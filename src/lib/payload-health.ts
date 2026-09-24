@@ -1,7 +1,10 @@
-import { Pool } from 'pg'
-
-const PAYLOAD_CHECK_TIMEOUT_MS = 3000
-
+/**
+ * Lightweight check for whether Payload CMS is likely available.
+ * We intentionally avoid importing `pg` directly because it may not
+ * be resolvable on all deployment targets (e.g. Vercel). Instead we
+ * simply verify the DATABASE_URI env var is present and non-placeholder.
+ * Actual connection errors are caught by the route handler wrapper.
+ */
 export async function isPayloadAvailable(): Promise<boolean> {
   const connectionString = process.env.DATABASE_URI?.trim()
 
@@ -9,25 +12,14 @@ export async function isPayloadAvailable(): Promise<boolean> {
     return false
   }
 
-  const pool = new Pool({
-    connectionString,
-    ssl: {
-      rejectUnauthorized: false,
-    },
-  })
-
-  try {
-    await Promise.race([
-      pool.query('SELECT 1'),
-      new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Database connection timeout')), PAYLOAD_CHECK_TIMEOUT_MS)
-      }),
-    ])
-
-    return true
-  } catch {
+  // Reject obvious placeholder values that won't connect
+  if (
+    connectionString.includes('[YOUR-') ||
+    connectionString === 'postgresql://postgres:placeholder@localhost:5432/postgres'
+  ) {
     return false
-  } finally {
-    await pool.end()
   }
+
+  return true
 }
+
