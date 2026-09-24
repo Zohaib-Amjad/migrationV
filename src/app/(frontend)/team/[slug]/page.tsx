@@ -50,7 +50,7 @@ export default async function TeamMemberPage({ params }: Props) {
           <div className="person-page__head">
             <span
               className="person__mono"
-              style={{ ['--mono' as any]: person.mono }}
+              style={{ '--mono': person.mono }}
               aria-hidden="true"
             >
               {person.initials}

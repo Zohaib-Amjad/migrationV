@@ -50,8 +50,8 @@ export default function ServicesPage() {
                   className="svc-index__card"
                   href={`/services/${svc.routeSlug}`}
                   style={{
-                    ['--card-bg' as any]: svc.tint,
-                    ['--card-accent' as any]: svc.accent,
+                    '--card-bg': svc.tint,
+                    '--card-accent': svc.accent,
                   }}
                 >
                   <span className="svc-index__media">

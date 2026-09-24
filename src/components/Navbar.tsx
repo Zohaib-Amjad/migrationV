@@ -161,7 +161,7 @@ export function Navbar() {
               <Link
                 className="nav__menu-item"
                 href="/services/skilled-migration"
-                style={{ ['--dot' as any]: '#0095ff' }}
+                style={{ ['--dot']: '#0095ff' }}
                 onClick={() => setDropdownOpen(false)}
               >
                 <span className="nav__menu-dot" aria-hidden="true"></span>
@@ -173,7 +173,7 @@ export function Navbar() {
               <Link
                 className="nav__menu-item"
                 href="/services/study-abroad"
-                style={{ ['--dot' as any]: '#ff5900' }}
+                style={{ ['--dot']: '#ff5900' }}
                 onClick={() => setDropdownOpen(false)}
               >
                 <span className="nav__menu-dot" aria-hidden="true"></span>
@@ -185,7 +185,7 @@ export function Navbar() {
               <Link
                 className="nav__menu-item"
                 href="/services/family-sponsorship"
-                style={{ ['--dot' as any]: '#179b66' }}
+                style={{ ['--dot']: '#179b66' }}
                 onClick={() => setDropdownOpen(false)}
               >
                 <span className="nav__menu-dot" aria-hidden="true"></span>
@@ -197,7 +197,7 @@ export function Navbar() {
               <Link
                 className="nav__menu-item"
                 href="/services/usa-visas"
-                style={{ ['--dot' as any]: '#6b81cf' }}
+                style={{ ['--dot']: '#6b81cf' }}
                 onClick={() => setDropdownOpen(false)}
               >
                 <span className="nav__menu-dot" aria-hidden="true"></span>
@@ -209,7 +209,7 @@ export function Navbar() {
               <Link
                 className="nav__menu-item"
                 href="/services/europe-visas"
-                style={{ ['--dot' as any]: '#fd0148' }}
+                style={{ ['--dot']: '#fd0148' }}
                 onClick={() => setDropdownOpen(false)}
               >
                 <span className="nav__menu-dot" aria-hidden="true"></span>
