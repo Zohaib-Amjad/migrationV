@@ -184,42 +184,41 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   }
 
   const popularTags = [
-    { label: 'Skilled Migration', url: '/services/skilled-migration' },
-    { label: 'Study Abroad', url: '/services/study-abroad' },
-    { label: 'USA NIW', url: '/services/usa-visas' },
-    { label: 'Canada PR', url: '/services/skilled-migration' },
-    { label: 'Australia PR', url: '/services/skilled-migration' },
-    { label: 'Success Stories', url: '/success-stories' },
-    { label: 'Contact Us', url: '/#consultation' },
+    { label: 'Skilled Migration', url: '/services/skilled-migration', icon: '🇨🇦' },
+    { label: 'Study Abroad', url: '/services/study-abroad', icon: '🎓' },
+    { label: 'USA NIW', url: '/services/usa-visas', icon: '🇺🇸' },
+    { label: 'Australia PR', url: '/services/skilled-migration', icon: '🇦🇺' },
+    { label: 'Success Stories', url: '/success-stories', icon: '🌟' },
+    { label: 'Book Consultation', url: '/#consultation', icon: '📅' },
   ]
 
   return (
     <div
-      className="fixed inset-0 z-[9999] flex items-start justify-center bg-black/60 px-4 pt-16 sm:pt-24 backdrop-blur-md animate-in fade-in duration-200"
+      className="search-modal-backdrop"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label="Search website"
     >
       <div
-        className="w-full max-w-2xl overflow-hidden rounded-2xl border border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 shadow-2xl backdrop-blur-xl transition-all"
+        className="search-modal-container"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleKeyDownNav}
       >
         {/* Search Input Bar */}
-        <div className="relative flex items-center border-b border-gray-200 dark:border-gray-800 px-4 py-3">
+        <div className="search-modal-header">
           <svg
-            className="h-5 w-5 text-gray-400 ltr:mr-3 rtl:ml-3"
+            className="search-modal-icon"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
             ref={inputRef}
             type="text"
-            className="w-full bg-transparent text-base text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none"
+            className="search-modal-input"
             placeholder={
               isArabic
                 ? 'ابحث عن الخدمات، التأشيرات، فريق العمل، أو الأسئلة الشائعة...'
@@ -235,110 +234,103 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+              className="search-modal-clear"
+              aria-label="Clear search"
             >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           )}
           <button
             type="button"
             onClick={onClose}
-            className="ltr:ml-2 rtl:mr-2 rounded-md bg-gray-100 dark:bg-gray-800 px-2.5 py-1 text-xs font-semibold text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="search-modal-esc"
+            aria-label="Close modal"
           >
             ESC
           </button>
         </div>
 
         {/* Modal Body / Results */}
-        <div className="max-h-[60vh] overflow-y-auto p-4">
+        <div className="search-modal-body">
           {query.trim() === '' ? (
             <div>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+              <div className="search-modal-section-title">
                 {isArabic ? 'عمليات البحث الشائعة' : 'Popular Searches'}
-              </p>
-              <div className="flex flex-wrap gap-2">
+              </div>
+              <div className="search-modal-pills">
                 {popularTags.map((tag) => (
                   <Link
                     key={tag.label}
                     href={tag.url}
                     onClick={onClose}
-                    className="rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/60 px-3 py-1.5 text-xs font-medium text-gray-700 dark:text-gray-300 transition hover:border-[#179b66] hover:bg-[#179b66]/10 hover:text-[#179b66]"
+                    className="search-modal-pill"
                   >
-                    {tag.label}
+                    <span>{tag.icon}</span>
+                    <span>{tag.label}</span>
                   </Link>
                 ))}
               </div>
             </div>
           ) : results.length > 0 ? (
-            <div className="space-y-1">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                {results.length} {isArabic ? 'نتائج' : 'Results Found'}
-              </p>
-              {results.map((res, index) => {
-                const isSelected = index === selectedIndex
-                return (
-                  <Link
-                    key={res.id}
-                    href={res.url}
-                    onClick={onClose}
-                    className={`group flex items-start gap-3 rounded-xl p-3 transition-colors ${
-                      isSelected
-                        ? 'bg-[#179b66]/10 border border-[#179b66]/30 text-gray-900 dark:text-white'
-                        : 'hover:bg-gray-100 dark:hover:bg-gray-800/70 text-gray-800 dark:text-gray-200'
-                    }`}
-                  >
-                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800 text-xs font-bold text-gray-600 dark:text-gray-300 group-hover:bg-[#179b66] group-hover:text-white">
-                      {res.category === 'Service' && '✈️'}
-                      {res.category === 'Story' && '🌟'}
-                      {res.category === 'Team' && '👤'}
-                      {res.category === 'FAQ' && '❓'}
-                      {res.category === 'Page' && '📄'}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2">
-                        <span className="truncate font-semibold text-sm text-gray-900 dark:text-white">
-                          {res.title}
-                        </span>
-                        {res.tag && (
-                          <span className="inline-block rounded bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:text-gray-400">
-                            {res.tag}
-                          </span>
-                        )}
+            <div>
+              <div className="search-modal-section-title">
+                {results.length} {isArabic ? 'نتائج تم العثور عليها' : 'Results Found'}
+              </div>
+              <div className="search-modal-results">
+                {results.map((res, index) => {
+                  const isSelected = index === selectedIndex
+                  return (
+                    <Link
+                      key={res.id}
+                      href={res.url}
+                      onClick={onClose}
+                      className={`search-modal-item ${isSelected ? 'is-selected' : ''}`}
+                    >
+                      <div className="search-modal-item-badge">
+                        {res.category === 'Service' && '✈️'}
+                        {res.category === 'Story' && '🌟'}
+                        {res.category === 'Team' && '👤'}
+                        {res.category === 'FAQ' && '❓'}
+                        {res.category === 'Page' && '📄'}
                       </div>
-                      <p className="line-clamp-1 text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                        {res.subtitle}
-                      </p>
-                    </div>
-                    <span className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity text-sm">
-                      →
-                    </span>
-                  </Link>
-                )
-              })}
+                      <div className="search-modal-item-info">
+                        <div className="search-modal-item-top">
+                          <span className="search-modal-item-title">{res.title}</span>
+                          {res.tag && (
+                            <span className="search-modal-item-category">{res.tag}</span>
+                          )}
+                        </div>
+                        <div className="search-modal-item-desc">{res.subtitle}</div>
+                      </div>
+                      <span className="search-modal-item-arrow" aria-hidden="true">→</span>
+                    </Link>
+                  )
+                })}
+              </div>
             </div>
           ) : (
-            <div className="py-8 text-center text-gray-500 dark:text-gray-400">
-              <p className="text-sm font-medium">
+            <div className="search-modal-empty">
+              <div className="search-modal-empty-title">
                 {isArabic ? 'لم يتم العثور على نتائج لـ' : 'No results found for'} &quot;{query}&quot;
-              </p>
-              <p className="mt-1 text-xs text-gray-400">
+              </div>
+              <div className="search-modal-empty-desc">
                 {isArabic
                   ? 'جرب البحث عن كلمات أخرى مثل "كندا"، "أستراليا"، "استشارة"'
                   : 'Try searching for keywords like "Canada", "Australia", "Consultation"'}
-              </p>
+              </div>
             </div>
           )}
         </div>
 
-        {/* Footer info */}
-        <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-800 px-4 py-2.5 text-[11px] text-gray-400 bg-gray-50/50 dark:bg-gray-900/50">
-          <span>HOF Migration Quick Search</span>
-          <div className="flex items-center gap-3">
-            <span>↑↓ Navigate</span>
-            <span>↵ Select</span>
-            <span>ESC Close</span>
+        {/* Footer */}
+        <div className="search-modal-footer">
+          <span>HOF Migration Spotlight</span>
+          <div className="search-modal-shortcuts">
+            <span className="search-modal-kbd"><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+            <span className="search-modal-kbd"><kbd>↵</kbd> Select</span>
+            <span className="search-modal-kbd"><kbd>ESC</kbd> Close</span>
           </div>
         </div>
       </div>
