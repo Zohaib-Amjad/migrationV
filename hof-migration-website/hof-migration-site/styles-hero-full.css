@@ -1,0 +1,794 @@
+/* ==========================================================================
+   HOF Migration — Hero (airplane window) + consultants band + experience
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+:root {
+  /* Brand primary #8DABA4 (hsl 166 15% 61%). Every hero tone below is that
+     hue held at the lightness the previous blue scale used, so the section
+     keeps its existing depth and only the hue changes. */
+  --brand: #8daba4;
+  --brand-lightest: #f1f8f6;
+  --brand-ink: #2e564d; /* readable on --brand-lightest: 7.6:1 */
+
+  --bg: #e0efeb;
+  --bg-gradient: linear-gradient(61.85deg, #f1f8f6 1.13%, #e0efeb 97.73%);
+  --ink: #000000;
+  --sub: #353535;
+  --accent: #000000;
+
+  --radius-pill: 12px;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+/* One continuous gradient behind both the hero and the consultant band.
+   It lives on the wrapper because a band with its own background restarts the
+   ramp at its own top-left and leaves a seam where the two sections meet. */
+.hero-band {
+  background: var(--bg-gradient);
+}
+
+.hero {
+  position: relative;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 3.33vw, 64px);
+  padding: clamp(20px, 4.74vw, 91px) clamp(20px, 9.48vw, 182px) clamp(84px, 9vw, 160px)
+    clamp(20px, 6.82vw, 131px);
+}
+
+/* --------------------------------------------------------------------------
+   Nav
+   -------------------------------------------------------------------------- */
+
+.nav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  /* The bar hugs its tallest child (the consultation button) with one padding
+     value, so the gap above, below and to the right of that button is the
+     same 14px. It used to set a fluid height and a separate padding-right,
+     which meant the vertical gap was only ever the leftover space — 7px at
+     most widths against 20px on the right. */
+  padding: 14px 14px 14px clamp(20px, 1.88vw, 36px);
+  background: #fff;
+  border-radius: var(--radius-pill);
+}
+
+.nav__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 3.33vw, 64px);
+  flex-wrap: wrap;
+}
+
+.nav__group--right {
+  gap: clamp(12px, 1.25vw, 24px);
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* One lockup per language — the mark and wordmark now come as a single
+   supplied file, so the language control swaps the whole image rather than
+   re-setting a text span. Only one is ever rendered. */
+.nav__logo-img {
+  display: block;
+  height: 36px;
+  width: auto;
+}
+
+.nav__logo-img--ar {
+  display: none;
+}
+
+html[lang='ar'] .nav__logo-img--en {
+  display: none;
+}
+
+html[lang='ar'] .nav__logo-img--ar {
+  display: block;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.08vw, 40px);
+}
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14.4px;
+  font-weight: 500;
+  color: #1b232e;
+  white-space: nowrap;
+}
+
+.nav__chevron {
+  width: 10px;
+  height: 10px;
+}
+
+.nav__lang {
+  font-family: 'Noto Sans Arabic', var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.nav__divider {
+  width: 2px;
+  height: 20px;
+  background: #9ca3af;
+}
+
+.nav__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.nav__icon-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 26px;
+  border-radius: var(--radius-pill);
+  font-size: 16.9px;
+  font-weight: 500;
+  letter-spacing: 0.18px;
+  color: #000;
+  white-space: nowrap;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--panel {
+  background: #eee;
+}
+
+.btn--white {
+  background: #fff;
+}
+
+.btn--dark {
+  background: #14161a;
+  color: #fff;
+}
+
+.btn--dark .btn__icon {
+  /* the shared arrow-up-right.svg is a solid black stroke — flip it white
+     for this dark variant rather than keeping a second icon asset */
+  filter: brightness(0) invert(1);
+}
+
+.btn__icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Content row: copy + airplane window
+   -------------------------------------------------------------------------- */
+
+.hero__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(32px, 5vw, 96px);
+  flex-wrap: wrap;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+  max-width: 780px;
+  flex: 1 1 480px;
+}
+
+/* No container of its own — the pill, the separator and the plaques sit
+   straight on the hero. The padding goes with the panel: without a surface to
+   inset against it would only push the pill out of line with the headline
+   below it. */
+.badge-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2vw, 32px);
+  flex-wrap: wrap;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1vw, 14px);
+  padding: clamp(14px, 1.25vw, 20px) clamp(20px, 1.9vw, 28px);
+  background: var(--brand-lightest);
+  border-radius: 12px;
+}
+
+.badge__icon {
+  display: flex;
+  flex-shrink: 0;
+  width: clamp(32px, 2.3vw, 44px);
+  height: clamp(32px, 2.3vw, 44px);
+}
+
+.badge__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.badge__text {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(16px, 1.25vw, 22px);
+  letter-spacing: 0.2px;
+  color: var(--brand-ink);
+  white-space: nowrap;
+}
+
+.badge-row__divider {
+  width: 1.5px;
+  height: clamp(36px, 3.4vw, 56px);
+  background: #cbdcd7;
+  flex-shrink: 0;
+}
+
+.badge__logos {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 1.5vw, 24px);
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   Certification chips
+
+   The regulator marks are set into brushed-metal plaques rather than sitting
+   loose on the row. Three layers do it: the chip itself is the rim, painted
+   with a conic gradient so the light around its edge varies the way a turned
+   bezel does; the face is the plate, a soft silver with a fine brushed grain
+   laid over it; and the mark is debossed into that plate with a light lower
+   lip and a dark upper one.
+
+   A single specular band crosses each plate on a long cycle. It is deliberately
+   mostly absent — the sweep occupies the last third of a 7s loop — so the
+   surface reads as metal catching the light occasionally rather than as
+   something animating. The two chips are offset so they never travel together.
+   -------------------------------------------------------------------------- */
+
+.cert-chip {
+  --chip-size: clamp(52px, 5vw, 76px);
+  position: relative;
+  flex-shrink: 0;
+  width: var(--chip-size);
+  height: var(--chip-size);
+  /* the rim is a proportion of the chip, so it survives every size the row
+     puts the plaque at — kept thin so the plate reads as the piece and the
+     bezel as an edge on it */
+  padding: 3%;
+  border-radius: 27%;
+  background: conic-gradient(
+    from 208deg,
+    #f7f9fa 0deg,
+    #b4bcc2 38deg,
+    #eef1f3 78deg,
+    #98a1a8 126deg,
+    #e1e6e9 172deg,
+    #a7b0b7 212deg,
+    #f4f6f8 252deg,
+    #939ca3 298deg,
+    #d9dee2 338deg,
+    #f7f9fa 360deg
+  );
+  box-shadow: 0 1px 2px rgba(10, 18, 16, 0.28), 0 6px 14px -6px rgba(10, 18, 16, 0.35);
+}
+
+.cert-chip__face {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 25%;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    /* brushed grain — kept near the threshold of visible, or it reads as
+       stripes rather than metal */
+    repeating-linear-gradient(
+      64deg,
+      rgba(255, 255, 255, 0.16) 0 1px,
+      rgba(132, 143, 151, 0.04) 1px 4px
+    ),
+    /* the light falling on the plate */
+    radial-gradient(118% 96% at 28% 16%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 58%),
+    /* the plate itself */
+    linear-gradient(158deg, #fbfcfd 0%, #eef1f4 36%, #d6dce1 72%, #eef2f5 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 1px rgba(18, 28, 32, 0.12),
+    inset 0 0 0 1px rgba(120, 132, 141, 0.22);
+}
+
+.cert-chip__mark {
+  position: relative;
+  z-index: 1;
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  /* One hard, hairline highlight directly under the strokes is all the stamp
+     needs. The pair of blurred shadows this replaces were softening the
+     artwork itself, which is what made the marks read as muddy. */
+  filter: drop-shadow(0 0.5px 0 rgba(255, 255, 255, 0.95));
+}
+
+/* the travelling highlight */
+.cert-chip__face::after {
+  content: '';
+  position: absolute;
+  inset: -45%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    74deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.42) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  transform: translateX(-125%);
+  animation: cert-chip-sheen 7s cubic-bezier(0.42, 0, 0.22, 1) infinite;
+}
+
+.cert-chip--offset .cert-chip__face::after {
+  animation-delay: 2.6s;
+}
+
+@keyframes cert-chip-sheen {
+  0%,
+  64% {
+    transform: translateX(-125%);
+  }
+  100% {
+    transform: translateX(125%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cert-chip__face::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .badge-row__divider {
+    display: none;
+  }
+}
+
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 2.75vw, 48px);
+  line-height: 1.25;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+@media (max-width: 1080px) {
+  .hero__title {
+    font-size: clamp(30px, 5vw, 48px);
+  }
+}
+
+.hero__subtitle {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(17px, 1.55vw, 24px);
+  line-height: 1.45;
+  color: var(--sub);
+}
+
+/* --------------------------------------------------------------------------
+   Airplane window — LEGACY (raster) implementation, kept as the fallback
+
+   The hero now uses the animated SVG window (plane-window.css /
+   plane-window.js). These rules, assets/window-final/window-frame.png and
+   carousel.js are all still here and still work: restoring the old window is
+   just a matter of swapping the markup back — see hero-window-legacy.html.
+   Nothing below is referenced by the current markup.
+   -------------------------------------------------------------------------- */
+
+.window {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 900 / 1233;
+  flex-shrink: 0;
+}
+
+.window__glass {
+  position: absolute;
+  /* aligned to the transparent hole measured in the frame artwork, with a small
+     safety margin so the photo always fully covers it — the opaque frame on
+     top masks anything outside the true hole, so no rounding here. */
+  inset: 19.5% 20% 15.5% 20%;
+  overflow: hidden;
+  background: #0b2530;
+}
+
+.window__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.window__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.window__slide.is-active {
+  opacity: 1;
+}
+
+.window__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@media (max-width: 1080px) {
+  .hero__row {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: left;
+  }
+
+  .hero__content {
+    align-items: flex-start;
+  }
+
+  .window {
+    max-width: 265px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav {
+    height: auto;
+    padding: 14px 16px;
+    border-radius: 20px;
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .nav__group--right {
+    gap: 10px;
+  }
+
+  .nav__lang,
+  .nav__divider,
+  .nav__icon-btn {
+    display: none;
+  }
+
+  .btn--panel {
+    padding: 0 18px;
+    font-size: 14px;
+    height: 44px;
+  }
+
+  .btn--panel .btn__icon {
+    display: none;
+  }
+
+  .window {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .window {
+    max-width: 185px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window__slide {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Consultants band
+   -------------------------------------------------------------------------- */
+
+.people-band {
+  position: relative;
+  /* no bar of its own any more — the cutouts sit straight on the gradient
+     that .hero-band paints behind both sections */
+  height: clamp(105px, 11.6vw, 223px);
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.people-band__wrap {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  /* overlap is a fixed proportion of the band's own height, so it stays
+     predictable at every viewport width instead of tracking the image's
+     natural aspect ratio at an arbitrary display width. */
+  height: 160%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.people-band__wrap img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+}
+
+/* --------------------------------------------------------------------------
+   Experience statement
+   -------------------------------------------------------------------------- */
+
+.experience {
+  background: #fff;
+  padding: clamp(14px, 1.8vw, 28px) 20px clamp(32px, 4.5vw, 64px);
+}
+
+.experience__inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.experience__heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(26px, 2.6vw, 44px);
+  line-height: 1.4;
+  color: #000;
+  text-wrap: balance;
+}
+
+.experience__text {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(16px, 1.45vw, 28px);
+  line-height: 1.4;
+  color: var(--sub);
+  /* Scales with the same vw factor as the font-size above (×~32.5) so the
+     text reliably breaks into exactly two lines at any viewport width,
+     which text-wrap: balance then evens out. */
+  width: clamp(520px, 48vw, 930px);
+  max-width: 100%;
+  text-wrap: balance;
+}
+
+/* --------------------------------------------------------------------------
+   Services dropdown
+
+   The Services link opens a panel listing the five service pages. The panel
+   is positioned against .nav__item rather than the bar so it tracks the link
+   in both directions; the bar itself can't be the anchor because it is the
+   element with the pill radius and would clip it.
+   -------------------------------------------------------------------------- */
+
+.nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav__menu {
+  position: absolute;
+  inset-block-start: calc(100% + 18px);
+  inset-inline-start: -18px;
+  z-index: 40;
+  min-width: 268px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(16, 32, 28, 0.16), 0 2px 8px rgba(16, 32, 28, 0.06);
+  display: grid;
+  gap: 2px;
+  /* closed state — kept in the flow so the panel can transition rather than
+     being torn out and rebuilt on every open */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+}
+
+/* the gap between link and panel would otherwise drop the hover */
+.nav__menu::before {
+  content: '';
+  position: absolute;
+  inset-block-start: -18px;
+  inset-inline: 0;
+  height: 18px;
+}
+
+.nav__item.is-open .nav__menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.nav__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: background 160ms ease;
+}
+
+.nav__menu-item:hover {
+  background: color-mix(in srgb, var(--dot, #8daba4) 10%, #fff);
+}
+
+.nav__menu-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot, #8daba4);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--dot, #8daba4) 16%, transparent);
+}
+
+.nav__menu-copy {
+  display: grid;
+  gap: 1px;
+}
+
+.nav__menu-copy b {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1b232e;
+}
+
+.nav__menu-copy small {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.nav__menu-all {
+  margin-block-start: 6px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  background: var(--brand-lightest);
+  color: var(--brand-ink);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.nav__menu-all:hover {
+  background: color-mix(in srgb, var(--brand) 26%, #fff);
+}
+
+.nav__item.is-open .nav__chevron {
+  transform: rotate(180deg);
+}
+
+.nav__chevron {
+  transition: transform 180ms ease;
+}
+
+@media (max-width: 900px) {
+  .nav__menu {
+    inset-inline-start: 0;
+    min-width: 232px;
+  }
+}

@@ -1,0 +1,531 @@
+/* ==========================================================================
+   HOF Migration — dark mode
+
+   Toggled by clicking the hero's airplane window: closing the shade takes the
+   cabin dark, opening it brings the light back (see plane-window.js).
+
+   This file only re-colours. No layout, spacing, type or animation is touched,
+   and the two surfaces that are already dark — the consultant band and the
+   footer — are deliberately left alone, as is the forest-green "Work with
+   Experts" card and its bird animation.
+
+   The palette is built around the footer's existing #141a19 so the whole page
+   reads as one piece rather than an inverted copy of the light theme.
+   ========================================================================== */
+
+html.is-dark {
+  /* Black is the ground everywhere below the hero; the green survives only
+     as an undertone in the steps above it. The hero keeps the one genuinely
+     green surface on the page (see .hero-band). */
+  --dk-base: #000; /* sections */
+  --dk-tint: #070b0a; /* the subtle green variation between sections */
+  --dk-raised: #0c110f; /* cards */
+  --dk-raised-2: #131b19; /* controls */
+  --dk-line: rgba(255, 255, 255, 0.1);
+  --dk-text: #f1f7f6;
+  --dk-muted: rgba(255, 255, 255, 0.68);
+  --dk-faint: rgba(255, 255, 255, 0.5);
+}
+
+/* --------------------------------------------------------------------------
+   The cross-fade
+
+   Only applied while the theme is actually changing — a permanent global
+   transition would override component transitions (the service-card hover,
+   the FAQ icon) for the rest of the session.
+   -------------------------------------------------------------------------- */
+
+html.theme-switching * {
+  transition: background-color 600ms ease, background-image 600ms ease, color 600ms ease,
+    border-color 600ms ease, fill 600ms ease, stroke 600ms ease, box-shadow 600ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-switching * {
+    transition: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Page + hero
+   -------------------------------------------------------------------------- */
+
+html.is-dark body {
+  background: var(--dk-base);
+  color: var(--dk-text);
+}
+
+/* The hero holds the only green surface on the page, and it sits on the floor
+   of the scale: L 6% down to L 3% at hue 166 — near-black by value. Saturation
+   climbs as lightness falls (26% -> 48%) because at this depth a low-saturation
+   green collapses into grey; the higher figure is what keeps 7-8 levels of
+   separation between the channels, so the undertone still reads. */
+html.is-dark .hero-band {
+  background: linear-gradient(61.85deg, #0b1311 1.13%, #040b0a 97.73%);
+}
+
+/* Ambient warm light from above the page
+
+   A wide, flat ellipse whose centre sits off the top edge, so what lands on
+   the hero is only the bottom of the falloff — the source itself is never on
+   screen. It washes over the nav and fades out before the headline.
+
+   Declared in both themes at zero opacity rather than only under .is-dark:
+   `html.theme-switching *` can't reach a pseudo-element, so without something
+   to animate the glow would snap in while everything else cross-fades. It
+   paints under .hero__inner (z-index 1) and takes no pointer events, so it
+   changes nothing but colour. */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(360px, 48vw, 700px);
+  background: radial-gradient(
+    120% 100% at 50% -18%,
+    rgba(141, 171, 164, 0.22) 0%,
+    rgba(128, 160, 152, 0.09) 45%,
+    rgba(125, 158, 150, 0) 76%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms ease;
+}
+
+html.is-dark .hero::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before {
+    transition: none;
+  }
+}
+
+html.is-dark .hero__title {
+  color: var(--dk-text);
+}
+
+html.is-dark .hero__subtitle {
+  color: var(--dk-muted);
+}
+
+/* Nav */
+
+/* The pill sat almost flush with the hero behind it, which is most of what
+   read as "muted" — it needs to be a distinct surface first, then brighter
+   text on top. The hairline is an inset shadow, not a border, so it doesn't
+   change the nav's height. */
+html.is-dark .nav {
+  background: #000;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+
+html.is-dark .nav__link {
+  color: #f4faf9;
+}
+
+html.is-dark .nav__lang {
+  color: #f4faf9;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.is-dark .nav__lang:hover {
+  background: color-mix(in srgb, var(--page-theme-accent) 30%, rgba(255, 255, 255, 0.12));
+  border-color: color-mix(in srgb, var(--page-theme-accent) 60%, transparent);
+  color: #ffffff;
+  box-shadow: 0 4px 14px var(--page-theme-glow);
+}
+
+html.is-dark .nav__lang:active {
+  background: color-mix(in srgb, var(--page-theme-accent) 45%, rgba(255, 255, 255, 0.12));
+}
+
+html.is-dark .nav__icon-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.is-dark .nav__icon-btn:hover {
+  background: color-mix(in srgb, var(--page-theme-accent) 30%, rgba(255, 255, 255, 0.12));
+  border-color: color-mix(in srgb, var(--page-theme-accent) 60%, transparent);
+  box-shadow: 0 4px 14px var(--page-theme-glow);
+}
+
+html.is-dark .nav__icon-btn:active {
+  background: color-mix(in srgb, var(--page-theme-accent) 45%, rgba(255, 255, 255, 0.12));
+}
+
+html.is-dark .nav__divider {
+  background: rgba(255, 255, 255, 0.38);
+}
+
+/* the shared icon artwork is solid dark — flip it rather than ship a second set */
+html.is-dark img.nav__logo-img,
+html.is-dark .nav__chevron,
+html.is-dark .nav__icon-btn img {
+  filter: brightness(0) invert(1);
+}
+
+/* Buttons */
+
+html.is-dark .btn--panel {
+  background: #263431;
+  color: var(--dk-text);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html.is-dark .btn--panel:hover {
+  background: color-mix(in srgb, var(--page-theme-accent) 30%, #263431);
+  border-color: color-mix(in srgb, var(--page-theme-accent) 60%, transparent);
+  box-shadow: 0 8px 24px -4px var(--page-theme-glow);
+  color: #ffffff;
+}
+
+html.is-dark .btn--panel:active {
+  background: color-mix(in srgb, var(--page-theme-accent) 45%, #263431);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+html.is-dark .btn--panel .btn__icon {
+  filter: brightness(0) invert(1);
+}
+
+/* .btn--white keeps its white fill — it reads as the primary action on dark.
+   .btn--dark would vanish, so it swaps to the light treatment instead. */
+html.is-dark .btn--white {
+  background: #ffffff;
+  color: #14161a;
+}
+
+html.is-dark .btn--white:hover {
+  box-shadow: 0 12px 28px -6px var(--page-theme-glow), 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+html.is-dark .btn--white:active {
+  background: #e2e8e6;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+html.is-dark .btn--dark {
+  background: var(--dk-text);
+  color: #141a19;
+}
+
+html.is-dark .btn--dark:hover {
+  background: color-mix(in srgb, var(--page-theme-accent) 22%, var(--dk-text));
+  box-shadow: 0 12px 28px -6px var(--page-theme-glow);
+  color: #141a19;
+}
+
+html.is-dark .btn--dark:active {
+  background: color-mix(in srgb, var(--page-theme-accent) 38%, var(--dk-text));
+}
+
+html.is-dark .btn--dark .btn__icon {
+  filter: none;
+}
+
+/* Certification badge */
+
+html.is-dark .badge {
+  background: rgba(141, 171, 164, 0.24);
+}
+
+html.is-dark .badge__text {
+  color: #b8d8cf;
+}
+
+html.is-dark .badge-row__divider {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* The regulator marks are set into metal plaques now, so they keep their dark
+   artwork in both themes — inverting them here would lift them off a surface
+   that is still silver. The plate itself is eased back a touch so it reads as
+   brushed metal in a dark room rather than a lit panel. */
+html.is-dark .cert-chip {
+  filter: brightness(0.9);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6), 0 6px 16px -6px rgba(0, 0, 0, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   The airplane window
+
+   The bezel itself swaps to its night-cabin twin in plane-window.css. What's
+   left here is the shade, which is inline SVG — its gradients are re-coloured
+   through their stops so the panel reads as a dark shade pulled down in a
+   dim cabin rather than a white one glowing on a dark page.
+   -------------------------------------------------------------------------- */
+
+html.is-dark #pw-shade-face stop:nth-child(1) {
+  stop-color: #3b4b47;
+}
+html.is-dark #pw-shade-face stop:nth-child(2) {
+  stop-color: #2f3d3a;
+}
+html.is-dark #pw-shade-face stop:nth-child(3) {
+  stop-color: #24302d;
+}
+
+html.is-dark #pw-shade-lip stop:nth-child(1) {
+  stop-color: #4a5c58;
+}
+html.is-dark #pw-shade-lip stop:nth-child(2) {
+  stop-color: #384844;
+}
+html.is-dark #pw-shade-lip stop:nth-child(3) {
+  stop-color: #273431;
+}
+
+html.is-dark .pw-lip-edge {
+  stroke: #5b6d69;
+}
+
+html.is-dark .pw-lip-label {
+  fill: #9aa9a6;
+}
+
+/* the seal drawn over the join between frame and glass */
+html.is-dark #pw-seal-edge stop:nth-child(1) {
+  stop-color: #111a18;
+}
+html.is-dark #pw-seal-edge stop:nth-child(2) {
+  stop-color: #394a46;
+}
+
+/* --------------------------------------------------------------------------
+   Experience
+   -------------------------------------------------------------------------- */
+
+html.is-dark .experience {
+  background: var(--dk-base);
+}
+
+html.is-dark .experience__heading {
+  color: var(--dk-text);
+}
+
+html.is-dark .experience__text {
+  color: var(--dk-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Services
+   -------------------------------------------------------------------------- */
+
+html.is-dark .services {
+  background: var(--dk-base);
+}
+
+html.is-dark .services__title,
+html.is-dark .services__explore {
+  color: var(--dk-text);
+}
+
+/* These cards stay off the green palette on purpose: each carries its own
+   hue, and a black surface with a near-black hairline keeps them reading as
+   their own thing rather than as part of the dark-green branding. */
+html.is-dark .service-card,
+html.is-dark .service-card__content {
+  background: #000;
+  border-color: #262626;
+}
+
+/* the hover tint keeps each card's own hue, mixed into the dark surface
+   instead of the white one — and the border picks up that hue outright.
+   This needs the html.is-dark prefix: without it the rule above would
+   out-specify the plain :hover in services.css and the border would stay
+   grey in dark mode. */
+html.is-dark .service-card:hover,
+html.is-dark .service-card:focus-within {
+  background: color-mix(in srgb, var(--card-bg, #dfedf7) 16%, #000);
+  border-color: var(--card-accent, #0095ff);
+}
+
+/* the brighter accent, not the darker text variant, which is too low-contrast here */
+html.is-dark .service-card__title {
+  color: var(--card-accent, #0095ff);
+}
+
+html.is-dark .service-card__text,
+html.is-dark .service-card__text b {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+html.is-dark .service-card__link {
+  color: var(--dk-text);
+}
+
+/* --------------------------------------------------------------------------
+   Reviews
+   -------------------------------------------------------------------------- */
+
+html.is-dark .reviews {
+  background: var(--dk-base);
+}
+
+html.is-dark .reviews__title,
+html.is-dark .reviews__view-all {
+  color: var(--dk-text);
+}
+
+html.is-dark .reviews__divider {
+  border-top-color: var(--dk-line);
+}
+
+/* Re-colour the token rather than one physical side: in Arabic the divider is
+   a border-left, which a border-right-color override never reached — leaving a
+   near-white hairline between the cards in dark mode. */
+html.is-dark .reviews {
+  --review-divider: var(--dk-line);
+}
+
+html.is-dark .review-card__name {
+  color: var(--dk-text);
+}
+
+html.is-dark .review-card__date,
+html.is-dark .review-card__more {
+  color: var(--dk-faint);
+}
+
+html.is-dark .review-card__more:hover {
+  color: var(--dk-text);
+}
+
+html.is-dark .review-card__text {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+html.is-dark .reviews__arrow {
+  background: var(--dk-raised-2);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+html.is-dark .reviews__arrow:hover {
+  background: #263431;
+}
+
+/* the chevrons are inline SVG with a hard-coded dark stroke */
+html.is-dark .reviews__arrow svg path {
+  stroke: #e8f1ef;
+}
+
+/* --------------------------------------------------------------------------
+   Success stories — the video panel is already dark and stays as it is
+   -------------------------------------------------------------------------- */
+
+html.is-dark .stories {
+  background: var(--dk-tint);
+}
+
+html.is-dark .stories__title,
+html.is-dark .stories__view-all,
+html.is-dark .stories__name {
+  color: var(--dk-text);
+}
+
+html.is-dark .stories__eyebrow,
+html.is-dark .stories__route {
+  color: var(--dk-faint);
+}
+
+html.is-dark .stories__text {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* --------------------------------------------------------------------------
+   FAQ
+   -------------------------------------------------------------------------- */
+
+html.is-dark .faq {
+  background: var(--dk-tint);
+}
+
+html.is-dark .faq__title,
+html.is-dark .faq__card-title,
+html.is-dark .faq-item__question {
+  color: var(--dk-text);
+}
+
+html.is-dark .faq__card {
+  background: var(--dk-raised-2);
+}
+
+html.is-dark .faq__card-text,
+html.is-dark .faq-item__answer {
+  color: var(--dk-muted);
+}
+
+html.is-dark .faq__list,
+html.is-dark .faq-item {
+  border-color: var(--dk-line);
+}
+
+/* closed: a dark disc with a white plus would disappear into the row, so it
+   lifts to a raised grey. Open keeps its light disc and dark minus. */
+html.is-dark .faq-item__icon {
+  background: #2b3b37;
+}
+
+/* --------------------------------------------------------------------------
+   Work with Experts — the green card, its tree and the flock are untouched;
+   only the page behind the card changes.
+   -------------------------------------------------------------------------- */
+
+html.is-dark .expert-cta {
+  background: var(--dk-base);
+}
+
+/* --------------------------------------------------------------------------
+   The consultant band and the footer are already dark — deliberately no
+   overrides for either.
+   -------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   Surfaces that are already dark in both themes
+
+   The footer, its inner panel and the story video were built on a navy-black
+   (#14161a and its neighbours) before the brand colour landed. Their light-mode
+   appearance is unchanged; these only re-point the same lightness onto the
+   brand hue so nothing cool is left in the dark palette.
+   -------------------------------------------------------------------------- */
+
+html.is-dark .footer {
+  background: #060908;
+}
+
+html.is-dark .footer__bottom {
+  background: #0d1211;
+}
+
+html.is-dark .stories__video {
+  background: linear-gradient(135deg, #2b3633 0%, #141a19 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Share Your Feedback
+   -------------------------------------------------------------------------- */
+
+html.is-dark .feedback {
+  background: var(--dk-base);
+}
+
+html.is-dark .feedback__title,
+html.is-dark .feedback__line {
+  color: var(--dk-text);
+}
+
+html.is-dark .feedback__text {
+  color: var(--dk-muted);
+}
+
+/* the alternating tiles are black in the reference, which would disappear into
+   a black section — they lift just enough to stay legible as tiles */
+html.is-dark .feedback__tile:nth-child(even) {
+  background: var(--dk-raised-2);
+}

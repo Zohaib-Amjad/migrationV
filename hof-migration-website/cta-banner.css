@@ -1,0 +1,496 @@
+/* ==========================================================================
+   HOF Migration — "Work with Experts" CTA + callback form
+
+   One section, not two: a single forest-green card carries the copy and the
+   form on the left and the tree on the right, so both halves share the same
+   background, spacing and proportions. The flock rests on the tree until the
+   section is reached, then takes flight (see cta-birds.js).
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+.expert-cta {
+  background: #fff;
+  padding: clamp(16px, 2.4vw, 32px) clamp(20px, 6.82vw, 131px) clamp(24px, 3vw, 44px);
+}
+
+.expert-cta__card {
+  position: relative;
+  max-width: 1920px;
+  margin: 0 auto;
+  min-height: clamp(620px, 46vw, 880px);
+  padding: clamp(32px, 4vw, 72px);
+  border-radius: 28px;
+  overflow: hidden;
+  isolation: isolate;
+  /* The one background both halves sit on. */
+  background: linear-gradient(to top right, #101817 0%, #192422 45%, #283935 100%);
+}
+
+/* A soft light from the upper right, behind everything else. */
+.expert-cta__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    80% 80% at 82% 10%,
+    rgba(141, 171, 164, 0.2) 0%,
+    rgba(107, 137, 130, 0.07) 55%,
+    rgba(25, 36, 34, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* ...and a matching shadow settling into the lower left, which is what keeps
+   the copy legible over the scene. */
+.expert-cta__card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top right,
+    rgba(12, 19, 17, 0.62) 0%,
+    rgba(12, 19, 17, 0.18) 42%,
+    rgba(12, 19, 17, 0) 78%
+  );
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   The tree
+
+   Height-locked to the card and anchored right, at the scene SVG's own
+   aspect ratio, so the tree spans the full height of the section however
+   wide the viewport is. The birds overlay shares the box (and the viewBox),
+   which is what keeps each bird sitting on its branch.
+   -------------------------------------------------------------------------- */
+
+.expert-cta__scene {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  aspect-ratio: 1000 / 900;
+  pointer-events: none;
+}
+
+.expert-cta__img,
+.expert-cta__birds {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.expert-cta__birds {
+  /* Lets the flock fly on past the edge of the tree's own box — the card
+     clips them instead, so they leave the whole section rather than
+     vanishing halfway across it. */
+  overflow: visible;
+}
+
+/* --------------------------------------------------------------------------
+   Copy + form, anchored left
+   -------------------------------------------------------------------------- */
+
+.expert-cta__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3.4vw, 52px);
+  max-width: 580px;
+}
+
+.expert-cta__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(18px, 2vw, 26px);
+}
+
+.expert-cta__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(26px, 3vw, 44px);
+  line-height: 1.22;
+  color: #fff;
+}
+
+.expert-cta__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expert-cta__list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: clamp(13px, 1vw, 15px);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.expert-cta__list svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Frosted glass over the scene rather than a solid panel — it blurs the
+   canopy behind it, so the form sits in the composition instead of on top
+   of it. The backdrop is everything painted below this element inside the
+   card: the background, the glow, the tree and the shading over it. */
+.expert-cta__form-card {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  padding: clamp(24px, 2.4vw, 36px);
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.55);
+}
+
+@media (max-width: 1080px) {
+  /* Still full height — the tree just slides further right so its lower
+     branches stop crowding the copy. */
+  .expert-cta__scene {
+    right: -16%;
+  }
+
+  .expert-cta__content {
+    max-width: 460px;
+  }
+}
+
+@media (max-width: 760px) {
+  .expert-cta__card {
+    padding: 24px 20px 28px;
+    border-radius: 22px;
+  }
+
+  .expert-cta__title {
+    font-size: 24px;
+  }
+
+  .expert-cta__content {
+    max-width: none;
+    /* Starts below the canopy band above it. */
+    margin-top: clamp(310px, 82vw, 420px);
+  }
+
+  .expert-cta__scene {
+    /* A phone is far too narrow for a full-height tree beside the copy, so
+       the canopy becomes a band across the top instead. Sized by height (not
+       a percentage of the card) so it stays put as the form grows. */
+    top: 0;
+    right: -20%;
+    height: clamp(330px, 88vw, 440px);
+    /* The trunk would otherwise stop dead where the band ends, so it fades
+       into the background rather than being cut off. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 100%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   The flock
+
+   Each bird is drawn twice — perched and in flight — stacked at the same
+   point on a branch. Until the section is reached the perched pose is the
+   visible one; when cta-birds.js adds .is-flying the poses swap and every
+   bird runs its own one-shot path up and out of the frame. Each path has a
+   slightly different direction, arc, tilt, speed and delay so the take-off
+   reads as a flock scattering rather than a synchronised loop.
+   -------------------------------------------------------------------------- */
+
+.cta-bird {
+  /* Without fill-box, rotation would pivot around the middle of the whole
+     scene rather than the bird itself. */
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.cta-bird__flying {
+  opacity: 0;
+}
+
+.is-flying .cta-bird__perched {
+  opacity: 0;
+  transition: opacity 160ms linear var(--t, 0s);
+}
+
+.is-flying .cta-bird__flying {
+  opacity: 1;
+  transition: opacity 160ms linear var(--t, 0s);
+}
+
+.cta-bird__wing {
+  transform-box: fill-box;
+}
+
+.cta-bird__wing--far {
+  transform-origin: 100% 100%;
+}
+
+.cta-bird__wing--near {
+  transform-origin: 100% 0%;
+}
+
+.is-flying .cta-bird__wing {
+  animation: cta-flap var(--flap, 300ms) ease-in-out var(--t, 0s) infinite alternate;
+}
+
+.is-flying .cta-bird__wing--near {
+  animation-delay: calc(var(--t, 0s) + 25ms);
+}
+
+@keyframes cta-flap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    /* Not much lower than this — folded any further and the bird thins out
+       to a sliver that reads as a flicker at the scene's rendered size. */
+    transform: scaleY(0.52);
+  }
+}
+
+.cta-bird--1 {
+  --t: 0ms;
+  --flap: 280ms;
+}
+.cta-bird--2 {
+  --t: 100ms;
+  --flap: 320ms;
+}
+.cta-bird--3 {
+  --t: 40ms;
+  --flap: 260ms;
+}
+.cta-bird--4 {
+  --t: 220ms;
+  --flap: 300ms;
+}
+.cta-bird--5 {
+  --t: 160ms;
+  --flap: 240ms;
+}
+.cta-bird--6 {
+  --t: 420ms;
+  --flap: 340ms;
+}
+.cta-bird--7 {
+  --t: 300ms;
+  --flap: 290ms;
+}
+
+.is-flying .cta-bird--1 {
+  animation: cta-fly-1 3.6s cubic-bezier(0.22, 0.62, 0.32, 1) var(--t) forwards;
+}
+.is-flying .cta-bird--2 {
+  animation: cta-fly-2 4.1s cubic-bezier(0.26, 0.58, 0.3, 1) var(--t) forwards;
+}
+.is-flying .cta-bird--3 {
+  animation: cta-fly-3 3.3s cubic-bezier(0.2, 0.66, 0.34, 1) var(--t) forwards;
+}
+.is-flying .cta-bird--4 {
+  animation: cta-fly-4 4.4s cubic-bezier(0.24, 0.6, 0.3, 1) var(--t) forwards;
+}
+.is-flying .cta-bird--5 {
+  animation: cta-fly-5 3s cubic-bezier(0.18, 0.7, 0.36, 1) var(--t) forwards;
+}
+.is-flying .cta-bird--6 {
+  animation: cta-fly-6 4.8s cubic-bezier(0.28, 0.54, 0.28, 1) var(--t) forwards;
+}
+.is-flying .cta-bird--7 {
+  animation: cta-fly-7 4s cubic-bezier(0.22, 0.64, 0.32, 1) var(--t) forwards;
+}
+
+/* Every path starts with a small crouch, bursts off the branch, then settles
+   into a glide and fades as it leaves the frame. They climb rather than cross
+   the section, so the flock never passes over the headline or the form. */
+
+@keyframes cta-fly-1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(2px, 4px) rotate(-4deg);
+  }
+  16% {
+    transform: translate(-32px, -96px) rotate(-20deg);
+  }
+  42% {
+    transform: translate(-116px, -262px) rotate(-9deg);
+  }
+  72% {
+    transform: translate(-198px, -452px) rotate(-15deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-260px, -620px) rotate(-10deg) scale(0.82);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-fly-2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(3px, 5px) rotate(3deg);
+  }
+  15% {
+    transform: translate(-18px, -104px) rotate(-14deg);
+  }
+  44% {
+    transform: translate(-64px, -310px) rotate(-7deg);
+  }
+  74% {
+    transform: translate(-102px, -520px) rotate(-12deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-120px, -700px) rotate(-6deg) scale(0.86);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-fly-3 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(-2px, 4px) rotate(-3deg);
+  }
+  17% {
+    transform: translate(-14px, -86px) rotate(-24deg);
+  }
+  45% {
+    transform: translate(-30px, -248px) rotate(-14deg);
+  }
+  73% {
+    transform: translate(-38px, -414px) rotate(-20deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-40px, -560px) rotate(-16deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-fly-4 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(-2px, 5px) rotate(4deg);
+  }
+  16% {
+    transform: translate(38px, -92px) rotate(22deg);
+  }
+  43% {
+    transform: translate(136px, -270px) rotate(10deg);
+  }
+  73% {
+    transform: translate(212px, -470px) rotate(16deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(260px, -640px) rotate(11deg) scale(0.84);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-fly-5 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(-3px, 4px) rotate(3deg);
+  }
+  15% {
+    transform: translate(62px, -66px) rotate(20deg);
+  }
+  44% {
+    transform: translate(212px, -184px) rotate(8deg);
+  }
+  74% {
+    transform: translate(340px, -300px) rotate(14deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(420px, -380px) rotate(9deg) scale(0.88);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-fly-6 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  6% {
+    transform: translate(2px, 6px) rotate(5deg);
+  }
+  14% {
+    /* dips off the branch before climbing — the laggard of the flock */
+    transform: translate(-34px, 12px) rotate(10deg);
+  }
+  34% {
+    transform: translate(-138px, -186px) rotate(-16deg);
+  }
+  68% {
+    transform: translate(-256px, -498px) rotate(-9deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-320px, -760px) rotate(-13deg) scale(0.84);
+    opacity: 0;
+  }
+}
+
+@keyframes cta-fly-7 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  5% {
+    transform: translate(2px, 5px) rotate(-3deg);
+  }
+  16% {
+    transform: translate(28px, -104px) rotate(18deg);
+  }
+  44% {
+    transform: translate(104px, -308px) rotate(8deg);
+  }
+  73% {
+    transform: translate(158px, -522px) rotate(14deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(180px, -700px) rotate(9deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The flock simply stays at rest on the tree. */
+  .is-flying .cta-bird,
+  .is-flying .cta-bird__wing {
+    animation: none;
+  }
+
+  .is-flying .cta-bird__perched {
+    opacity: 1;
+    transition: none;
+  }
+
+  .is-flying .cta-bird__flying {
+    opacity: 0;
+    transition: none;
+  }
+}

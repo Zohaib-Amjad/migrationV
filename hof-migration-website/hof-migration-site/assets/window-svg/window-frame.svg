@@ -1,0 +1,35 @@
+<svg viewBox="0 0 900 1232" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wf-rim" x1="0.22" y1="0" x2="0.78" y2="1">
+      <stop offset="0" stop-color="#e8ecef" />
+      <stop offset="0.5" stop-color="#c4cbd2" />
+      <stop offset="1" stop-color="#dde2e7" />
+    </linearGradient>
+    <linearGradient id="wf-face" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#ffffff" />
+      <stop offset="0.38" stop-color="#f4f6f8" />
+      <stop offset="0.78" stop-color="#e6eaee" />
+      <stop offset="1" stop-color="#d9dfe4" />
+    </linearGradient>
+    <linearGradient id="wf-inner" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#cfd5db" />
+      <stop offset="0.5" stop-color="#eef1f4" />
+      <stop offset="1" stop-color="#ffffff" />
+    </linearGradient>
+    <linearGradient id="wf-seal" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#9ea6ae" />
+      <stop offset="1" stop-color="#c3cad1" />
+    </linearGradient>
+  </defs>
+
+  <!-- A rounded rectangle rather than an oval, with a thin frame band: the
+       glass is 76% of the width, so the border reads as a sleek lip instead
+       of the heavy bezel the previous version had. -->
+  <rect x="0" y="0" width="900" height="1232" rx="250" ry="250" fill="url(#wf-rim)" />
+  <rect x="7" y="7" width="886" height="1218" rx="243" ry="243" fill="url(#wf-face)" />
+  <!-- the recessed step that catches light just inside the frame face -->
+  <rect x="86" y="86" width="728" height="1060" rx="164" ry="164" fill="url(#wf-inner)" />
+  <rect x="99" y="99" width="702" height="1034" rx="151" ry="151" fill="url(#wf-seal)" />
+  <!-- the glass itself: only seen if a destination image fails to load -->
+  <rect x="108" y="108" width="684" height="1016" rx="142" ry="142" fill="#0b2530" />
+</svg>

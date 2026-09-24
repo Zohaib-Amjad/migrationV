@@ -1,0 +1,156 @@
+/* ==========================================================================
+   HOF Migration — FAQ section
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+.faq {
+  background: #f6f7f9;
+  padding: clamp(32px, 4.5vw, 64px) clamp(20px, 6.82vw, 131px);
+}
+
+.faq__grid {
+  max-width: 1920px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 480px) 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Left column
+   -------------------------------------------------------------------------- */
+
+.faq__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(32px, 3.4vw, 56px);
+  line-height: 1.15;
+  color: #14161a;
+}
+
+.faq__card {
+  margin-top: clamp(40px, 6vw, 96px);
+  background: #fff;
+  border-radius: 20px;
+  padding: clamp(24px, 2.5vw, 32px);
+  max-width: 420px;
+}
+
+.faq__card-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 22px;
+  color: #14161a;
+  margin-bottom: 10px;
+}
+
+.faq__card-text {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: #6b6f76;
+  margin-bottom: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   Right column — accordion
+   -------------------------------------------------------------------------- */
+
+.faq__list {
+  border-top: 1px solid #e3e4e7;
+}
+
+.faq-item {
+  border-bottom: 1px solid #e3e4e7;
+}
+
+.faq-item__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 0;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(17px, 1.4vw, 22px);
+  color: #14161a;
+}
+
+.faq-item__icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #14161a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 200ms ease;
+}
+
+.faq-item__icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.faq-item__icon .faq-item__minus {
+  display: none;
+}
+
+.faq-item[data-open='true'] .faq-item__icon {
+  background: #e2e0fb;
+}
+
+.faq-item[data-open='true'] .faq-item__icon .faq-item__plus {
+  display: none;
+}
+
+.faq-item[data-open='true'] .faq-item__icon .faq-item__minus {
+  display: block;
+}
+
+.faq-item__panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms ease;
+}
+
+.faq-item[data-open='true'] .faq-item__panel {
+  grid-template-rows: 1fr;
+}
+
+.faq-item__panel-inner {
+  overflow: hidden;
+}
+
+.faq-item__answer {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #6b6f76;
+  padding-bottom: 26px;
+  padding-right: 56px;
+  max-width: 760px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-item__panel {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .faq__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .faq__card {
+    max-width: none;
+  }
+}

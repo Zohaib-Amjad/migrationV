@@ -1,0 +1,276 @@
+/* ==========================================================================
+   HOF Migration — Footer
+   Fonts: Plus Jakarta Sans throughout (footer reference uses sans, not serif)
+   ========================================================================== */
+
+.footer {
+  background: #14161a;
+  padding: clamp(32px, 4.5vw, 56px) clamp(20px, 6.82vw, 131px) clamp(20px, 3vw, 32px);
+}
+
+.footer__top {
+  max-width: 1920px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  padding-bottom: clamp(28px, 4vw, 48px);
+}
+
+.footer__heading {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+/* Newsletter */
+
+.footer__newsletter-form {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 9999px;
+  padding: 6px;
+  gap: 8px;
+  max-width: 440px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.footer__newsletter-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: #14161a;
+  padding: 10px 16px;
+}
+
+.footer__newsletter-input::placeholder {
+  color: #9a9a9a;
+}
+
+.footer__subscribe {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #14161a;
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  padding: 12px 10px 12px 22px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 150ms ease;
+}
+
+.footer__subscribe:hover {
+  opacity: 0.85;
+}
+
+.footer__subscribe-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.footer__subscribe-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.footer__newsletter-tagline {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 14px;
+}
+
+/* Link columns */
+
+.footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__links a {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 150ms ease;
+}
+
+.footer__links a:hover {
+  color: #fff;
+}
+
+/* Contact info row */
+
+.footer__info {
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+  padding: clamp(20px, 3vw, 28px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer__info-label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer__info-value {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+}
+
+/* Bottom dark bar */
+
+.footer__bottom {
+  max-width: 1920px;
+  margin: 0 auto;
+  /* A touch lighter than the now-dark .footer background so this panel
+     still reads as its own distinct card, same as it did against the
+     previous light gray. */
+  background: #1c1f26;
+  border-radius: 20px;
+  padding: clamp(18px, 2.5vw, 28px) clamp(20px, 3vw, 36px);
+}
+
+.footer__bottom-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 18px;
+}
+
+.footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The full lockup, drawn white rather than the mark flipped with a filter —
+   the wordmark needs real white artwork, not an inverted black one. Set
+   larger than the mark it replaces so it carries the bottom bar. */
+.footer__brand-logo {
+  display: block;
+  height: clamp(40px, 3.6vw, 52px);
+  width: auto;
+}
+
+.footer__legal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.footer__legal a {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.footer__legal a:hover {
+  color: #fff;
+}
+
+.footer__legal span {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+.footer__bottom-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.footer__bottom-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-top: 18px;
+}
+
+.footer__social {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.footer__social a {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.footer__social a:hover {
+  color: #fff;
+}
+
+.footer__copy {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__top > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer__top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__top > :first-child {
+    grid-column: auto;
+  }
+
+  .footer__info {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,277 @@
+/* ==========================================================================
+   HOF Migration — Reviews section
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+.reviews {
+  /* the hairline between cards, as a token: the divider sits on whichever
+     side is the row's trailing edge, so RTL re-declares the border on the
+     other side and dark mode re-colours it — both need the same value */
+  --review-divider: #ececec;
+  background: #fff;
+  padding: clamp(40px, 4vw, 64px) var(--container-pad, clamp(20px, 6.82vw, 131px));
+}
+
+.reviews__header {
+  max-width: var(--content-inner-max-w, 1658px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(20px, 2.5vw, 32px);
+}
+
+.reviews__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(24px, 2.1vw, 36px);
+  line-height: 1.25;
+  color: #171a1e;
+  text-wrap: balance;
+}
+
+.reviews__view-all {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.25vw, 20px);
+  color: #171a1e;
+  text-decoration: underline;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.reviews__divider {
+  display: none;
+}
+
+.reviews__row {
+  position: relative;
+  max-width: var(--content-inner-max-w, 1658px);
+  margin: 0 auto;
+}
+
+.reviews__row--fallback-hidden {
+  display: none;
+}
+
+.reviews__trustindex {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.reviews__trustindex .ti-widget,
+.reviews__trustindex .ti-widget-container {
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+.reviews__trustindex .ti-widget-header {
+  display: none !important;
+}
+
+.reviews__track {
+  display: flex;
+  overflow-x: auto;
+  /* No scroll-snap here: it fights the arrow buttons' programmatic smooth
+     scrollBy() in some browsers (the snap point pulls the animation back
+     before it finishes), so the step is just the precise card+gap width
+     instead — see reviews-carousel.js. */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.reviews__track::-webkit-scrollbar {
+  display: none;
+}
+
+.review-card {
+  flex: 1 0 calc(33.333% - 32px);
+  min-width: 260px;
+  padding: 28px 32px 28px 0;
+  margin-right: 32px;
+  border-right: 1px solid var(--review-divider);
+}
+
+.review-card:last-child {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.review-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.review-card__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.review-card__who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.review-card__name {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 16px;
+  color: #171a1e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.review-card__date {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+.review-card__badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.review-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.review-card__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.review-card__stars svg {
+  width: 16px;
+  height: 16px;
+}
+
+.review-card__verified {
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+}
+
+.review-card__text {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: #2b2b2b;
+  margin-bottom: 10px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-card__more {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
+.review-card__more:hover {
+  color: #171a1e;
+}
+
+/* --------------------------------------------------------------------------
+   Nav arrows
+   -------------------------------------------------------------------------- */
+
+.reviews__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              background 180ms ease,
+              border-color 180ms ease,
+              color 180ms ease,
+              box-shadow 180ms ease;
+  z-index: 3;
+}
+
+.reviews__arrow:hover {
+  background: color-mix(in srgb, var(--page-theme-accent, #0f764f) 8%, #ffffff);
+  border-color: color-mix(in srgb, var(--page-theme-accent, #0f764f) 45%, transparent);
+  transform: translateY(calc(-50% - 2.5px)) scale(1.06);
+  box-shadow: 0 8px 22px -4px var(--page-theme-glow, rgba(15, 118, 79, 0.25)), 0 3px 8px rgba(0, 0, 0, 0.08);
+  color: var(--page-theme-accent, #0f764f);
+}
+
+.reviews__arrow:active {
+  transform: translateY(-50%) scale(0.92);
+  background: color-mix(in srgb, var(--page-theme-accent, #0f764f) 18%, #ffffff);
+  border-color: color-mix(in srgb, var(--page-theme-accent, #0f764f) 60%, transparent);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  transition-duration: 70ms;
+}
+
+.reviews__arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.reviews__arrow--prev {
+  left: -22px;
+}
+
+.reviews__arrow--next {
+  right: -22px;
+}
+
+@media (max-width: 900px) {
+  .reviews {
+    padding-inline: var(--container-pad, 16px);
+  }
+
+  .reviews__arrow {
+    display: none;
+  }
+
+  .review-card {
+    flex: 1 0 80%;
+  }
+
+  .reviews__arrow--prev {
+    left: 0;
+  }
+
+  .reviews__arrow--next {
+    right: 0;
+  }
+}

@@ -1,0 +1,517 @@
+/* ==========================================================================
+   HOF Migration — Hero Concept: Airplane Window
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+:root {
+  --ink: #1b232e;
+  --charcoal: #141a1a;
+  --charcoal-2: #1c2323;
+  --panel: #eeeeee;
+  --cream: #eeeeee;
+
+  --radius-pill: 12px;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--charcoal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.hero-v2 {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(60% 55% at 82% 46%, rgba(255, 255, 255, 0.05), transparent 70%),
+    var(--charcoal);
+}
+
+.hero-v2__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1920px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vw, 80px);
+  padding: clamp(20px, 4.74vw, 91px) clamp(20px, 9.48vw, 182px) clamp(32px, 4.74vw, 91px)
+    clamp(20px, 6.82vw, 131px);
+}
+
+/* --------------------------------------------------------------------------
+   Nav (reused pattern — solid white variant)
+   -------------------------------------------------------------------------- */
+
+.nav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  height: clamp(64px, 4.17vw, 80px);
+  padding: 0 20px 0 clamp(20px, 1.88vw, 36px);
+  background: #fff;
+  border-radius: var(--radius-pill);
+}
+
+.nav__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 3.33vw, 64px);
+  flex-wrap: wrap;
+}
+
+.nav__group--right {
+  gap: clamp(12px, 1.25vw, 24px);
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav__logo-mark {
+  width: 21px;
+  height: 22px;
+}
+
+.nav__logo span {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+  color: #7c7c7c;
+  white-space: nowrap;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.08vw, 40px);
+}
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14.4px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.nav__chevron {
+  width: 10px;
+  height: 10px;
+}
+
+.nav__lang {
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.nav__divider {
+  width: 2px;
+  height: 20px;
+  background: #9ca3af;
+}
+
+.nav__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.nav__icon-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 26px;
+  border-radius: var(--radius-pill);
+  font-size: 16.9px;
+  font-weight: 500;
+  letter-spacing: 0.18px;
+  color: #000;
+  white-space: nowrap;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--panel {
+  background: var(--panel);
+}
+
+.btn--white {
+  background: #fff;
+}
+
+.btn__icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Content row: copy + airplane window
+   -------------------------------------------------------------------------- */
+
+.hero-v2__row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(32px, 5vw, 96px);
+  flex-wrap: wrap;
+}
+
+.hero-v2__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  max-width: 780px;
+  flex: 1 1 480px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 9px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap;
+}
+
+.badge__icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.badge__text {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14.2px;
+  letter-spacing: 0.2px;
+  color: #000;
+  white-space: nowrap;
+}
+
+.badge__logos {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge__logo {
+  height: 21px;
+  width: auto;
+  object-fit: contain;
+}
+
+.hero-v2__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-v2__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 2.75vw, 48px);
+  line-height: 1.25;
+  color: #fff;
+  text-wrap: balance;
+}
+
+@media (max-width: 1080px) {
+  .hero-v2__title {
+    font-size: clamp(30px, 5vw, 48px);
+  }
+}
+
+.hero-v2__subtitle {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(17px, 1.55vw, 24px);
+  line-height: 1.45;
+  color: var(--cream);
+}
+
+/* --------------------------------------------------------------------------
+   Airplane window
+   -------------------------------------------------------------------------- */
+
+.window {
+  position: relative;
+  width: 100%;
+  max-width: 564px;
+  aspect-ratio: 564 / 731;
+  flex-shrink: 0;
+}
+
+/* outer plastic bezel */
+.window__bezel {
+  position: absolute;
+  inset: 0;
+  border-radius: 44% / 34%;
+  background: linear-gradient(152deg, #eef0f2 0%, #cdd1d5 20%, #999ea3 52%, #74787d 76%, #55585c 100%);
+  box-shadow: 0 40px 70px -24px rgba(0, 0, 0, 0.6), 0 14px 30px -12px rgba(0, 0, 0, 0.45),
+    inset 0 2px 3px rgba(255, 255, 255, 0.55), inset 0 -8px 14px rgba(0, 0, 0, 0.35);
+}
+
+/* engraved groove ring for depth */
+.window__groove {
+  position: absolute;
+  inset: 7%;
+  border-radius: 42% / 32%;
+  box-shadow: inset 0 0 0 2px rgba(20, 22, 24, 0.4), inset 0 3px 5px rgba(0, 0, 0, 0.28),
+    inset 0 -2px 3px rgba(255, 255, 255, 0.3);
+}
+
+/* glass viewport — carousel renders inside here */
+.window__glass {
+  position: absolute;
+  inset: 13%;
+  border-radius: 38% / 28%;
+  overflow: hidden;
+  background: #0b2530;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.3), inset 0 0 30px 8px rgba(0, 0, 0, 0.5);
+}
+
+.window__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+  background-size: cover;
+  background-position: center;
+}
+
+.window__slide.is-active {
+  opacity: 1;
+}
+
+.window__slide--sunset {
+  background: linear-gradient(
+    180deg,
+    #2b3d6b 0%,
+    #7c5a8c 28%,
+    #d97a63 55%,
+    #f3a65a 72%,
+    #fbd394 100%
+  );
+}
+
+.window__slide--night {
+  background: radial-gradient(1.2px 1.2px at 20% 22%, #fff 100%, transparent 100%) 0 0/48px 48px,
+    radial-gradient(1px 1px at 65% 15%, #fff 100%, transparent 100%) 0 0/64px 64px,
+    radial-gradient(1.4px 1.4px at 40% 55%, #fff 100%, transparent 100%) 0 0/56px 56px,
+    radial-gradient(1px 1px at 80% 65%, #fff 100%, transparent 100%) 0 0/40px 40px,
+    linear-gradient(180deg, #050914 0%, #0b1730 45%, #16264a 100%);
+}
+
+/* soft diagonal reflection across the glass */
+.window__reflection {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0) 26%,
+    rgba(255, 255, 255, 0) 68%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  mix-blend-mode: screen;
+}
+
+/* pull-down shade covering the lower portion of the glass */
+.window__shade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 34%;
+  z-index: 2;
+  background: linear-gradient(180deg, #23262a 0%, #121416 55%, #08090a 100%);
+}
+
+.window__shade::before {
+  content: '';
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  top: -26%;
+  height: 46%;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.window__shade::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 30%;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* latch / handle nub at the base of the window */
+.window__handle {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5%;
+  width: 7%;
+  height: 3.4%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, #3a3d40, #17181a);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .hero-v2__row {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: left;
+    padding-bottom: 40px;
+  }
+
+  .hero-v2__content {
+    align-items: flex-start;
+  }
+
+  .window {
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav {
+    height: auto;
+    padding: 14px 16px;
+    border-radius: 20px;
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .nav__group--right {
+    gap: 10px;
+  }
+
+  .nav__lang,
+  .nav__divider,
+  .nav__icon-btn {
+    display: none;
+  }
+
+  .btn--panel {
+    padding: 0 18px;
+    font-size: 14px;
+    height: 44px;
+  }
+
+  .btn--panel .btn__icon {
+    display: none;
+  }
+
+  .window {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-v2__inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .window {
+    max-width: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window__slide {
+    transition: none;
+  }
+}

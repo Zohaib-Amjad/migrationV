@@ -1,0 +1,253 @@
+/* ==========================================================================
+   HOF Migration — inner page shell
+
+   Everything the pages beyond Home share: the band the nav sits in, the
+   breadcrumb, the page heading, and the content container the sections
+   measure against. The Home page keeps its own hero; this is the quieter
+   equivalent for a page whose first job is to say where you are.
+
+   Written with logical properties throughout so the Arabic direction switch
+   mirrors these pages without a second set of rules.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Band + container
+   -------------------------------------------------------------------------- */
+
+.page-band {
+  background: var(--bg-gradient);
+}
+
+.page-band__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 2.6vw, 48px);
+  /* the hero's rhythm, with the deep bottom inset taken back — there is no
+     artwork below the heading here to make room for */
+  padding: clamp(20px, 4.74vw, 91px) clamp(20px, 9.48vw, 182px) clamp(44px, 5vw, 92px)
+    clamp(20px, 6.82vw, 131px);
+}
+
+/* the measure every section below the band lines up against */
+.wrap {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 6.82vw, 131px);
+}
+
+.section-block {
+  padding-block: clamp(56px, 6vw, 112px);
+}
+
+.section-block--tight {
+  padding-block: clamp(36px, 4vw, 72px);
+}
+
+/* --------------------------------------------------------------------------
+   Breadcrumb
+   -------------------------------------------------------------------------- */
+
+.crumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: #5b6b66;
+}
+
+.crumbs a {
+  color: #5b6b66;
+  transition: color 160ms ease;
+}
+
+.crumbs a:hover {
+  color: var(--brand-ink);
+}
+
+.crumbs__sep {
+  opacity: 0.5;
+  /* the glyph is directional; let the browser flip it with the text */
+  display: inline-block;
+}
+
+.crumbs [aria-current='page'] {
+  color: var(--brand-ink);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Page heading
+   -------------------------------------------------------------------------- */
+
+.page-head {
+  display: grid;
+  gap: clamp(14px, 1.4vw, 22px);
+  max-width: 62ch;
+}
+
+.page-head__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-ink);
+}
+
+.page-head__eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.page-head__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(38px, 5vw, 78px);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
+}
+
+.page-head__lede {
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.65;
+  color: var(--sub);
+  max-width: 58ch;
+}
+
+.page-head__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block-start: 4px;
+}
+
+.page-head__chip {
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(46, 86, 77, 0.12);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Section headings inside the page body
+   -------------------------------------------------------------------------- */
+
+.block-head {
+  display: grid;
+  gap: 12px;
+  max-width: 60ch;
+  margin-block-end: clamp(28px, 3vw, 52px);
+}
+
+.block-head__num {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.block-head__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(28px, 3.1vw, 50px);
+  line-height: 1.14;
+  letter-spacing: -0.01em;
+}
+
+.block-head__note {
+  font-size: clamp(14px, 1vw, 17px);
+  line-height: 1.65;
+  color: var(--sub);
+}
+
+/* --------------------------------------------------------------------------
+   Facts panel — a short list of labelled values beside a long read. Used by
+   the story pages and the team profiles.
+   -------------------------------------------------------------------------- */
+
+.facts {
+  position: sticky;
+  inset-block-start: 28px;
+  display: grid;
+  gap: 4px;
+  padding: clamp(22px, 2.2vw, 32px);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(16, 32, 28, 0.05), 0 18px 44px rgba(16, 32, 28, 0.07);
+}
+
+.facts__title {
+  margin-block-end: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand);
+}
+
+.facts__row {
+  display: grid;
+  gap: 2px;
+  padding-block: 12px;
+  border-block-end: 1px solid #edf2f0;
+}
+
+.facts__row:last-child {
+  border-block-end: none;
+  padding-block-end: 0;
+}
+
+.facts__row dt {
+  font-size: 12px;
+  color: #8b9793;
+}
+
+.facts__row dd {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1b232e;
+}
+
+@media (max-width: 1000px) {
+  .facts {
+    position: static;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reveal on scroll — the same cue the brand page uses, applied to the
+   sections these pages are built from. Handled in page.js.
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  transition: opacity 620ms cubic-bezier(0.2, 0, 0.1, 1),
+    transform 620ms cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>HOF Migration — Brand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+<!-- The site's own stylesheets, for the two components this page puts on
+     display: the certification chip and the language tiles. Showing the
+     shipping component rather than a copy keeps the sheet honest. -->
+<link rel="stylesheet" href="styles-hero-full.css" />
+<link rel="stylesheet" href="feedback.css" />
+<link rel="stylesheet" href="branding.css" />
+</head>
+<body>
+
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+  <span class="theme-toggle__dot" aria-hidden="true"></span>
+  <span data-theme-label>Dark</span>
+</button>
+
+<header class="masthead">
+  <span class="masthead__ghost" aria-hidden="true">الهجرة</span>
+  <div class="brand-wrap masthead__inner">
+    <p class="masthead__eyebrow">Brand System — 2026</p>
+    <img class="masthead__logo" data-logo-mast src="assets/icons-v2/logo-brand.svg" alt="HOF Migration" />
+    <h1 class="masthead__title">A quiet green, <em>set in serif</em>, in four scripts.</h1>
+    <p class="masthead__lede">
+      The identity runs on one colour, three typefaces and a small set of made objects — a
+      brushed certification plaque, four tiles, and a line that changes language. This page
+      is the reference for all of it, in both the light and the dark treatment.
+    </p>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="brand-wrap">
+      <div class="section__head">
+        <span class="section__num">01</span>
+        <h2 class="section__title">Colour</h2>
+        <p class="section__note">One hue — 166° — held across the whole scale. Click any swatch to copy it.</p>
+      </div>
+
+      <div class="colour-hero">
+        <button class="colour-hero__primary" data-hex="#8daba4">
+          <h3>Primary</h3>
+          <div>
+            <p style="font-size:clamp(28px,3vw,44px);font-family:var(--font-serif)">#8DABA4</p>
+            <div class="colour-hero__meta">
+              <span>hsl(166, 15%, 61%)</span>
+              <span>rgb(141, 171, 164)</span>
+            </div>
+          </div>
+        </button>
+        <div class="colour-hero__gradients">
+          <div class="gradient-card gradient-card--light">Hero · light — #F1F8F6 → #E0EFEB</div>
+          <div class="gradient-card gradient-card--dark">Hero · dark — #0B1311 → #040B0A</div>
+        </div>
+      </div>
+
+      <div class="ramp">
+        <button class="swatch" style="background:#f1f8f7;color:#20322e" data-hex="#f1f8f7">
+          <b>50</b><span>#f1f8f7</span><span>Hero opens here</span>
+        </button>
+        <button class="swatch" style="background:#e1efec;color:#20322e" data-hex="#e1efec">
+          <b>100</b><span>#e1efec</span>
+        </button>
+        <button class="swatch" style="background:#cbe2dc;color:#20322e" data-hex="#cbe2dc">
+          <b>200</b><span>#cbe2dc</span>
+        </button>
+        <button class="swatch" style="background:#abc9c2;color:#20322e" data-hex="#abc9c2">
+          <b>300</b><span>#abc9c2</span>
+        </button>
+        <button class="swatch" style="background:#8daba4;color:#10201c" data-hex="#8daba4">
+          <b>400</b><span>#8daba4</span><span>Primary</span>
+        </button>
+        <button class="swatch" style="background:#66998d;color:#ffffff" data-hex="#66998d">
+          <b>500</b><span>#66998d</span>
+        </button>
+        <button class="swatch" style="background:#518579;color:#ffffff" data-hex="#518579">
+          <b>600</b><span>#518579</span>
+        </button>
+        <button class="swatch" style="background:#406d63;color:#ffffff" data-hex="#406d63">
+          <b>700</b><span>#406d63</span>
+        </button>
+        <button class="swatch" style="background:#2e564d;color:#ffffff" data-hex="#2e564d">
+          <b>800</b><span>#2e564d</span><span>Chip ink</span>
+        </button>
+        <button class="swatch" style="background:#20322e;color:#cbe2dc" data-hex="#20322e">
+          <b>900</b><span>#20322e</span>
+        </button>
+        <button class="swatch" style="background:#0b1311;color:#abc9c2" data-hex="#0b1311">
+          <b>950</b><span>#0b1311</span><span>Dark hero</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="brand-wrap">
+      <div class="section__head">
+        <span class="section__num">02</span>
+        <h2 class="section__title">Typography</h2>
+        <p class="section__note">A serif for voice, a grotesque for everything that has to be read, and an Arabic face that carries both jobs.</p>
+      </div>
+
+      <div class="specimens">
+        <article class="specimen">
+          <div class="specimen__glyph is-serif">Aa</div>
+          <div>
+            <h3 class="specimen__name is-serif">Instrument Serif</h3>
+            <p class="specimen__role">Display · Regular &amp; Italic</p>
+            <p class="specimen__line is-serif">Your right migration starts with the <em>right guidance</em></p>
+            <p class="specimen__scale">Headlines and pull quotes only. Set at 40px and up, tracking −0.02em. Never below 28px — the thin joins close up.</p>
+          </div>
+        </article>
+
+        <article class="specimen">
+          <div class="specimen__glyph is-sans">Aa</div>
+          <div>
+            <h3 class="specimen__name is-serif">Plus Jakarta Sans</h3>
+            <p class="specimen__role">Text · 300 – 700</p>
+            <p class="specimen__line is-sans">Book a free consultation — no commitment required</p>
+            <p class="specimen__scale">Body, labels, navigation and every control. 400 for running text, 500 for buttons and labels, 600–700 for headings inside cards.</p>
+          </div>
+        </article>
+
+        <article class="specimen">
+          <div class="specimen__glyph is-arabic" dir="rtl">أب</div>
+          <div>
+            <h3 class="specimen__name is-serif">Noto Sans Arabic</h3>
+            <p class="specimen__role">Arabic · 400 – 700</p>
+            <p class="specimen__line is-arabic" dir="rtl">هجرتك الصحيحة تبدأ بالإرشاد الصحيح</p>
+            <p class="specimen__scale">Carries display and text both — the serif has no Arabic glyphs. Line height runs 1.45–1.5, looser than the Latin setting, to clear the ascenders and descenders.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="brand-wrap">
+      <div class="section__head">
+        <span class="section__num">03</span>
+        <h2 class="section__title">Logo</h2>
+        <p class="section__note">One lockup per language. The dark variants are drawn white — not the light one inverted.</p>
+      </div>
+
+      <div class="logo-grid">
+        <div class="logo-tile logo-tile--light">
+          <span class="logo-tile__tag">English · Light</span>
+          <img src="assets/icons-v2/logo-brand.svg" alt="HOF Migration, English lockup on light" />
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <span class="logo-tile__tag">English · Dark</span>
+          <img src="assets/icons-v2/logo-brand-white.svg" alt="HOF Migration, English lockup on dark" />
+        </div>
+        <div class="logo-tile logo-tile--light">
+          <span class="logo-tile__tag">Arabic · Light</span>
+          <img src="assets/icons-v2/logo-brand.svg" alt="HOF Migration, Arabic lockup on light" />
+        </div>
+        <div class="logo-tile logo-tile--dark">
+          <span class="logo-tile__tag">Arabic · Dark</span>
+          <img src="assets/icons-v2/logo-brand-white.svg" alt="HOF Migration, Arabic lockup on dark" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="brand-wrap">
+      <div class="section__head">
+        <span class="section__num">04</span>
+        <h2 class="section__title">Certification</h2>
+        <p class="section__note">Brushed plaques, built in CSS. A single specular band crosses each one on a seven-second loop.</p>
+      </div>
+
+      <div class="cert-stage">
+        <span class="cert-chip">
+          <span class="cert-chip__face">
+            <img src="assets/icons-v2/partner-logo-1-mark.png" alt="MARA" class="cert-chip__mark" />
+          </span>
+        </span>
+        <span class="cert-chip cert-chip--offset">
+          <span class="cert-chip__face">
+            <img src="assets/icons-v2/partner-logo-2-mark.png" alt="ICCRC" class="cert-chip__mark" />
+          </span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="brand-wrap">
+      <div class="section__head">
+        <span class="section__num">05</span>
+        <h2 class="section__title">Language &amp; motion</h2>
+        <p class="section__note">The line types itself through the set, two seconds a language. Hover the tiles.</p>
+      </div>
+
+      <div class="motion-stage">
+        <div class="feedback__artwork" data-feedback-languages>
+          <p class="feedback__line">
+            <span class="feedback__typed" lang="en">we care about you</span><span class="feedback__caret" aria-hidden="true"></span>
+          </p>
+          <span class="feedback__sources" hidden data-feedback-sources>
+            <span lang="en">we care about you</span>
+            <span lang="ar" dir="rtl">نحن نهتم بك</span>
+            <span lang="ur" dir="rtl">ہمیں آپ کی فکر ہے</span>
+            <span lang="hi">हमें आपकी फ़िक्र है</span>
+          </span>
+          <div class="feedback__tiles" aria-hidden="true">
+            <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+            <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+            <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+            <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+          </div>
+        </div>
+
+        <div class="arabic-row">
+        <span>الهجرة<small>Migration</small></span>
+        <span>نهتم<small>We care</small></span>
+        <span>ثقة<small>Trust</small></span>
+        <span>وجهة<small>Destination</small></span>
+        <span>إرشاد<small>Guidance</small></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="brand-foot">
+  <div class="brand-wrap" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;width:100%">
+    <span>HOF Migration · Brand reference</span>
+    <span>Standalone page — not linked from the site</span>
+  </div>
+</footer>
+
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+
+<script src="feedback-languages.js"></script>
+<script src="branding.js"></script>
+</body>
+</html>

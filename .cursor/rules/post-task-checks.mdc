@@ -1,0 +1,14 @@
+---
+description: After every coding task, run ESLint and production build before finishing
+alwaysApply: true
+---
+
+# Post-task verification (required)
+
+Whenever a coding task is finished (feature, fix, refactor, or multi-file change), do **not** stop until this checklist is done:
+
+1. **ESLint** — run `pnpm lint` and fix any errors introduced by the change.
+2. **Build** — run `pnpm run build` and fix any failures until it succeeds.
+3. **AGENTS.md** — if the change alters architecture, routes, CMS wiring, or major conventions, update `AGENTS.md` so it stays accurate.
+
+Skip only when the user explicitly says not to run checks, or the task was purely informational (no code edits).

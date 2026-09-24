@@ -1,0 +1,98 @@
+/* ==========================================================================
+   HOF Migration — Callback / inquiry form
+
+   The form's fields only. It lives inside the glass card on the left of the
+   "Work with Experts" section — that card's size, placement and frosting are
+   handled in cta-banner.css. Everything here is therefore styled for a dark,
+   translucent surface rather than a white one.
+   Fonts: Plus Jakarta Sans
+   ========================================================================== */
+
+.callback-form__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.callback-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.callback-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.callback-form__field label {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.callback-form__field input,
+.callback-form__field select {
+  height: 52px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill, 12px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.07);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: #fff;
+  outline: none;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.callback-form__field input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.callback-form__field input:focus,
+.callback-form__field select:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.callback-form__field select {
+  appearance: none;
+  -webkit-appearance: none;
+  /* Inline down-chevron — assets/icons-v2/chevron-down.svg is actually a
+     right-pointing arrow (used for the nav dropdown), not a match here. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='%23ffffff' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 12px;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.callback-form__field select:invalid {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* The native dropdown list is drawn by the OS, not on the glass — it needs
+   its own light-on-dark-proof colours or it renders white text on white. */
+.callback-form__field option {
+  color: #14161a;
+  background: #fff;
+}
+
+.callback-form__submit {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .callback-form__row {
+    grid-template-columns: 1fr;
+  }
+
+  .callback-form__submit {
+    align-self: stretch;
+    justify-content: center;
+  }
+}

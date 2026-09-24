@@ -1,0 +1,206 @@
+/* ==========================================================================
+   HOF Migration — Arabic / RTL
+
+   Two jobs: put the whole site in Noto Sans Arabic, and mirror the handful of
+   components that are positioned physically rather than logically. Flex and
+   grid rows mirror by themselves under dir="rtl" — everything listed here is
+   somewhere a `left`, `right`, `padding-left` or a translate was hard-coded.
+
+   Loaded last so it can override the section stylesheets and dark-mode.css.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Typeface
+
+   Playfair Display has no Arabic glyphs, so the serif token has to change too
+   — otherwise the headings would silently fall back to a system Arabic face
+   and lose the site's voice. Swapping both tokens re-points every rule that
+   uses them, which is most of the site.
+   -------------------------------------------------------------------------- */
+
+html[lang='ar'] {
+  --font-serif: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
+  --font-sans: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
+}
+
+html[lang='ar'] body {
+  font-family: var(--font-sans);
+}
+
+/* Arabic has no uppercase; the transform just tracks the letters apart */
+html[lang='ar'] .footer__info-label,
+html[lang='ar'] .stories__eyebrow {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* Arabic ascenders/descenders need a little more room than the Latin setting */
+html[lang='ar'] .hero__title,
+html[lang='ar'] .experience__heading,
+html[lang='ar'] .services__title,
+html[lang='ar'] .expert-cta__title,
+html[lang='ar'] .faq__title,
+html[lang='ar'] .service-card__title {
+  line-height: 1.45;
+}
+
+/* the message on the window shade is SVG text with its own family */
+html[lang='ar'] .pw-lip-label,
+html[lang='ar'] .pw-message__text {
+  font-family: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* the language control keeps the Latin face while it reads "English" */
+html[lang='ar'] .nav__lang {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Nav — the wider inset belongs on the logo side
+   -------------------------------------------------------------------------- */
+
+html[dir='rtl'] .nav {
+  padding: 14px clamp(20px, 1.88vw, 36px) 14px 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Service cards
+
+   The card pads on one side only and drops its photo at a fixed offset so it
+   bleeds off the opposite edge — both are physical, so both flip.
+   -------------------------------------------------------------------------- */
+
+html[dir='rtl'] .service-card {
+  padding-left: 0;
+  padding-right: calc(var(--card-w, 1079px) * 0.0593);
+}
+
+html[dir='rtl'] .service-card__image {
+  left: auto;
+  right: calc(var(--card-w, 1079px) * 0.6209);
+}
+
+@media (max-width: 900px) {
+  html[dir='rtl'] .service-card {
+    padding: 28px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reviews — dividers sit between cards, so they move to the other edge
+   -------------------------------------------------------------------------- */
+
+html[dir='rtl'] .review-card {
+  border-right: none;
+  /* the fallback matters: an undefined custom property invalidates the whole
+     shorthand at computed-value time, which would drop the divider entirely
+     rather than just mis-colour it */
+  border-left: 1px solid var(--review-divider, #ececec);
+  margin-right: 0;
+  margin-left: 32px;
+  padding: 28px 0 28px 32px;
+}
+
+html[dir='rtl'] .review-card:last-child {
+  border-left: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+html[dir='rtl'] .review-card__badge {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+html[dir='rtl'] .reviews__arrow--prev {
+  left: auto;
+  right: -22px;
+}
+
+html[dir='rtl'] .reviews__arrow--next {
+  right: auto;
+  left: -22px;
+}
+
+/* the chevrons point the other way round */
+html[dir='rtl'] .reviews__arrow svg {
+  transform: scaleX(-1);
+}
+
+@media (max-width: 900px) {
+  html[dir='rtl'] .reviews__arrow--prev {
+    right: 0;
+  }
+  html[dir='rtl'] .reviews__arrow--next {
+    left: 0;
+  }
+}
+
+html[dir='rtl'] .review-card__name {
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   FAQ
+   -------------------------------------------------------------------------- */
+
+html[dir='rtl'] .faq-item__answer {
+  padding-right: 0;
+  padding-left: 56px;
+}
+
+/* --------------------------------------------------------------------------
+   Work with Experts — the tree moves to the other side of the card, and the
+   scene is flipped so the canopy still leans away from the copy
+   -------------------------------------------------------------------------- */
+
+html[dir='rtl'] .expert-cta__scene {
+  right: auto;
+  left: 0;
+  transform: scaleX(-1);
+}
+
+@media (max-width: 1080px) {
+  html[dir='rtl'] .expert-cta__scene {
+    left: -16%;
+  }
+}
+
+@media (max-width: 760px) {
+  html[dir='rtl'] .expert-cta__scene {
+    left: -8%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Callback form — the select's chevron is a background image
+   -------------------------------------------------------------------------- */
+
+/* the tel field keeps its left-to-right run so a typed number reads normally,
+   but it still has to sit against the same edge as the fields around it */
+html[dir='rtl'] .callback-form__field input[type='tel'] {
+  text-align: right;
+}
+
+html[dir='rtl'] .callback-form__field select {
+  background-position: left 18px center;
+  padding-right: 18px;
+  padding-left: 44px;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+html[dir='rtl'] .footer__subscribe {
+  padding: 12px 22px 12px 10px;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — the arrow glyph points away from the text in both directions
+   -------------------------------------------------------------------------- */
+
+html[dir='rtl'] .btn__icon,
+html[dir='rtl'] .footer__subscribe-icon svg {
+  transform: scaleX(-1);
+}

@@ -1,0 +1,32 @@
+<svg viewBox="0 0 900 1232" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="wfd-rim" x1="0.22" y1="0" x2="0.78" y2="1">
+      <stop offset="0" stop-color="#3d4d49" />
+      <stop offset="0.5" stop-color="#202b28" />
+      <stop offset="1" stop-color="#33423f" />
+    </linearGradient>
+    <linearGradient id="wfd-face" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#3a4a46" />
+      <stop offset="0.38" stop-color="#2f3d3a" />
+      <stop offset="0.78" stop-color="#25312e" />
+      <stop offset="1" stop-color="#1d2725" />
+    </linearGradient>
+    <linearGradient id="wfd-inner" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#1c2724" />
+      <stop offset="0.5" stop-color="#33433f" />
+      <stop offset="1" stop-color="#435551" />
+    </linearGradient>
+    <linearGradient id="wfd-seal" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0" stop-color="#151f1d" />
+      <stop offset="1" stop-color="#2b3835" />
+    </linearGradient>
+  </defs>
+
+  <!-- Same geometry as window-frame.svg, lit for a night cabin: the panel
+       reads as dark grey plastic instead of white. -->
+  <rect x="0" y="0" width="900" height="1232" rx="250" ry="250" fill="url(#wfd-rim)" />
+  <rect x="7" y="7" width="886" height="1218" rx="243" ry="243" fill="url(#wfd-face)" />
+  <rect x="86" y="86" width="728" height="1060" rx="164" ry="164" fill="url(#wfd-inner)" />
+  <rect x="99" y="99" width="702" height="1034" rx="151" ry="151" fill="url(#wfd-seal)" />
+  <rect x="108" y="108" width="684" height="1016" rx="142" ry="142" fill="#08110f" />
+</svg>

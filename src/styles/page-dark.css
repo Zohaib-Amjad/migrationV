@@ -1,0 +1,302 @@
+/* ==========================================================================
+   HOF Migration — dark mode for the pages beyond Home
+
+   dark-mode.css re-colours the Home page. This does the same job for the
+   components those pages add: the band, the breadcrumb, the page heading and
+   the service, story and team blocks. It uses the same tokens, so the two
+   files stay one palette, and it is loaded straight after dark-mode.css.
+
+   The theme is set by the shade on the Home page; these pages read the choice
+   back before first paint (see the snippet in their head).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Band, breadcrumb, headings
+   -------------------------------------------------------------------------- */
+
+/* the band carries the same near-black green the hero uses, so arriving from
+   Home is continuous rather than a step change */
+html.is-dark .page-band,
+html.is-dark .service-page .page-band {
+  background: linear-gradient(61.85deg, #0b1311 1.13%, #040b0a 97.73%);
+}
+
+html.is-dark .crumbs,
+html.is-dark .crumbs a {
+  color: var(--dk-faint);
+}
+
+html.is-dark .crumbs a:hover,
+html.is-dark .crumbs [aria-current='page'] {
+  color: var(--brand);
+}
+
+html.is-dark .page-head__eyebrow,
+html.is-dark .service-page .page-head__eyebrow,
+html.is-dark .block-head__num,
+html.is-dark .service-page .block-head__num {
+  color: var(--brand);
+}
+
+html.is-dark .page-head__title,
+html.is-dark .block-head__title {
+  color: var(--dk-text);
+}
+
+html.is-dark .page-head__lede,
+html.is-dark .block-head__note {
+  color: var(--dk-muted);
+}
+
+html.is-dark .page-head__chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--dk-line);
+  color: var(--dk-text);
+}
+
+html.is-dark .service-page .page-head__chip {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid color-mix(in srgb, var(--svc-accent) 45%, transparent);
+  color: color-mix(in srgb, var(--svc-accent) 70%, #ffffff);
+}
+
+/* --------------------------------------------------------------------------
+   Service page
+   -------------------------------------------------------------------------- */
+
+html.is-dark .svc-types-section {
+  background: var(--dk-tint);
+}
+
+html.is-dark .svc-group,
+html.is-dark .svc-type {
+  background: var(--dk-raised);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .svc-type:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18), 0 26px 56px rgba(0, 0, 0, 0.5);
+}
+
+html.is-dark .svc-group__name,
+html.is-dark .svc-type__name,
+html.is-dark .svc-node b,
+html.is-dark .svc-help__title {
+  color: var(--dk-text);
+}
+
+html.is-dark .svc-node span,
+html.is-dark .svc-type__text,
+html.is-dark .svc-help__text {
+  color: var(--dk-muted);
+}
+
+/* the accent is a hue that was chosen against white — on black it needs to be
+   mixed toward the light end to stay legible rather than merely visible */
+html.is-dark .svc-group__flag {
+  background: color-mix(in srgb, var(--svc-accent) 22%, #000);
+  color: color-mix(in srgb, var(--svc-accent) 55%, #fff);
+}
+
+html.is-dark .svc-node {
+  background: var(--dk-raised-2);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .svc-node:hover {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--svc-accent) 45%, transparent);
+}
+
+html.is-dark .svc-node::after {
+  background: var(--dk-raised);
+}
+
+html.is-dark .svc-node__tag,
+html.is-dark .svc-type__code {
+  background: color-mix(in srgb, var(--svc-accent) 20%, #000);
+  color: color-mix(in srgb, var(--svc-accent) 55%, #fff);
+}
+
+html.is-dark .svc-type__facts {
+  border-block-start-color: var(--dk-line);
+}
+
+html.is-dark .svc-type__fact dt {
+  color: var(--dk-faint);
+}
+
+html.is-dark .svc-type__fact dd {
+  color: var(--dk-text);
+}
+
+html.is-dark .svc-help__step {
+  background: var(--dk-raised);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .svc-index__card {
+  background: var(--dk-raised);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .svc-index__card:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 30px 64px rgba(0, 0, 0, 0.55);
+}
+
+html.is-dark .svc-index__title {
+  color: var(--dk-text);
+}
+
+html.is-dark .svc-index__text {
+  color: var(--dk-muted);
+}
+
+html.is-dark .svc-index__link {
+  color: color-mix(in srgb, var(--card-accent, #8daba4) 50%, #fff);
+}
+
+/* --------------------------------------------------------------------------
+   Services dropdown in the nav
+   -------------------------------------------------------------------------- */
+
+html.is-dark .nav__menu {
+  background: #0f1614;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .nav__menu-copy b {
+  color: var(--dk-text);
+}
+
+html.is-dark .nav__menu-copy small {
+  color: var(--dk-faint);
+}
+
+html.is-dark .nav__menu-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+html.is-dark .nav__menu-all {
+  background: rgba(141, 171, 164, 0.14);
+  color: var(--brand);
+}
+
+html.is-dark .nav__menu-all:hover {
+  background: rgba(141, 171, 164, 0.22);
+}
+
+/* --------------------------------------------------------------------------
+   Success stories
+   -------------------------------------------------------------------------- */
+
+html.is-dark .story-card,
+html.is-dark .facts {
+  background: var(--dk-raised);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .story-card:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 32px 68px rgba(0, 0, 0, 0.55);
+}
+
+html.is-dark .story-card__eyebrow,
+html.is-dark .story-card__link,
+html.is-dark .facts__title {
+  color: var(--brand);
+}
+
+html.is-dark .story-card__name,
+html.is-dark .story-prose h2,
+html.is-dark .facts__row dd {
+  color: var(--dk-text);
+}
+
+html.is-dark .story-card__text,
+html.is-dark .story-prose p {
+  color: var(--dk-muted);
+}
+
+html.is-dark .story-card__route,
+html.is-dark .facts__row dt {
+  color: var(--dk-faint);
+}
+
+html.is-dark .facts__row {
+  border-block-end-color: var(--dk-line);
+}
+
+/* the quote keeps its green, moved to the dark end of the same ramp */
+html.is-dark .story-quote {
+  background: rgba(141, 171, 164, 0.1);
+  border-inline-start-color: var(--brand);
+}
+
+html.is-dark .story-quote p {
+  color: #cbe2dc;
+}
+
+html.is-dark .story-quote cite {
+  color: var(--dk-faint);
+}
+
+/* --------------------------------------------------------------------------
+   About Us
+
+   The brandmark stage is deliberately absent from this file: it is dark in
+   both themes by design, the way the Work with Experts card is.
+   -------------------------------------------------------------------------- */
+
+html.is-dark .about-intro__title,
+html.is-dark .person__name,
+html.is-dark .person-prose h2 {
+  color: var(--dk-text);
+}
+
+html.is-dark .about-intro__body p,
+html.is-dark .person__text,
+html.is-dark .person-prose p {
+  color: var(--dk-muted);
+}
+
+html.is-dark .about-stat {
+  background: var(--dk-tint);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .about-stat b {
+  color: var(--brand);
+}
+
+html.is-dark .about-stat span {
+  color: var(--dk-muted);
+}
+
+html.is-dark .person {
+  background: var(--dk-raised);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}
+
+html.is-dark .person:hover {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), 0 28px 60px rgba(0, 0, 0, 0.55);
+}
+
+html.is-dark .person__role {
+  color: var(--brand);
+}
+
+html.is-dark .person__link {
+  color: var(--dk-faint);
+}
+
+html.is-dark .person:hover .person__link {
+  color: var(--brand);
+}
+
+/* --------------------------------------------------------------------------
+   Facts panel
+   -------------------------------------------------------------------------- */
+
+html.is-dark .facts {
+  background: var(--dk-raised);
+  box-shadow: inset 0 0 0 1px var(--dk-line);
+}

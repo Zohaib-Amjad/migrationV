@@ -1,0 +1,318 @@
+/* ==========================================================================
+   HOF Migration — Services section (horizontal scroll-hijack)
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+.services {
+  position: relative;
+  background: #fff;
+}
+
+.services__header {
+  /* Pinned at the top of the sticky viewport — never shrinks, so the cards
+     below it always get the same amount of room. */
+  flex: none;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: clamp(28px, 3.3vw, 40px) clamp(20px, 6.82vw, 131px) clamp(18px, 2.2vw, 28px);
+}
+
+.services__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.1vw, 36px);
+  line-height: 1.25;
+  color: #171a1e;
+  text-wrap: balance;
+}
+
+.services__explore {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.25vw, 20px);
+  color: #171a1e;
+  text-decoration: underline;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Scroll-hijack mechanics
+   -------------------------------------------------------------------------- */
+
+.services__scroll {
+  position: relative;
+  /* height is set by JS to (sticky viewport height + horizontal distance to
+     travel) */
+}
+
+/* One fixed-height viewport that pins for the whole horizontal scroll: the
+   heading sits at the top of it and the cards are centred in whatever space
+   is left underneath. Because the box never changes height, the cards never
+   shift or crop as the track slides across — and there's no leftover spacer
+   showing through below them. */
+.services__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.services__viewport {
+  /* All the height the heading didn't take. min-height:0 lets it actually
+     shrink to that rather than being forced open by the track inside it. */
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+}
+
+.services__track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 clamp(20px, 6.82vw, 131px);
+  will-change: transform;
+}
+
+/* --------------------------------------------------------------------------
+   Service card — v3 (Figma node 118:1244 — square card, tall bleed photo)
+
+   A flat pastel card: text on the left, a tall portrait photo (with a solid
+   white border) on the right. Per-card colors (background, accent
+   border/heading color) come from --card-bg / --card-accent, set inline on
+   each .service-card in the markup, straight from the Figma fills.
+
+   Sized entirely from --card-w / --card-h, set by services-scroll.js so that
+   ~2.5 cards fill the sticky viewport width while the card height never
+   exceeds what fits the window without cropping (see measure() there).
+   Every internal measurement below is a fraction of --card-w (matching its
+   ratio to the reference 1079×1079 card — now square), so the whole card —
+   borders, radii, type, image — scales together as one unit. Falls back to
+   that 1079×1079 reference size before JS runs.
+   -------------------------------------------------------------------------- */
+
+.service-card {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--card-w, 1079px);
+  height: var(--card-h, 1079px);
+  box-sizing: border-box;
+  /* No padding-right by design — the photo is sized and positioned to
+     deliberately bleed past the card's right edge and get clipped by it
+     (see .service-card__image below). That's a real detail in the Figma
+     reference, not a mistake: the image is a fixed 550px square dropped at
+     a fixed offset, wider than the space actually left for it. */
+  padding: calc(var(--card-w, 1079px) * 0.0927) 0 calc(var(--card-w, 1079px) * 0.0927)
+    calc(var(--card-w, 1079px) * 0.0593);
+  border-radius: calc(var(--card-w, 1079px) * 0.0463);
+  /* Neutral at rest; the card's own colour only comes in on hover. */
+  border: 1px solid #e3e4e7;
+  /* White by default — the card's pastel color only appears as a slight
+     tint on hover (see below), instead of being the resting-state fill. */
+  background: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  /* Subtle, understated hover — a slight tint of the card's own pastel
+     color, nothing that alters the card's layout or design. */
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.service-card:hover,
+.service-card:focus-within {
+  background: var(--card-bg, #dfedf7);
+  border-color: var(--card-accent, #0095ff);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card {
+    transition: none;
+  }
+}
+
+.service-card__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: calc(var(--card-w, 1079px) * 0.0167);
+  width: calc(var(--card-w, 1079px) * 0.5023);
+  flex-shrink: 0;
+}
+
+.service-card__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(18px, calc(var(--card-w, 1079px) * 0.0445), 48px);
+  line-height: 1.4;
+  color: var(--card-accent-text, var(--card-accent, #0671be));
+  letter-spacing: 0.28px;
+}
+
+.service-card__text {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(12px, calc(var(--card-w, 1079px) * 0.0167), 18px);
+  line-height: 1.42;
+  color: #393939;
+  letter-spacing: 0.28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-card__text li + li {
+  margin-top: clamp(2px, calc(var(--card-w, 1079px) * 0.0057), 6px);
+}
+
+.service-card__text b {
+  font-weight: 700;
+  color: #393939;
+}
+
+.service-card__link {
+  font-family: var(--font-sans);
+  font-size: clamp(13px, calc(var(--card-w, 1079px) * 0.0222), 24px);
+  line-height: 1.4;
+  color: #000;
+  text-decoration: underline;
+  letter-spacing: 0.28px;
+  transition: color 200ms ease;
+}
+
+.service-card:hover .service-card__link,
+.service-card:focus-within .service-card__link {
+  /* Same accent color as the card's own heading. */
+  color: var(--card-accent-text, var(--card-accent, #0671be));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card__link {
+    transition: none;
+  }
+}
+
+.service-card__image {
+  /* Fixed offset from the card's left edge (padding + content + gap) and a
+     fixed size — deliberately wider than the remaining space so it bleeds
+     off the card's right edge, clipped by .service-card's overflow:hidden.
+     Vertically centered since top/bottom padding on the card are equal.
+     Now a tall portrait rectangle (550×850 at the 1079 reference), not a
+     square — the image no longer matches the card's own aspect ratio. */
+  position: absolute;
+  left: calc(var(--card-w, 1079px) * 0.6209);
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(var(--card-w, 1079px) * 0.5097);
+  height: calc(var(--card-w, 1079px) * 0.7878);
+  border-radius: calc(var(--card-w, 1079px) * 0.0463);
+  /* Wide border in the card's own accent color at 20% opacity, instead of a
+     thin white stroke — a bolder but soft frame around the photo. */
+  border: calc(var(--card-w, 1079px) * 0.0278) solid
+    color-mix(in srgb, var(--card-accent, #0095ff) 20%, transparent);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.service-card__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* --------------------------------------------------------------------------
+   Native fallback — small screens & reduced motion get a swipeable row
+   instead of scroll-hijacking (large cards + wheel-jacking do not translate
+   well to touch scrolling). The side-by-side layout also doesn't have room
+   to breathe at phone widths, so it stacks image-over-text there instead —
+   no reference was given for mobile, so this keeps the same colors/shapes
+   and just re-flows them.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px), (prefers-reduced-motion: reduce) {
+  .services__scroll {
+    height: auto !important;
+  }
+
+  .services__sticky {
+    position: static;
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+
+  .services__viewport {
+    display: block;
+  }
+
+  .services__track {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    padding-bottom: 24px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .service-card {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 900px) {
+  /* The bleed-image layout needs real horizontal room to make sense; below
+     900px it switches to a plain stacked card (image full-width on top,
+     text below) instead of forcing the wide desktop proportions in. */
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: min(85vw, 420px);
+    height: auto;
+    gap: 24px;
+    padding: 28px;
+  }
+
+  .service-card__image {
+    position: static;
+    transform: none;
+    width: 100%;
+    /* height must be cleared, or the desktop rule's fixed
+       calc(--card-w × 0.7878) wins over aspect-ratio — and --card-w is never
+       set down here (the sizing script no-ops for the swipeable fallback),
+       so it would resolve against the 1079px reference and blow the card out. */
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-width: 8px;
+    border-radius: 20px;
+  }
+
+  .service-card__content {
+    position: static;
+    width: auto;
+    height: auto;
+  }
+
+  .service-card__title {
+    font-size: 24px;
+  }
+
+  .service-card__text {
+    font-size: 15px;
+  }
+
+  .service-card__link {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,301 @@
+/* ==========================================================================
+   HOF Migration — animated airplane window (hero)
+
+   Replaces the raster window treatment. Three stacked layers, all sized from
+   the same 900×1232 space so they line up at any width:
+
+     1. window-frame.svg   the bezel, drawn as nested rounded rects
+     2. .plane-window__view   the destination photos, clipped to the aperture
+     3. .plane-window__overlay  the shade, the glass depth and the seal edge
+
+   The aperture is rect(108 108 684 1016, rx 142) in that space — the
+   percentages and the border-radius below are that rect, so the photos are
+   contained by the window's own shape and can never spill past it.
+
+   The legacy implementation is preserved — see hero-window-legacy.html.
+   ========================================================================== */
+
+.plane-window {
+  position: relative;
+  width: clamp(220px, 24vw, 360px);
+  max-width: 100%;
+  aspect-ratio: 900 / 1232;
+  height: auto;
+  flex-shrink: 0;
+  /* clicking the window pulls the shade down and takes the site dark */
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+@media (max-height: 750px) {
+  .plane-window {
+    width: clamp(180px, 20vw, 260px);
+  }
+}
+
+@media (max-width: 1080px) {
+  .plane-window {
+    width: clamp(200px, 34vw, 280px);
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .plane-window {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.plane-window:focus-visible {
+  outline: 3px solid #1c7ced;
+  outline-offset: 6px;
+  border-radius: 28px;
+}
+
+.plane-window__frame,
+.plane-window__overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.plane-window__frame {
+  z-index: 1;
+  object-fit: fill;
+  filter: drop-shadow(0 16px 34px rgba(18, 38, 60, 0.16));
+}
+
+/* The night-cabin bezel sits on top of the daylight one and is cross-faded
+   by the theme — the frame is an <img>, so it can't simply be re-coloured in
+   CSS, and swapping the src would flash. Both files are ~2KB. */
+.plane-window__frame--dark {
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+html.is-dark .plane-window__frame--dark {
+  opacity: 1;
+}
+
+.plane-window__overlay {
+  z-index: 3;
+}
+
+/* --------------------------------------------------------------------------
+   The view — the aperture rect, expressed as percentages of the same box
+   -------------------------------------------------------------------------- */
+
+.plane-window__view {
+  position: absolute;
+  left: 12%; /* 108/900   */
+  top: 8.766%; /* 108/1232  */
+  width: 76%; /* 684/900   */
+  height: 82.468%; /* 1016/1232 */
+  /* rx 142 of a 684×1016 box */
+  border-radius: 20.76% / 13.98%;
+  overflow: hidden;
+  background: #0b2530;
+  z-index: 2;
+  contain: paint;
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  transform: translateZ(0);
+}
+
+/* Destinations travel left to right: each one waits off the left edge, slides
+   across to fill the glass, and later carries on out to the right. Both the
+   incoming and the outgoing image move the same way, so the flow reads as one
+   continuous pan rather than a swap. The view's overflow:hidden does the
+   masking, so nothing needs to fade. */
+.plane-window__slide {
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  /* must match SLIDE in plane-window.js */
+  transition: transform 600ms cubic-bezier(0.33, 0, 0.18, 1);
+  will-change: transform;
+}
+
+.plane-window__slide.is-active {
+  transform: translateX(0);
+}
+
+.plane-window__slide.is-leaving {
+  transform: translateX(100%);
+}
+
+.plane-window__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   The shade
+
+   Closed, the panel covers the aperture. Opening lifts it until only its pull
+   tab is left peeking at the top of the glass — where a real window shade
+   sits when it's stowed, and where the original artwork drew it too. The tiny
+   overshoot near the end is the shade hitting the stop and settling back.
+   -------------------------------------------------------------------------- */
+
+.pw-shade {
+  transform: translateY(0);
+}
+
+.plane-window.is-open .pw-shade {
+  animation: pw-shade-open 1700ms cubic-bezier(0.32, 0.03, 0.18, 1) forwards;
+}
+
+@keyframes pw-shade-open {
+  0% {
+    transform: translateY(0);
+  }
+  84% {
+    transform: translateY(-948px);
+  }
+  100% {
+    transform: translateY(-936px);
+  }
+}
+
+/* Pulling it back down: a shade drops faster than it lifts, and settles
+   against the sill rather than easing to a stop. */
+.plane-window.is-closing .pw-shade {
+  animation: pw-shade-close 1700ms cubic-bezier(0.32, 0.03, 0.18, 1) forwards;
+}
+
+@keyframes pw-shade-close {
+  0% {
+    transform: translateY(-936px);
+  }
+  84% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   The message on the shade
+
+   Only shown once the shade has been deliberately pulled down — it waits out
+   the 1050ms close so it settles onto a shade that has stopped moving, and
+   clears immediately on the way back up. Deliberately not shown in the brief
+   closed state before the first open, where it would flash for 420ms.
+   -------------------------------------------------------------------------- */
+
+.pw-message {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+
+.plane-window.is-closing .pw-message {
+  opacity: 1;
+  transition: opacity 520ms ease 980ms;
+}
+
+.pw-message__text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Open / Close
+
+   The shade's pull tab carries the label, so the control sits exactly where
+   the affordance already was rather than adding a second thing to click. Both
+   words are in the markup and only one is ever shown; swapping visibility in
+   CSS keeps the labels as ordinary text nodes for the translator, and means
+   no script has to know which language is on.
+   -------------------------------------------------------------------------- */
+
+.pw-lip-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  fill: #6b7076;
+  transition: opacity 200ms ease;
+}
+
+/* closed - and before the first open - the tab offers to open the window */
+.pw-lip-label--close {
+  opacity: 0;
+}
+
+.plane-window.is-open .pw-lip-label--open {
+  opacity: 0;
+}
+
+.plane-window.is-open .pw-lip-label--close {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pw-message,
+  .plane-window.is-closing .pw-message {
+    transition: none;
+  }
+}
+
+/* and the cabin darkens again behind it */
+.plane-window.is-closing .pw-dim {
+  opacity: 0.62;
+  transition: opacity 900ms ease;
+}
+
+/* Daylight coming in as the shade clears. */
+.pw-dim {
+  opacity: 0.62;
+  transition: opacity 1500ms ease 200ms;
+}
+
+.plane-window.is-open .pw-dim {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Open, lit and still — no shade travel, no drift. */
+  .plane-window.is-open .pw-shade {
+    animation: none;
+    transform: translateY(-936px);
+  }
+
+  .pw-dim {
+    transition: none;
+  }
+
+  .plane-window__slide {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — same breakpoints the previous window used, so the hero's
+   composition against the consultant band is unchanged.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .plane-window {
+    max-width: 265px;
+  }
+}
+
+@media (max-width: 900px) {
+  .plane-window {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .plane-window {
+    max-width: 100%;
+  }
+}

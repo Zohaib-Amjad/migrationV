@@ -1,0 +1,4 @@
+# Preview build — placeholder content, not for indexing.
+# Delete this file before deploying to production.
+User-agent: *
+Disallow: /

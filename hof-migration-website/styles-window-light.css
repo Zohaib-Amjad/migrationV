@@ -1,0 +1,430 @@
+/* ==========================================================================
+   HOF Migration — Hero Concept: Airplane Window (light variant)
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+:root {
+  --bg: #d9eaf6;
+  --ink: #000000;
+  --sub: #353535;
+  --accent: #0095ff;
+
+  --radius-pill: 12px;
+
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+
+.hero-v3 {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.hero-v3__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1920px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(36px, 3.33vw, 64px);
+  padding: clamp(20px, 4.74vw, 91px) clamp(20px, 9.48vw, 182px) clamp(32px, 4.74vw, 91px)
+    clamp(20px, 6.82vw, 131px);
+}
+
+/* --------------------------------------------------------------------------
+   Nav
+   -------------------------------------------------------------------------- */
+
+.nav {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  height: clamp(64px, 4.17vw, 80px);
+  padding: 0 20px 0 clamp(20px, 1.88vw, 36px);
+  background: #fff;
+  border-radius: var(--radius-pill);
+}
+
+.nav__group {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 3.33vw, 64px);
+  flex-wrap: wrap;
+}
+
+.nav__group--right {
+  gap: clamp(12px, 1.25vw, 24px);
+}
+
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav__logo-mark {
+  width: 21px;
+  height: 22px;
+}
+
+.nav__logo span {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.48px;
+  text-transform: uppercase;
+  color: #7c7c7c;
+  white-space: nowrap;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2.08vw, 40px);
+}
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14.4px;
+  font-weight: 500;
+  color: #1b232e;
+  white-space: nowrap;
+}
+
+.nav__chevron {
+  width: 10px;
+  height: 10px;
+}
+
+.nav__lang {
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.nav__divider {
+  width: 2px;
+  height: 20px;
+  background: #9ca3af;
+}
+
+.nav__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.nav__icon-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 26px;
+  border-radius: var(--radius-pill);
+  font-size: 16.9px;
+  font-weight: 500;
+  letter-spacing: 0.18px;
+  color: #000;
+  white-space: nowrap;
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--panel {
+  background: #eee;
+}
+
+.btn--white {
+  background: #fff;
+}
+
+.btn__icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Content row: copy + airplane window
+   -------------------------------------------------------------------------- */
+
+.hero-v3__row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(32px, 5vw, 96px);
+  flex-wrap: wrap;
+}
+
+.hero-v3__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 48px;
+  max-width: 780px;
+  flex: 1 1 480px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 9px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
+}
+
+.badge__icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.badge__text {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14.2px;
+  letter-spacing: 0.2px;
+  color: #000;
+  white-space: nowrap;
+}
+
+.badge__logos {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge__logo {
+  height: 21px;
+  width: auto;
+  object-fit: contain;
+}
+
+.hero-v3__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-v3__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 2.75vw, 48px);
+  line-height: 1.25;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+@media (max-width: 1080px) {
+  .hero-v3__title {
+    font-size: clamp(30px, 5vw, 48px);
+  }
+}
+
+.hero-v3__subtitle {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(17px, 1.55vw, 24px);
+  line-height: 1.45;
+  color: var(--sub);
+}
+
+/* --------------------------------------------------------------------------
+   Airplane window — simplified "porthole" treatment
+   -------------------------------------------------------------------------- */
+
+.window {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  aspect-ratio: 780 / 1170;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 6px solid var(--accent);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 30px 60px -24px rgba(20, 40, 70, 0.35), 0 10px 24px -12px rgba(20, 40, 70, 0.2);
+}
+
+.window__glass {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.window__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.window__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.window__slide.is-active {
+  opacity: 1;
+}
+
+/* the porthole bezel graphic — transparent glass hole lets the photo show through */
+.window__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1080px) {
+  .hero-v3__row {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: left;
+    padding-bottom: 40px;
+  }
+
+  .hero-v3__content {
+    align-items: flex-start;
+  }
+
+  .window {
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav {
+    height: auto;
+    padding: 14px 16px;
+    border-radius: 20px;
+  }
+
+  .nav__links {
+    display: none;
+  }
+
+  .nav__group--right {
+    gap: 10px;
+  }
+
+  .nav__lang,
+  .nav__divider,
+  .nav__icon-btn {
+    display: none;
+  }
+
+  .btn--panel {
+    padding: 0 18px;
+    font-size: 14px;
+    height: 44px;
+  }
+
+  .btn--panel .btn__icon {
+    display: none;
+  }
+
+  .window {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-v3__inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .window {
+    max-width: 220px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window__slide {
+    transition: none;
+  }
+}

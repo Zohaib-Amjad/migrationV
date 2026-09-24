@@ -1,0 +1,185 @@
+name: Security Configuration & Anti-Malware Guard
+
+# Runs automatically on every push to any branch and on every pull request.
+# Blocks CI and surfaces immediate PR error annotations if any infected commits,
+# obfuscated C2 payloads, dropper scripts, or stealth config modifications are introduced.
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: read
+
+jobs:
+  security-audit:
+    name: PolinRider & Configuration Backdoor Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run cross-platform anti-malware audit (Node.js)
+        run: node scripts/security-audit.mjs
+
+      - name: Audit repository for malware, droppers, and obfuscated code (Python deep-scan)
+        run: |
+          python3 - <<'EOF'
+          import sys
+          import re
+          from pathlib import Path
+
+          repo_root = Path(".")
+          violations = []
+
+          print("=" * 70)
+          print("STARTING REPOSITORY INTEGRITY AND CONFIGURATION AUDIT")
+          print("=" * 70)
+
+          # -----------------------------------------------------------------
+          # 1. DROPPER FILES AUDIT (Filesystem Check)
+          # Detects known batch/JSON dropper files created by PolinRider / Lazarus
+          # -----------------------------------------------------------------
+          print("\n[Step 1/5] Scanning for dropper files on disk...")
+          DROPPER_PATTERNS = [
+              "**/temp_auto_push*.bat",
+              "**/temp_interactive_push*.bat",
+              "**/branch_structure.json"
+          ]
+          found_droppers = []
+          for pat in DROPPER_PATTERNS:
+              found_droppers.extend(list(repo_root.glob(pat)))
+
+          if found_droppers:
+              for df in found_droppers:
+                  rel_path = df.relative_to(repo_root)
+                  violations.append((str(rel_path), 1, f"Known malware dropper file found on disk: {rel_path}"))
+                  print(f"::error file={rel_path},line=1::Malware dropper file detected: {rel_path}")
+          else:
+              print("  -> Passed: Zero dropper files found on disk.")
+
+          # -----------------------------------------------------------------
+          # 2. GITIGNORE INTEGRITY AUDIT
+          # Detects attempts to hide dropper scripts from git tracking
+          # -----------------------------------------------------------------
+          print("\n[Step 2/5] Scanning .gitignore files for dropper exclusions...")
+          DROPPER_SIGNATURES = re.compile(r'(temp_auto_push|temp_interactive_push|branch_structure\.json)')
+          for gi in repo_root.glob("**/.gitignore"):
+              if "node_modules" in gi.parts or ".next" in gi.parts:
+                  continue
+              try:
+                  lines = gi.read_text(encoding="utf-8", errors="ignore").splitlines()
+                  for idx, line in enumerate(lines, 1):
+                      m = DROPPER_SIGNATURES.search(line)
+                      if m:
+                          rel_path = gi.relative_to(repo_root)
+                          msg = f"Malicious dropper exclusion found in .gitignore: '{m.group(0)}'"
+                          violations.append((str(rel_path), idx, msg))
+                          print(f"::error file={rel_path},line={idx}::{msg}")
+              except Exception as e:
+                  print(f"  Warning: failed to read {gi}: {e}")
+          if not any(".gitignore" in v[0] for v in violations):
+              print("  -> Passed: All .gitignore files clean.")
+
+          # -----------------------------------------------------------------
+          # 3. BUILD & CONFIGURATION FILES AUDIT (PostCSS, Tailwind, Next, Vite)
+          # Detects obfuscated payloads (global.i, hex tables, createRequire shims)
+          # -----------------------------------------------------------------
+          print("\n[Step 3/5] Scanning build configuration files for obfuscated C2 payloads...")
+          CONFIG_GLOBS = [
+              "**/*postcss*.config.*",
+              "**/*postcss*",
+              "**/*tailwind*.config.*",
+              "**/*next.config.*",
+              "**/*vite.config.*",
+              "**/*webpack.config.*",
+              "**/*babel.config.*"
+          ]
+
+          config_files = set()
+          for cg in CONFIG_GLOBS:
+              for p in repo_root.glob(cg):
+                  if p.is_file() and "node_modules" not in p.parts and ".next" not in p.parts and ".git" not in p.parts:
+                      if p.suffix in [".js", ".cjs", ".mjs", ".ts", ".mts", ".cts", ".json"]:
+                          config_files.add(p)
+
+          PAYLOAD_REGEX = re.compile(
+              r'(global\.i\s*=|'
+              r'_0x[0-9a-fA-F]{3,}|'
+              r'0x[0-9a-fA-F]{4,}|'
+              r'createRequire\(import\.meta\.url\)\s*;\s*const require\s*=.*global\.i|'
+              r'[\t ]{50,})'
+          )
+
+          for cf in sorted(config_files):
+              rel_path = cf.relative_to(repo_root)
+              try:
+                  content = cf.read_text(encoding="utf-8", errors="ignore")
+                  lines = content.splitlines()
+
+                  for idx, line in enumerate(lines, 1):
+                      if len(line) > 500:
+                          msg = f"Suspiciously long line ({len(line)} chars). Potential stealth payload injection."
+                          violations.append((str(rel_path), idx, msg))
+                          print(f"::error file={rel_path},line={idx}::{msg}")
+
+                      m = PAYLOAD_REGEX.search(line)
+                      if m:
+                          snippet = m.group(0)
+                          if len(snippet) > 40:
+                              snippet = f"whitespace padding ({len(snippet)} chars)" if snippet.isspace() else snippet[:40] + "..."
+                          msg = f"Malicious code signature detected: '{snippet}'"
+                          violations.append((str(rel_path), idx, msg))
+                          print(f"::error file={rel_path},line={idx}::{msg}")
+
+              except Exception as e:
+                  print(f"  Warning: failed to read {cf}: {e}")
+
+          if not any(any(k in v[0] for k in ["postcss", "tailwind", "next.config", "vite.config"]) for v in violations):
+              print(f"  -> Passed: All {len(config_files)} configuration files clean.")
+
+          # -----------------------------------------------------------------
+          # 4. PACKAGE.JSON LIFECYCLE SCRIPTS AUDIT
+          # Detects malicious installation hooks (preinstall, postinstall running curl/eval)
+          # -----------------------------------------------------------------
+          print("\n[Step 4/5] Scanning package.json files for rogue install hooks...")
+          import json
+          for pj in repo_root.glob("**/package.json"):
+              if "node_modules" in pj.parts or ".next" in pj.parts:
+                  continue
+              try:
+                  data = json.loads(pj.read_text(encoding="utf-8", errors="ignore"))
+                  scripts = data.get("scripts", {})
+                  rel_path = pj.relative_to(repo_root)
+                  for hook in ["preinstall", "install", "postinstall", "prepublish", "postpublish"]:
+                      if hook in scripts:
+                          cmd = scripts[hook]
+                          if re.search(r'(curl|wget|powershell|cmd\.exe|temp_auto_push|node\s+-e\s+["\'].*global\.i)', cmd, re.I):
+                              msg = f"Suspicious command found in package.json '{hook}' lifecycle script: {cmd}"
+                              violations.append((str(rel_path), 1, msg))
+                              print(f"::error file={rel_path},line=1::{msg}")
+              except Exception:
+                  pass
+          print("  -> Passed: No suspicious package.json lifecycle hooks found.")
+
+          # -----------------------------------------------------------------
+          # 5. SUMMARY AND EXIT CODE
+          # -----------------------------------------------------------------
+          print("\n" + "=" * 70)
+          if violations:
+              print(f"AUDIT FAILED: {len(violations)} SECURITY VIOLATIONS DETECTED!")
+              print("=" * 70)
+              for file_path, line_no, msg in violations:
+                  print(f"  FAIL: {file_path}:{line_no} -> {msg}")
+              print("\nPlease remove the malicious code before pushing or merging.")
+              sys.exit(1)
+          else:
+              print("AUDIT SUCCESSFUL: REPOSITORY IS 100% CLEAN AND FREE OF MALWARE")
+              print("=" * 70)
+              sys.exit(0)
+          EOF

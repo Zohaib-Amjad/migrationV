@@ -1,0 +1,240 @@
+/* ==========================================================================
+   HOF Migration — Reviews section
+   Fonts: Playfair Display (serif) · Plus Jakarta Sans (sans-serif)
+   ========================================================================== */
+
+.reviews {
+  /* the hairline between cards, as a token: the divider sits on whichever
+     side is the row's trailing edge, so RTL re-declares the border on the
+     other side and dark mode re-colours it — both need the same value */
+  --review-divider: #ececec;
+  background: #fff;
+  /* top padding kept tight — the services scroll section ends right above
+     this, and that gap was reading as too much dead space */
+  padding: clamp(12px, 1.6vw, 20px) clamp(20px, 6.82vw, 131px) clamp(32px, 4.5vw, 64px);
+}
+
+.reviews__header {
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(20px, 2.5vw, 32px);
+}
+
+.reviews__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.1vw, 36px);
+  line-height: 1.25;
+  color: #171a1e;
+  text-wrap: balance;
+}
+
+.reviews__view-all {
+  font-family: var(--font-sans);
+  font-size: clamp(15px, 1.25vw, 20px);
+  color: #171a1e;
+  text-decoration: underline;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.reviews__divider {
+  max-width: 1920px;
+  margin: 0 auto;
+  border-top: 1px solid #e5e5e5;
+}
+
+.reviews__row {
+  position: relative;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.reviews__track {
+  display: flex;
+  overflow-x: auto;
+  /* No scroll-snap here: it fights the arrow buttons' programmatic smooth
+     scrollBy() in some browsers (the snap point pulls the animation back
+     before it finishes), so the step is just the precise card+gap width
+     instead — see reviews-carousel.js. */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.reviews__track::-webkit-scrollbar {
+  display: none;
+}
+
+.review-card {
+  flex: 1 0 calc(33.333% - 32px);
+  min-width: 260px;
+  padding: 28px 32px 28px 0;
+  margin-right: 32px;
+  border-right: 1px solid var(--review-divider);
+}
+
+.review-card:last-child {
+  border-right: none;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.review-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.review-card__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.review-card__who {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.review-card__name {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 16px;
+  color: #171a1e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.review-card__date {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+.review-card__badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.review-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.review-card__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.review-card__stars svg {
+  width: 16px;
+  height: 16px;
+}
+
+.review-card__verified {
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+}
+
+.review-card__text {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: #2b2b2b;
+  margin-bottom: 10px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.review-card__more {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
+.review-card__more:hover {
+  color: #171a1e;
+}
+
+/* --------------------------------------------------------------------------
+   Nav arrows
+   -------------------------------------------------------------------------- */
+
+.reviews__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: background 150ms ease, transform 150ms ease;
+  z-index: 3;
+}
+
+.reviews__arrow:hover {
+  background: #f4f4f4;
+}
+
+.reviews__arrow:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+.reviews__arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.reviews__arrow--prev {
+  left: -22px;
+}
+
+.reviews__arrow--next {
+  right: -22px;
+}
+
+@media (max-width: 900px) {
+  .review-card {
+    flex: 1 0 80%;
+  }
+
+  .reviews__arrow--prev {
+    left: 0;
+  }
+
+  .reviews__arrow--next {
+    right: 0;
+  }
+}

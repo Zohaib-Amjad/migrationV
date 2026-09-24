@@ -1,0 +1,971 @@
+<title>HOF Migration Full Hero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="styles-hero-full.css" />
+<link rel="stylesheet" href="plane-window.css" />
+<link rel="stylesheet" href="services.css" />
+<link rel="stylesheet" href="reviews.css" />
+<link rel="stylesheet" href="stories.css" />
+<link rel="stylesheet" href="faq.css" />
+<link rel="stylesheet" href="cta-banner.css" />
+<link rel="stylesheet" href="callback-form.css" />
+<link rel="stylesheet" href="feedback.css" />
+<link rel="stylesheet" href="footer.css" />
+<link rel="stylesheet" href="dark-mode.css" />
+<link rel="stylesheet" href="rtl.css" />
+
+<!-- The hero and the consultant band share one gradient rather than each
+     painting its own: a band with its own background restarts the ramp and
+     leaves a visible line where the two meet. -->
+<div class="hero-band">
+  <section class="hero">
+    <div class="hero__inner">
+      <header class="nav">
+        <div class="nav__group">
+          <a href="/" class="nav__logo">
+            <img src="assets/icons-v2/logo-brand.svg" alt="HOF Migration" class="nav__logo-img nav__logo-img--en" />
+            <img src="assets/icons-v2/logo-brand.svg" alt="HOF Migration" class="nav__logo-img nav__logo-img--ar" />
+          </a>
+
+          <nav class="nav__links" aria-label="Primary">
+            <a href="#services" class="nav__link nav__link--dropdown">
+              Services
+              <img src="assets/icons-v2/chevron-down.svg" alt="" class="nav__chevron" />
+            </a>
+            <a href="#stories" class="nav__link">Success Stories</a>
+            <a href="#reviews" class="nav__link">Reviews</a>
+            <a href="#about" class="nav__link">About Us</a>
+          </nav>
+        </div>
+
+        <div class="nav__group nav__group--right">
+          <a href="#" class="nav__lang" dir="auto" data-lang-toggle lang="ar"
+          aria-label="تغيير لغة الموقع إلى العربية">العربية</a>
+          <span class="nav__divider" aria-hidden="true"></span>
+          <button type="button" class="nav__icon-btn" aria-label="Change language / region">
+            <img src="assets/icons-v2/globe.svg" alt="" />
+          </button>
+          <a href="#consultation" class="btn btn--panel">
+            Book a free consultation
+            <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+          </a>
+        </div>
+      </header>
+
+      <div class="hero__row">
+        <div class="hero__content">
+          <div class="badge-row">
+            <div class="badge">
+              <span class="badge__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2.5l7.5 3v5.4c0 4.9-3.2 9.3-7.5 10.6-4.3-1.3-7.5-5.7-7.5-10.6V5.5l7.5-3z" fill="#fff" />
+                  <path d="M8.5 12.2l2.4 2.4 4.6-4.9" stroke="#8daba4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
+              <span class="badge__text">ICCRC &amp; MARA Certified</span>
+            </div>
+            <span class="badge-row__divider" aria-hidden="true"></span>
+            <span class="badge__logos">
+            <span class="cert-chip">
+              <span class="cert-chip__face">
+                <img src="assets/icons-v2/partner-logo-1-mark.png" alt="MARA" class="cert-chip__mark" />
+              </span>
+            </span>
+            <span class="cert-chip cert-chip--offset">
+              <span class="cert-chip__face">
+                <img src="assets/icons-v2/partner-logo-2-mark.png" alt="ICCRC" class="cert-chip__mark" />
+              </span>
+            </span>
+            </span>
+          </div>
+
+          <div class="hero__copy">
+            <h1 class="hero__title">The Gulf&rsquo;s #1<br />Trusted Immigration Consultancy</h1>
+            <p class="hero__subtitle">Your Right Migration Starts With The Right Guidance</p>
+          </div>
+
+          <a href="#contact" class="btn btn--white">
+            Let&rsquo;s Talk
+            <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+          </a>
+        </div>
+
+        <!--
+          Airplane window — an SVG bezel (assets/window-svg/window-frame.svg) with the
+          destination photos clipped to its aperture and an overlay carrying the shade.
+          The shade is down until the hero is in view, then lifts and the destinations
+          begin to cross-dissolve; see plane-window.css / plane-window.js.
+
+          The previous raster treatment is preserved intact in hero-window-legacy.html
+          and can be swapped back in without touching anything else in the hero.
+        -->
+        <div class="plane-window" data-plane-window role="button" tabindex="0"
+        aria-pressed="false"
+        aria-label="Close the window shade to switch the site to dark mode">
+          <img class="plane-window__frame" src="assets/window-svg/window-frame.svg" alt="" />
+          <img class="plane-window__frame plane-window__frame--dark" src="assets/window-svg/window-frame-dark.svg" alt="" />
+
+          <div class="plane-window__view">
+            <div class="plane-window__slide is-active">
+              <img src="assets/destinations/sydney.jpg" alt="Sydney Opera House, Australia" />
+            </div>
+            <div class="plane-window__slide">
+              <img src="assets/destinations/new-york.jpg" alt="Brooklyn Bridge, New York, USA" />
+            </div>
+            <div class="plane-window__slide">
+              <img src="assets/destinations/toronto.jpg" alt="Toronto skyline, Canada" />
+            </div>
+          </div>
+
+          <svg class="plane-window__overlay" viewBox="0 0 900 1232" aria-hidden="true">
+            <defs>
+              <clipPath id="pw-aperture">
+                <rect x="108" y="108" width="684" height="1016" rx="142" ry="142" />
+              </clipPath>
+              <linearGradient id="pw-shade-face" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0" stop-color="#f6f7f8" />
+                <stop offset="0.5" stop-color="#e8ebee" />
+                <stop offset="1" stop-color="#d4d9dd" />
+              </linearGradient>
+              <linearGradient id="pw-shade-lip" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0" stop-color="#fbfcfc" />
+                <stop offset="0.45" stop-color="#e2e6e9" />
+                <stop offset="1" stop-color="#bfc6cc" />
+              </linearGradient>
+              <linearGradient id="pw-cast" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0" stop-color="#05141b" stop-opacity="0.42" />
+                <stop offset="1" stop-color="#05141b" stop-opacity="0" />
+              </linearGradient>
+              <radialGradient id="pw-vignette" cx="0.5" cy="0.44" r="0.74">
+                <stop offset="0.52" stop-color="#000000" stop-opacity="0" />
+                <stop offset="1" stop-color="#000000" stop-opacity="0.34" />
+              </radialGradient>
+              <linearGradient id="pw-sheen" x1="0" y1="0" x2="0.9" y2="1">
+                <stop offset="0.16" stop-color="#ffffff" stop-opacity="0" />
+                <stop offset="0.35" stop-color="#ffffff" stop-opacity="0.14" />
+                <stop offset="0.48" stop-color="#ffffff" stop-opacity="0" />
+              </linearGradient>
+              <linearGradient id="pw-seal-edge" x1="0.5" y1="0" x2="0.5" y2="1">
+                <stop offset="0" stop-color="#4c5157" />
+                <stop offset="1" stop-color="#8f969d" />
+              </linearGradient>
+              <!-- The message is etched into the shade rather than printed on it:
+                   one shared metal gradient for the outline and icon, a tighter
+                   one across the two lines of type, and a relief filter that
+                   puts a dark lip above each edge and a faint highlight below
+                   - the way a groove reads under light coming from above. -->
+              <linearGradient id="pw-etch" gradientUnits="userSpaceOnUse" x1="450" y1="175" x2="450" y2="1041">
+                <stop offset="0" stop-color="#868b91" />
+                <stop offset="0.45" stop-color="#6c7075" />
+                <stop offset="0.68" stop-color="#83888e" />
+                <stop offset="1" stop-color="#6a6e73" />
+              </linearGradient>
+              <linearGradient id="pw-etch-text" gradientUnits="userSpaceOnUse" x1="450" y1="736" x2="450" y2="822">
+                <stop offset="0" stop-color="#8d9299" />
+                <stop offset="0.55" stop-color="#74787e" />
+                <stop offset="1" stop-color="#686c71" />
+              </linearGradient>
+              <filter id="pw-etch-relief" x="-4%" y="-4%" width="108%" height="108%">
+                <feDropShadow dx="0" dy="-2.5" stdDeviation="0" flood-color="#080b0e" flood-opacity="0.65" />
+                <feDropShadow dx="0" dy="2.5" stdDeviation="0" flood-color="#ffffff" flood-opacity="0.08" />
+              </filter>
+            </defs>
+
+            <g clip-path="url(#pw-aperture)">
+              <!-- glass depth: a soft vignette and one low specular streak -->
+              <rect x="108" y="108" width="684" height="1016" fill="url(#pw-vignette)" />
+              <rect x="108" y="108" width="684" height="1016" fill="url(#pw-sheen)" />
+              <!-- daylight level, faded out as the shade lifts -->
+              <rect class="pw-dim" x="108" y="108" width="684" height="1016" fill="#071a22" />
+
+              <g class="pw-shade">
+                <rect x="90" y="-40" width="720" height="1164" fill="url(#pw-shade-face)" />
+                <rect x="90" y="1124" width="720" height="84" fill="url(#pw-cast)" />
+                <rect x="292" y="1056" width="316" height="56" rx="28" fill="url(#pw-shade-lip)" />
+                <rect class="pw-lip-edge" x="292" y="1056" width="316" height="56" rx="28" fill="none" stroke="#9aa2a9" stroke-width="1.5" opacity="0.55" />
+                <!-- the shade's pull tab doubles as the Open / Close control. Both words
+                     are in the markup and swapped with CSS rather than script, so the
+                     translator picks them up like any other copy. -->
+                <text class="pw-lip-label pw-lip-label--open" x="450" y="1094" text-anchor="middle">Open</text>
+                <text class="pw-lip-label pw-lip-label--close" x="450" y="1094" text-anchor="middle">Close</text>
+
+          <!-- "Keep your window open to new opportunities" (Figma 143:1409).
+               Drawn inside .pw-shade so it is printed on the shade itself and
+               travels up with it; geometry is the Figma panel mapped onto this
+               aperture by its inset from the shade edges, not by the outer
+               frame - the two windows have differently proportioned bezels. -->
+          <g class="pw-message">
+            <rect x="169" y="175" width="562" height="866" rx="102" ry="102"
+                  fill="none" stroke="url(#pw-etch)" stroke-width="5" filter="url(#pw-etch-relief)" />
+
+                  <!-- the 3D lock render, used as supplied rather than redrawn; the box is
+                       square so whatever padding the PNG carries stays centred on (450, 540),
+                       where the previous icon sat -->
+                  <image class="pw-message__lock" href="assets/icons-v2/lock-3d.png"
+                         x="270" y="358" width="350" height="350" preserveAspectRatio="xMidYMid meet" />
+
+            <text class="pw-message__text" text-anchor="middle" fill="url(#pw-etch-text)"
+                        filter="url(#pw-etch-relief)">
+              <tspan x="450" y="768">Keep your window open</tspan><tspan x="450" y="810">to new opportunities</tspan>
+            </text>
+          </g>
+              </g>
+            </g>
+
+            <!-- drawn over the boundary between the frame and the photos, so there is
+                 never a seam where the two layers meet -->
+            <rect x="108" y="108" width="684" height="1016" rx="142" ry="142" fill="none"
+                  stroke="url(#pw-seal-edge)" stroke-width="4" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="people-band">
+    <div class="people-band__wrap">
+      <img src="assets/window-final/people-post.png" alt="The HOF Migration consultant team" />
+    </div>
+  </section>
+</div>
+
+<section class="experience">
+  <div class="experience__inner">
+    <h2 class="experience__heading">6 Years of Experience in Immigration Consultancy</h2>
+    <p class="experience__text">
+      Navigate your immigration journey with experienced consultants who provide expert,
+      end-to-end guidance for multiple destinations.
+    </p>
+  </div>
+</section>
+
+<section class="services" id="services">
+
+  <!--
+    Horizontal scroll-hijack: `.services__scroll` is a tall spacer whose
+    height (set by services-scroll.js) equals one viewport height plus the
+    distance the track needs to travel. `.services__sticky` pins in place
+    while that spacer scrolls past, and the track's translateX tracks the
+    scroll position 1:1 — see services-scroll.js for the mechanics, and
+    services.css for the small-screen / reduced-motion fallback (a plain
+    swipeable row).
+  -->
+  <div class="services__scroll" data-services-scroll>
+    <div class="services__sticky">
+      <div class="services__header">
+        <h2 class="services__title">Immigration &amp; Education Consultancy Services</h2>
+        <a href="#all-services" class="services__explore">Explore all Services</a>
+      </div>
+
+      <div class="services__viewport">
+        <div class="services__track">
+          <article class="service-card" style="--card-bg:#DFEDF7; --card-accent:#0095FF; --card-accent-text:#0671BE;">
+            <div class="service-card__content">
+              <h3 class="service-card__title">Skilled Migration Canada &amp; Australia</h3>
+              <ul class="service-card__text">
+                <li><b>Canada</b> | Express Entry &amp; Provincial Nominee Programs (PNP)</li>
+                <li><b>Australia</b> | Skilled Independent (189), Skilled Nominated (190) &amp; Skilled Work Regional (491)</li>
+              </ul>
+              <a href="#" class="service-card__link">See how we can help</a>
+            </div>
+            <div class="service-card__image">
+              <img class="service-card__img" src="assets/services-v2/skilled-migration.jpg" alt="Toronto skyline, Canada" />
+            </div>
+          </article>
+
+          <article class="service-card" style="--card-bg:#F7E9DF; --card-accent:#FF5900; --card-accent-text:#BD5D35;">
+            <div class="service-card__content">
+              <h3 class="service-card__title">Study Abroad &amp;<br />Student Visas</h3>
+              <p class="service-card__text">
+                Explore study opportunities worldwide, including Australia&rsquo;s Subclass 500, the
+                UK Student Visa, Canada&rsquo;s Study Permit, Germany&rsquo;s Student Visa, and the
+                USA&rsquo;s F-1 Visa.
+              </p>
+              <a href="#" class="service-card__link">See how we can help</a>
+            </div>
+            <div class="service-card__image">
+              <img class="service-card__img" src="assets/services-v2/study-abroad.jpg" alt="Graduate in cap and gown" />
+            </div>
+          </article>
+
+          <article class="service-card" style="--card-bg:#F7FFFA; --card-accent:#179B66;">
+            <div class="service-card__content">
+              <h3 class="service-card__title">Family Sponsorship &amp; Reunification</h3>
+              <p class="service-card__text">
+                Bring your loved ones together with expert guidance for family sponsorship and
+                reunification.
+              </p>
+              <a href="#" class="service-card__link">See how we can help</a>
+            </div>
+            <div class="service-card__image">
+              <img class="service-card__img" src="assets/services-v2/family-sponsorship.jpg" alt="Family portrait outdoors" />
+            </div>
+          </article>
+
+          <article class="service-card" style="--card-bg:#ECF1FF; --card-accent:#6B81CF;">
+            <div class="service-card__content">
+              <h3 class="service-card__title">USA EB-2 NIW &amp; Investor Visas</h3>
+              <p class="service-card__text">
+                EB-2 US National Interest Waiver Petitions, E-2 Investor and L-1 Transfer Visas
+              </p>
+              <a href="#" class="service-card__link">See how we can help</a>
+            </div>
+            <div class="service-card__image">
+              <img class="service-card__img" src="assets/services-v2/usa-visas.jpg" alt="Statue of Liberty, USA" />
+            </div>
+          </article>
+
+          <article class="service-card" style="--card-bg:#FFE8EF; --card-accent:#FD0148; --card-accent-text:#E30246;">
+            <div class="service-card__content">
+              <h3 class="service-card__title">Europe Golden Visa &amp; Visitor Visas</h3>
+              <p class="service-card__text">
+                EB-2 US National Interest Waiver Petitions, E-2 Investor and L-1 Transfer Visas
+              </p>
+              <a href="#" class="service-card__link">See how we can help</a>
+            </div>
+            <div class="service-card__image">
+              <img class="service-card__img" src="assets/services-v2/europe-visas.jpg" alt="Eiffel Tower, Paris" />
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ======================================================================
+       Reviews
+       ==================================================================== -->
+  <section class="reviews" id="reviews">
+    <div class="reviews__header">
+      <h2 class="reviews__title">What Our Clients Say</h2>
+      <a href="#" class="reviews__view-all">View All</a>
+    </div>
+    <div class="reviews__divider"></div>
+
+    <div class="reviews__row" data-reviews>
+      <button type="button" class="reviews__arrow reviews__arrow--prev" aria-label="Previous reviews">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#14161a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+
+      <div class="reviews__track">
+        <article class="review-card">
+          <div class="review-card__head">
+            <div class="review-card__avatar" style="background:#6C5CE7">Y</div>
+            <div class="review-card__who">
+              <span class="review-card__name">Yusuf R.</span>
+              <span class="review-card__date">12 August 2026</span>
+            </div>
+            <svg class="review-card__badge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#fff"/><circle cx="12" cy="12" r="11" fill="none" stroke="#eee"/><text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="15" fill="#4285F4">G</text></svg>
+          </div>
+          <div class="review-card__rating">
+            <span class="review-card__stars">
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+            </span>
+            <svg class="review-card__verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1DA1F2"/><path d="M7 12.5l3 3 7-7.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="review-card__text">
+            HOF Migration made my move to Canada seamless. Their team explained every step clearly and
+            kept me updated throughout the entire process. I couldn&rsquo;t have asked for better guidance
+            through such a big life decision.
+          </p>
+          <a href="#" class="review-card__more">Read more</a>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__head">
+            <div class="review-card__avatar" style="background:#16A085">S</div>
+            <div class="review-card__who">
+              <span class="review-card__name">Sara K.</span>
+              <span class="review-card__date">2 September 2026</span>
+            </div>
+            <svg class="review-card__badge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#00AF87"/><circle cx="8.5" cy="12" r="3.4" fill="#00AF87" stroke="#fff" stroke-width="1.4"/><circle cx="15.5" cy="12" r="3.4" fill="#00AF87" stroke="#fff" stroke-width="1.4"/><circle cx="8.5" cy="12" r="1.1" fill="#fff"/><circle cx="15.5" cy="12" r="1.1" fill="#fff"/></svg>
+          </div>
+          <div class="review-card__rating">
+            <span class="review-card__stars">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+            </span>
+            <svg class="review-card__verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1DA1F2"/><path d="M7 12.5l3 3 7-7.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="review-card__text">
+            From our first consultation to the final visa approval, the HOF team was incredibly
+            professional. They helped my whole family relocate to Australia without any stress
+            at all &mdash; truly grateful for their support.
+          </p>
+          <a href="#" class="review-card__more">Read more</a>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__head">
+            <div class="review-card__avatar" style="background:#E67E22">M</div>
+            <div class="review-card__who">
+              <span class="review-card__name">Michael D.</span>
+              <span class="review-card__date">20 July 2026</span>
+            </div>
+            <svg class="review-card__badge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#fff"/><circle cx="12" cy="12" r="11" fill="none" stroke="#eee"/><text x="12" y="17" text-anchor="middle" font-family="Arial, sans-serif" font-weight="700" font-size="15" fill="#4285F4">G</text></svg>
+          </div>
+          <div class="review-card__rating">
+            <span class="review-card__stars">
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="#FBBC04"><path d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7L2 9.5l7.1-.6L12 2z"/></svg>
+            </span>
+            <svg class="review-card__verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1DA1F2"/><path d="M7 12.5l3 3 7-7.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="review-card__text">
+            Excellent service from start to finish. My US investor visa application was handled
+            with real expertise &mdash; highly recommend HOF Migration to anyone considering
+            the move.
+          </p>
+          <a href="#" class="review-card__more">Read more</a>
+        </article>
+
+        <article class="review-card">
+          <div class="review-card__head">
+            <div class="review-card__avatar" style="background:#E84393">F</div>
+            <div class="review-card__who">
+              <span class="review-card__name">Fatima A.</span>
+              <span class="review-card__date">5 June 2026</span>
+            </div>
+            <svg class="review-card__badge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#00AF87"/><circle cx="8.5" cy="12" r="3.4" fill="#00AF87" stroke="#fff" stroke-width="1.4"/><circle cx="15.5" cy="12" r="3.4" fill="#00AF87" stroke="#fff" stroke-width="1.4"/><circle cx="8.5" cy="12" r="1.1" fill="#fff"/><circle cx="15.5" cy="12" r="1.1" fill="#fff"/></svg>
+          </div>
+          <div class="review-card__rating">
+            <span class="review-card__stars">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#00AF87"/></svg>
+            </span>
+            <svg class="review-card__verified" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#1DA1F2"/><path d="M7 12.5l3 3 7-7.5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <p class="review-card__text">
+            Professional, responsive, and genuinely caring about our situation. HOF Migration
+            guided us through the UK study visa process with total clarity from day one.
+          </p>
+          <a href="#" class="review-card__more">Read more</a>
+        </article>
+      </div>
+
+      <button type="button" class="reviews__arrow reviews__arrow--next" aria-label="Next reviews">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#14161a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       Success Stories
+       (no visual reference provided yet — built from the written brief)
+       ==================================================================== -->
+  <section class="stories" id="stories">
+    <div class="stories__header">
+      <h2 class="stories__title">Success Stories</h2>
+      <a href="#" class="stories__view-all">View All</a>
+    </div>
+
+    <div class="stories__grid">
+      <div class="stories__video">
+        <div class="stories__video-noise"></div>
+        <button type="button" class="stories__play" aria-label="Play video">
+          <svg viewBox="0 0 24 24" fill="#14161a"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <span class="stories__video-caption">Watch Ahmed&rsquo;s story</span>
+      </div>
+
+      <div class="stories__content">
+        <span class="stories__eyebrow">Success Story</span>
+        <h3 class="stories__name">Ahmed&rsquo;s Journey to the United States</h3>
+        <span class="stories__route">Manufacturing Professional &middot; Dubai, UAE &rarr; United States</span>
+        <p class="stories__text">
+          Ahmed had been living and working in Dubai for the past 15 years in the manufacturing
+          industry. He had been considering moving to the United States and wanted professional
+          guidance on the right migration pathway. HOF Migration helped him understand his options
+          and guided him through the process.
+        </p>
+        <a href="#" class="btn btn--white stories__cta">
+          Read Full Story
+          <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       Footer
+       ==================================================================== -->
+  <!-- ======================================================================
+     FAQ
+     (no visual reference for the copy itself — questions come from the
+     provided reference, answers are placeholder content to be refined)
+     ==================================================================== -->
+<section class="faq" id="faq">
+  <div class="faq__grid">
+    <div>
+      <h2 class="faq__title">Frequently Asked<br />Questions</h2>
+
+      <div class="faq__card">
+        <h3 class="faq__card-title">Still have a question?</h3>
+        <p class="faq__card-text">Our team is ready to assist you with anything you need.</p>
+        <a href="#consultation" class="btn btn--dark">
+          Book a free consultation
+          <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+        </a>
+      </div>
+    </div>
+
+    <div class="faq__list" data-faq>
+      <div class="faq-item" data-open="true">
+        <button type="button" class="faq-item__question" aria-expanded="true">
+          What immigration programs does HOF Migration specialize in?
+          <span class="faq-item__icon">
+            <svg class="faq-item__plus" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="faq-item__minus" viewBox="0 0 12 12" fill="none"><path d="M0 6h12" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="faq-item__panel">
+          <div class="faq-item__panel-inner">
+            <p class="faq-item__answer">
+              We specialize in skilled migration, study visas, family sponsorship, investor and
+              golden visa programs, and USA EB-2 NIW petitions &mdash; covering pathways to
+              Canada, Australia, the UK, the USA, and Europe.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-open="false">
+        <button type="button" class="faq-item__question" aria-expanded="false">
+          Are you licensed immigration consultants?
+          <span class="faq-item__icon">
+            <svg class="faq-item__plus" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="faq-item__minus" viewBox="0 0 12 12" fill="none"><path d="M0 6h12" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="faq-item__panel">
+          <div class="faq-item__panel-inner">
+            <p class="faq-item__answer">
+              Yes. Our consultants are ICCRC/CICC and MARA certified, meeting the regulatory
+              standards required to represent clients in Canadian and Australian immigration
+              matters.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-open="false">
+        <button type="button" class="faq-item__question" aria-expanded="false">
+          How long does the immigration process usually take?
+          <span class="faq-item__icon">
+            <svg class="faq-item__plus" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="faq-item__minus" viewBox="0 0 12 12" fill="none"><path d="M0 6h12" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="faq-item__panel">
+          <div class="faq-item__panel-inner">
+            <p class="faq-item__answer">
+              Timelines vary by pathway and destination. Express Entry profiles can receive
+              invitations within weeks, while skilled nomination and family sponsorship routes
+              typically take 3 to 6 months. We outline a clear timeline for your specific case
+              from the start.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-open="false">
+        <button type="button" class="faq-item__question" aria-expanded="false">
+          Can my spouse and family members be included in the application?
+          <span class="faq-item__icon">
+            <svg class="faq-item__plus" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="faq-item__minus" viewBox="0 0 12 12" fill="none"><path d="M0 6h12" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="faq-item__panel">
+          <div class="faq-item__panel-inner">
+            <p class="faq-item__answer">
+              In most programs, yes &mdash; eligible spouses, partners, and dependent children
+              can usually be included as part of your application. We&rsquo;ll confirm exactly
+              who qualifies under your chosen pathway.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-open="false">
+        <button type="button" class="faq-item__question" aria-expanded="false">
+          What documents do I need to get started?
+          <span class="faq-item__icon">
+            <svg class="faq-item__plus" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="faq-item__minus" viewBox="0 0 12 12" fill="none"><path d="M0 6h12" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="faq-item__panel">
+          <div class="faq-item__panel-inner">
+            <p class="faq-item__answer">
+              Requirements differ by program, but you&rsquo;ll typically need valid
+              identification, education and work history records, language test results, and
+              financial documentation. We provide a personalized checklist once we understand
+              your goals.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-open="false">
+        <button type="button" class="faq-item__question" aria-expanded="false">
+          How can I verify that HOF Migration is legitimate?
+          <span class="faq-item__icon">
+            <svg class="faq-item__plus" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="faq-item__minus" viewBox="0 0 12 12" fill="none"><path d="M0 6h12" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="faq-item__panel">
+          <div class="faq-item__panel-inner">
+            <p class="faq-item__answer">
+              You can verify our credentials directly with the relevant regulatory bodies
+              (ICCRC/CICC, MARA), and we&rsquo;re happy to share our registration details and
+              client references on request.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item" data-open="false">
+        <button type="button" class="faq-item__question" aria-expanded="false">
+          Do immigration consultants guarantee visa approval?
+          <span class="faq-item__icon">
+            <svg class="faq-item__plus" viewBox="0 0 12 12" fill="none"><path d="M6 0v12M0 6h12" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg class="faq-item__minus" viewBox="0 0 12 12" fill="none"><path d="M0 6h12" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <div class="faq-item__panel">
+          <div class="faq-item__panel-inner">
+            <p class="faq-item__answer">
+              No consultancy can guarantee a visa outcome, as final decisions rest with
+              government authorities. What we guarantee is honest advice, a properly prepared
+              application, and dedicated support at every step.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================================
+     Work with Experts — copy, callback form and the tree, as one section
+     ==================================================================== -->
+<section class="expert-cta" id="consultation-form">
+  <div class="expert-cta__card" data-bird-scene>
+    <!--
+      The tree, plus the flock. Each bird is stacked twice at a point on one
+      of the branches — perched (shown at rest) and in flight — and
+      cta-birds.js swaps the poses when the section is reached. The overlay
+      shares the tree SVG's 1000x900 viewBox, which is why the perch points
+      can come straight off the branch curves.
+    -->
+    <div class="expert-cta__scene" aria-hidden="true">
+      <img class="expert-cta__img" src="assets/cta/cta-forest.svg" alt="" />
+
+      <svg class="expert-cta__birds" viewBox="0 0 1000 900" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <g id="hof-bird-perched">
+            <path d="M-1.5 0 L-1.5 -6" stroke="#efeadb" stroke-width="1.4" stroke-linecap="round" />
+            <path d="M2 0 L2 -6" stroke="#efeadb" stroke-width="1.4" stroke-linecap="round" />
+            <path d="M6 -9 L21 -3 L7 -6 Z" fill="#e6e0cf" />
+            <ellipse cx="0" cy="-11" rx="10" ry="7.6" transform="rotate(-12 0 -11)" fill="#f6f2e6" />
+            <path d="M-4 -12 C1 -16 7 -15 9 -10 C5 -7 -1 -8 -4 -12 Z" fill="#dcd5c1" />
+            <circle cx="-8.5" cy="-19" r="5" fill="#f6f2e6" />
+            <path d="M-12.6 -19.4 L-17.5 -18.2 L-12.6 -16.8 Z" fill="#e0913c" />
+            <circle cx="-9.6" cy="-20.2" r="1.05" fill="#14261c" />
+          </g>
+          <g id="hof-bird-body">
+            <path d="M9 0 L21 -3.4 L21 3.4 Z" fill="#e6e0cf" />
+            <ellipse cx="0" cy="0" rx="11" ry="3.8" fill="#f6f2e6" />
+            <circle cx="-10" cy="-1" r="3.6" fill="#f6f2e6" />
+            <path d="M-13.4 -1.2 L-18 -0.2 L-13.4 1 Z" fill="#e0913c" />
+          </g>
+        </defs>
+
+      <g transform="translate(552 416)">
+        <g class="cta-bird cta-bird--1">
+          <g transform="scale(1.4 1.4)">
+            <use class="cta-bird__perched" href="#hof-bird-perched" />
+            <g class="cta-bird__flying" transform="translate(0 -12)">
+              <g class="cta-bird__wing cta-bird__wing--far"><path d="M0 0 C-7 -10 -18 -17 -31 -20 C-21 -11 -10 -4 0 0 Z" fill="#dcd5c1" /></g><g class="cta-bird__wing cta-bird__wing--near"><path d="M0 0 C-7 10 -18 17 -31 20 C-21 11 -10 4 0 0 Z" fill="#f6f2e6" /></g>
+              <use href="#hof-bird-body" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <g transform="translate(455 365)">
+        <g class="cta-bird cta-bird--2">
+          <g transform="scale(1.4 1.4)">
+            <use class="cta-bird__perched" href="#hof-bird-perched" />
+            <g class="cta-bird__flying" transform="translate(0 -12)">
+              <g class="cta-bird__wing cta-bird__wing--far"><path d="M0 0 C-7 -10 -18 -17 -31 -20 C-21 -11 -10 -4 0 0 Z" fill="#dcd5c1" /></g><g class="cta-bird__wing cta-bird__wing--near"><path d="M0 0 C-7 10 -18 17 -31 20 C-21 11 -10 4 0 0 Z" fill="#f6f2e6" /></g>
+              <use href="#hof-bird-body" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <g transform="translate(696 326)">
+        <g class="cta-bird cta-bird--3">
+          <g transform="scale(1.4 1.4)">
+            <use class="cta-bird__perched" href="#hof-bird-perched" />
+            <g class="cta-bird__flying" transform="translate(0 -12)">
+              <g class="cta-bird__wing cta-bird__wing--far"><path d="M0 0 C-7 -10 -18 -17 -31 -20 C-21 -11 -10 -4 0 0 Z" fill="#dcd5c1" /></g><g class="cta-bird__wing cta-bird__wing--near"><path d="M0 0 C-7 10 -18 17 -31 20 C-21 11 -10 4 0 0 Z" fill="#f6f2e6" /></g>
+              <use href="#hof-bird-body" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <g transform="translate(830 431)">
+        <g class="cta-bird cta-bird--4">
+          <g transform="scale(-1.4 1.4)">
+            <use class="cta-bird__perched" href="#hof-bird-perched" />
+            <g class="cta-bird__flying" transform="translate(0 -12)">
+              <g class="cta-bird__wing cta-bird__wing--far"><path d="M0 0 C-7 -10 -18 -17 -31 -20 C-21 -11 -10 -4 0 0 Z" fill="#dcd5c1" /></g><g class="cta-bird__wing cta-bird__wing--near"><path d="M0 0 C-7 10 -18 17 -31 20 C-21 11 -10 4 0 0 Z" fill="#f6f2e6" /></g>
+              <use href="#hof-bird-body" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <g transform="translate(925 370)">
+        <g class="cta-bird cta-bird--5">
+          <g transform="scale(-1.4 1.4)">
+            <use class="cta-bird__perched" href="#hof-bird-perched" />
+            <g class="cta-bird__flying" transform="translate(0 -12)">
+              <g class="cta-bird__wing cta-bird__wing--far"><path d="M0 0 C-7 -10 -18 -17 -31 -20 C-21 -11 -10 -4 0 0 Z" fill="#dcd5c1" /></g><g class="cta-bird__wing cta-bird__wing--near"><path d="M0 0 C-7 10 -18 17 -31 20 C-21 11 -10 4 0 0 Z" fill="#f6f2e6" /></g>
+              <use href="#hof-bird-body" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <g transform="translate(503 566)">
+        <g class="cta-bird cta-bird--6">
+          <g transform="scale(1.4 1.4)">
+            <use class="cta-bird__perched" href="#hof-bird-perched" />
+            <g class="cta-bird__flying" transform="translate(0 -12)">
+              <g class="cta-bird__wing cta-bird__wing--far"><path d="M0 0 C-7 -10 -18 -17 -31 -20 C-21 -11 -10 -4 0 0 Z" fill="#dcd5c1" /></g><g class="cta-bird__wing cta-bird__wing--near"><path d="M0 0 C-7 10 -18 17 -31 20 C-21 11 -10 4 0 0 Z" fill="#f6f2e6" /></g>
+              <use href="#hof-bird-body" />
+            </g>
+          </g>
+        </g>
+      </g>
+      <g transform="translate(876 524)">
+        <g class="cta-bird cta-bird--7">
+          <g transform="scale(-1.4 1.4)">
+            <use class="cta-bird__perched" href="#hof-bird-perched" />
+            <g class="cta-bird__flying" transform="translate(0 -12)">
+              <g class="cta-bird__wing cta-bird__wing--far"><path d="M0 0 C-7 -10 -18 -17 -31 -20 C-21 -11 -10 -4 0 0 Z" fill="#dcd5c1" /></g><g class="cta-bird__wing cta-bird__wing--near"><path d="M0 0 C-7 10 -18 17 -31 20 C-21 11 -10 4 0 0 Z" fill="#f6f2e6" /></g>
+              <use href="#hof-bird-body" />
+            </g>
+          </g>
+        </g>
+      </g>
+      </svg>
+    </div>
+
+    <div class="expert-cta__content">
+      <div class="expert-cta__copy">
+        <h2 class="expert-cta__title">Work with<br />Experts to help you migrate</h2>
+        <ul class="expert-cta__list">
+        <li>
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="rgba(255,255,255,0.12)" stroke="#fff" stroke-width="1.2"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Book a Free Consultation &mdash; No Commitment Required
+        </li>
+        <li>
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="rgba(255,255,255,0.12)" stroke="#fff" stroke-width="1.2"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Discover Your Eligible Visa Pathways
+        </li>
+        <li>
+          <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="rgba(255,255,255,0.12)" stroke="#fff" stroke-width="1.2"/><path d="M6 10.2l2.6 2.6L14 7.4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Get Matched With The Right Immigration Expert
+        </li>
+        </ul>
+      </div>
+
+      <div class="expert-cta__form-card" id="consultation">
+        <form class="callback-form__form" onsubmit="return false">
+          <div class="callback-form__row">
+            <div class="callback-form__field">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="callback-form__field">
+              <label for="cf-phone">Phone Number</label>
+              <input type="tel" id="cf-phone" name="phone" placeholder="+971 00 000 0000" required />
+            </div>
+          </div>
+
+          <div class="callback-form__field">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" placeholder="you@example.com" required />
+          </div>
+
+          <div class="callback-form__field">
+            <label for="cf-program">Program</label>
+            <select id="cf-program" name="program" required>
+              <option value="" disabled selected>Select a program</option>
+            <option>Skilled Migration &ndash; Canada &amp; Australia</option>
+            <option>Study Abroad &amp; Student Visas</option>
+            <option>Family Sponsorship &amp; Reunification</option>
+            <option>USA EB-2 NIW &amp; Investor Visas</option>
+            <option>Europe Golden Visa &amp; Visitor Visas</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn--white callback-form__submit">
+            Submit
+            <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Share Your Feedback (Figma 247:147). The ask sits at the top of the
+     column and the artwork along the bottom; the line under it cycles
+     through the five languages in the reference every second. -->
+<section class="feedback" id="feedback">
+  <div class="feedback__inner">
+    <div class="feedback__content">
+      <h2 class="feedback__title">Share Your Feedback</h2>
+      <p class="feedback__text">
+        Immigration is a process that takes time and effort. We make it smoother by
+        taking the process off your hands, and we are straight with you about the
+        parts no one controls — laws change, government policies shift, and political
+        situations can affect an outcome after everything has been done right. What we
+        can promise is that you come first, and that your time, your money and your
+        effort are treated as if they were our own.
+      </p>
+      <a href="#" class="btn btn--dark feedback__cta">
+        Share Your Feedback
+        <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+      </a>
+    </div>
+
+    <div class="feedback__artwork" data-feedback-languages>
+      <p class="feedback__line">
+        <span class="feedback__typed" lang="en">we care about you</span><span class="feedback__caret" aria-hidden="true"></span>
+      </p>
+      <!-- The phrases the line types through. Hidden from view but left in the
+           markup so the set is readable without script and stays visible to
+           assistive tech, which never sees the character-by-character render. -->
+      <span class="feedback__sources" hidden data-feedback-sources>
+        <span lang="en">we care about you</span>
+        <span lang="ar" dir="rtl">نحن نهتم بك</span>
+        <span lang="ur" dir="rtl">ہمیں آپ کی فکر ہے</span>
+        <span lang="hi">हमें आपकी फ़िक्र है</span>
+      </span>
+      <div class="feedback__tiles" aria-hidden="true">
+        <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+        <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+        <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+        <span class="feedback__tile"><span class="feedback__tile-glyph"></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+    <div class="footer__top">
+      <div>
+        <h3 class="footer__heading">Newsletter</h3>
+        <form class="footer__newsletter-form" onsubmit="return false">
+          <input type="email" class="footer__newsletter-input" placeholder="Enter your email address" aria-label="Email address" />
+          <button type="submit" class="footer__subscribe">
+            Subscribe
+            <span class="footer__subscribe-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="#14161a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </form>
+        <p class="footer__newsletter-tagline">Let&rsquo;s transform your vision into results.</p>
+      </div>
+
+      <div>
+        <h3 class="footer__heading">Links</h3>
+        <ul class="footer__links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#stories">Success Stories</a></li>
+          <li><a href="#">About Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer__heading">Company</h3>
+        <ul class="footer__links">
+          <li><a href="#">Our Team</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__info">
+      <div class="footer__info-item">
+        <span class="footer__info-label">Email</span>
+        <span class="footer__info-value">info@hofmigration.com</span>
+      </div>
+      <div class="footer__info-item">
+        <span class="footer__info-label">Visit Us</span>
+        <span class="footer__info-value">Business Bay, Dubai, UAE</span>
+      </div>
+      <div class="footer__info-item">
+        <span class="footer__info-label">Call Us Now</span>
+        <span class="footer__info-value">+971 4 385 2200</span>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <div class="footer__bottom-top">
+        <div class="footer__brand">
+          <img src="assets/icons-v2/logo-brand-white.svg" alt="HOF Migration" class="footer__brand-logo" />
+        </div>
+        <div class="footer__legal">
+          <a href="#">Privacy Policy</a>
+          <span>&bull;</span>
+          <a href="#">Terms</a>
+          <span>&bull;</span>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+      <div class="footer__bottom-divider"></div>
+      <div class="footer__bottom-bottom">
+        <div class="footer__social">
+          <a href="#">Twitter</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Facebook</a>
+          <a href="#">Instagram</a>
+        </div>
+        <span class="footer__copy">&copy; 2026. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+<script src="carousel.js"></script>
+<script src="plane-window.js"></script>
+<script src="i18n.js"></script>
+<script src="services-scroll.js"></script>
+<script src="reviews-carousel.js"></script>
+<script src="faq.js"></script>
+<script src="cta-birds.js"></script>
+<script src="feedback-languages.js"></script>

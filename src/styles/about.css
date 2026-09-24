@@ -1,0 +1,466 @@
+/* ==========================================================================
+   HOF Migration — About Us
+
+   Three things live here: the company account, the brandmark stage, and the
+   two sets of people. The stage stays dark in both themes, the way the Work
+   with Experts card does — it is a lit object, not a surface that follows the
+   page, and holding it constant is what makes the logo read as the same mark
+   everywhere.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Company account
+   -------------------------------------------------------------------------- */
+
+.about-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 4vw, 80px);
+  align-items: start;
+}
+
+.about-intro__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(30px, 3.2vw, 52px);
+  line-height: 1.12;
+  letter-spacing: -0.012em;
+}
+
+.about-intro__body {
+  display: grid;
+  gap: clamp(14px, 1.2vw, 20px);
+}
+
+.about-intro__body p {
+  font-size: clamp(15px, 1.12vw, 18px);
+  line-height: 1.78;
+  color: var(--sub);
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: clamp(14px, 1.4vw, 24px);
+  margin-block-start: clamp(28px, 3vw, 52px);
+}
+
+.about-stat {
+  display: grid;
+  gap: 6px;
+  padding: clamp(20px, 2vw, 28px);
+  border-radius: 20px;
+  background: var(--brand-lightest);
+}
+
+.about-stat b {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 3vw, 46px);
+  line-height: 1;
+  color: var(--brand-ink);
+}
+
+.about-stat span {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #55655f;
+}
+
+/* --------------------------------------------------------------------------
+   Brandmark stage
+
+   The lockup is inlined as SVG so its three parts can be moved separately:
+   the stem grows, the mark blooms open, and the wordmark is wiped in behind
+   them. Everything is triggered by .is-in, which page.js adds when the stage
+   arrives, so the sequence plays once, in view, rather than before anyone is
+   looking at it.
+   -------------------------------------------------------------------------- */
+
+.brandmark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 26px;
+  padding: clamp(56px, 8vw, 132px) clamp(24px, 4vw, 80px);
+  border-radius: 32px;
+  overflow: hidden;
+  isolation: isolate;
+  background: radial-gradient(120% 140% at 50% 0%, #16211e 0%, #0a100e 46%, #050908 100%);
+}
+
+/* the halo — a slow breath rather than a pulse */
+.brandmark__glow {
+  position: absolute;
+  inset-block-start: -28%;
+  inset-inline-start: 50%;
+  width: min(760px, 86%);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(141, 171, 164, 0.4) 0%, rgba(141, 171, 164, 0.08) 42%, transparent 68%);
+  filter: blur(18px);
+  z-index: -2;
+  animation: bm-breathe 9s ease-in-out infinite;
+}
+
+/* a single ring, turning slowly, to give the field a direction */
+.brandmark__ring {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: min(620px, 78%);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  z-index: -1;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(141, 171, 164, 0.22) 60deg,
+    transparent 130deg,
+    transparent 240deg,
+    rgba(141, 171, 164, 0.12) 300deg,
+    transparent 360deg
+  );
+  mask: radial-gradient(circle, transparent 58%, #000 60%, #000 66%, transparent 68%);
+  -webkit-mask: radial-gradient(circle, transparent 58%, #000 60%, #000 66%, transparent 68%);
+  animation: bm-turn 26s linear infinite;
+  opacity: 0;
+  transition: opacity 1200ms ease 400ms;
+}
+
+.brandmark.is-in .brandmark__ring {
+  opacity: 1;
+}
+
+.brandmark__lockup {
+  position: relative;
+  width: min(720px, 100%);
+}
+
+.brandmark__lockup svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --- the three parts ----------------------------------------------------- */
+
+.bm-mark,
+.bm-stem,
+.bm-word {
+  opacity: 0;
+}
+
+.bm-mark {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.bm-stem {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+.brandmark.is-in .bm-stem {
+  animation: bm-grow 900ms cubic-bezier(0.2, 0, 0.1, 1) 120ms forwards;
+}
+
+.brandmark.is-in .bm-mark {
+  animation: bm-bloom 1100ms cubic-bezier(0.16, 1, 0.3, 1) 380ms forwards;
+}
+
+.brandmark.is-in .bm-word {
+  animation: bm-wipe 1000ms cubic-bezier(0.2, 0, 0.1, 1) 760ms forwards;
+}
+
+/* the specular pass — one sweep across the lockup, on a long loop */
+.brandmark__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    transparent 38%,
+    rgba(255, 255, 255, 0.13) 48%,
+    rgba(255, 255, 255, 0.28) 51%,
+    rgba(255, 255, 255, 0.13) 54%,
+    transparent 64%
+  );
+  translate: -120% 0;
+  opacity: 0;
+}
+
+.brandmark.is-in .brandmark__sheen {
+  animation: bm-sheen 7s ease-in-out 1900ms infinite;
+}
+
+.brandmark__caption {
+  position: relative;
+  z-index: 3;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.46);
+}
+
+@keyframes bm-grow {
+  from {
+    opacity: 0;
+    scale: 1 0.04;
+  }
+  to {
+    opacity: 1;
+    scale: 1 1;
+  }
+}
+
+@keyframes bm-bloom {
+  from {
+    opacity: 0;
+    scale: 0.42;
+    rotate: -38deg;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+
+@keyframes bm-wipe {
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* the wipe runs from the other edge when the page is mirrored */
+html[dir='rtl'] .brandmark.is-in .bm-word {
+  animation-name: bm-wipe-rtl;
+}
+
+@keyframes bm-wipe-rtl {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes bm-sheen {
+  0% {
+    translate: -120% 0;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  34% {
+    translate: 120% 0;
+    opacity: 0;
+  }
+  100% {
+    translate: 120% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes bm-breathe {
+  0%,
+  100% {
+    scale: 1;
+    opacity: 0.72;
+  }
+  50% {
+    scale: 1.12;
+    opacity: 1;
+  }
+}
+
+@keyframes bm-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+/* Reduced motion: the lockup is simply present. Nothing moves, nothing
+   turns, and nothing is hidden waiting for an animation that will not run. */
+@media (prefers-reduced-motion: reduce) {
+  .bm-mark,
+  .bm-stem,
+  .bm-word {
+    opacity: 1;
+  }
+
+  .brandmark.is-in .bm-mark,
+  .brandmark.is-in .bm-stem,
+  .brandmark.is-in .bm-word,
+  .brandmark__glow,
+  .brandmark__ring,
+  .brandmark.is-in .brandmark__sheen {
+    animation: none;
+  }
+
+  .brandmark__sheen {
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   People
+   -------------------------------------------------------------------------- */
+
+.people {
+  display: grid;
+  /* five to a set: sized so they land three-then-two rather than leaving a
+     single card alone on the second row */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: clamp(16px, 1.8vw, 28px);
+}
+
+.person {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: clamp(20px, 2vw, 30px);
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(16, 32, 28, 0.05), 0 16px 40px rgba(16, 32, 28, 0.06);
+  transition: transform 280ms cubic-bezier(0.2, 0, 0.1, 1), box-shadow 280ms ease;
+}
+
+.person:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1px 2px rgba(16, 32, 28, 0.06), 0 28px 60px rgba(16, 32, 28, 0.12);
+}
+
+/* No photographs exist yet, so the card carries a monogram rather than a
+   grey silhouette. --mono sets each one's place on the brand ramp. */
+.person__mono {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, var(--mono, #8daba4), color-mix(in srgb, var(--mono, #8daba4) 55%, #0b1311));
+  font-family: var(--font-serif);
+  font-size: 22px;
+  letter-spacing: 0.02em;
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+
+.person__name {
+  font-size: clamp(17px, 1.3vw, 21px);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.person__role {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brand-ink);
+}
+
+.person__text {
+  font-size: 14.5px;
+  line-height: 1.66;
+  color: var(--sub);
+}
+
+.person__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #6b7a76;
+  transition: color 180ms ease;
+}
+
+.person__link::after {
+  content: '→';
+  transition: transform 220ms ease;
+}
+
+.person:hover .person__link {
+  color: var(--brand-ink);
+}
+
+.person:hover .person__link::after {
+  transform: translateX(4px);
+}
+
+html[dir='rtl'] .person__link::after {
+  content: '←';
+}
+
+html[dir='rtl'] .person:hover .person__link::after {
+  transform: translateX(-4px);
+}
+
+/* --------------------------------------------------------------------------
+   Person detail
+   -------------------------------------------------------------------------- */
+
+.person-page__head {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2vw, 32px);
+  flex-wrap: wrap;
+}
+
+.person-page__head .person__mono {
+  width: clamp(84px, 8vw, 116px);
+  height: clamp(84px, 8vw, 116px);
+  border-radius: 28px;
+  font-size: clamp(30px, 3vw, 42px);
+}
+
+.person-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.8fr);
+  gap: clamp(28px, 4vw, 76px);
+  align-items: start;
+}
+
+.person-prose {
+  display: grid;
+  gap: clamp(15px, 1.3vw, 22px);
+  max-width: 68ch;
+}
+
+.person-prose p {
+  font-size: clamp(15px, 1.12vw, 18px);
+  line-height: 1.78;
+  color: var(--sub);
+}
+
+.person-prose h2 {
+  margin-block-start: clamp(8px, 0.9vw, 16px);
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(23px, 2vw, 32px);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+@media (max-width: 1000px) {
+  .about-intro,
+  .person-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

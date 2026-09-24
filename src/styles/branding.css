@@ -1,0 +1,626 @@
+/* ==========================================================================
+   HOF Migration — Brand page
+
+   A standalone showcase. It deliberately loads the site's own stylesheets for
+   the two components it presents — the certification chips and the language
+   tiles — so what is on display is the shipping component, not a copy of it
+   that can drift. Everything else on the page lives here.
+   ========================================================================== */
+
+:root {
+  /* the ramp, hue 166 throughout — 400 is the primary, 50 the tone the hero
+     opens on, 800 the ink the certification chip sets its label in, 950 the
+     ground the hero falls to in dark mode */
+  --b50: #f1f8f7;
+  --b100: #e1efec;
+  --b200: #cbe2dc;
+  --b300: #abc9c2;
+  --b400: #8daba4;
+  --b500: #66998d;
+  --b600: #518579;
+  --b700: #406d63;
+  --b800: #2e564d;
+  --b900: #20322e;
+  --b950: #0b1311;
+
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-arabic: 'Noto Sans Arabic', 'Plus Jakarta Sans', sans-serif;
+
+  --page: #fff;
+  --page-2: var(--b50);
+  --ink: #101413;
+  --ink-2: rgba(16, 20, 19, 0.62);
+  --rule: rgba(16, 20, 19, 0.12);
+  --card: #fff;
+}
+
+html.brand-dark {
+  --page: #000;
+  --page-2: #070b0a;
+  --ink: #f1f7f6;
+  --ink-2: rgba(255, 255, 255, 0.62);
+  --rule: rgba(255, 255, 255, 0.14);
+  --card: #0c110f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  transition: background-color 500ms ease, color 500ms ease;
+}
+
+.brand-wrap {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 72px);
+}
+
+/* --------------------------------------------------------------------------
+   Masthead
+   -------------------------------------------------------------------------- */
+
+.masthead {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: linear-gradient(61.85deg, var(--b50) 1.13%, var(--b100) 97.73%);
+  transition: background 500ms ease;
+}
+
+html.brand-dark .masthead {
+  background: linear-gradient(61.85deg, #0b1311 1.13%, #040b0a 97.73%);
+}
+
+/* a very large Arabic word set behind the title — "migration" — carrying the
+   Arabic face at a scale you can actually read the letterforms at */
+.masthead__ghost {
+  position: absolute;
+  inset-inline-end: -4%;
+  bottom: -6%;
+  font-family: var(--font-arabic);
+  font-weight: 600;
+  font-size: clamp(180px, 34vw, 560px);
+  line-height: 0.8;
+  color: var(--b400);
+  opacity: 0.16;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+html.brand-dark .masthead__ghost {
+  opacity: 0.1;
+}
+
+.masthead__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.masthead__eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--b700);
+}
+
+html.brand-dark .masthead__eyebrow {
+  color: var(--b300);
+}
+
+.masthead__logo {
+  display: block;
+  height: clamp(88px, 12vw, 168px);
+  width: auto;
+  margin: clamp(24px, 3vw, 40px) 0;
+}
+
+.masthead__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(44px, 7vw, 116px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  max-width: 16ch;
+}
+
+.masthead__title em {
+  font-style: italic;
+  color: var(--b600);
+}
+
+html.brand-dark .masthead__title em {
+  color: var(--b300);
+}
+
+.masthead__lede {
+  margin-top: clamp(18px, 2vw, 28px);
+  max-width: 54ch;
+  font-size: clamp(15px, 1.2vw, 18px);
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+
+/* --------------------------------------------------------------------------
+   Section scaffolding
+   -------------------------------------------------------------------------- */
+
+.section {
+  padding: clamp(72px, 9vw, 150px) 0;
+  border-top: 1px solid var(--rule);
+}
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(16px, 2vw, 28px);
+  margin-bottom: clamp(36px, 4.5vw, 68px);
+}
+
+.section__num {
+  font-family: var(--font-serif);
+  font-size: clamp(20px, 2vw, 32px);
+  color: var(--b400);
+}
+
+.section__title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4vw, 62px);
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+
+.section__note {
+  margin-inline-start: auto;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+/* --------------------------------------------------------------------------
+   Colour
+   -------------------------------------------------------------------------- */
+
+.colour-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(20px, 2.4vw, 36px);
+  margin-bottom: clamp(20px, 2.4vw, 36px);
+}
+
+.colour-hero__primary {
+  appearance: none;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
+  align-items: flex-start;
+  background: var(--b400);
+  border-radius: 22px;
+  padding: clamp(26px, 3vw, 44px);
+  min-height: clamp(220px, 26vw, 360px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #10201c;
+}
+
+.colour-hero__primary h3 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 3.4vw, 54px);
+}
+
+.colour-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 26px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.colour-hero__gradients {
+  display: grid;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+
+.gradient-card {
+  border-radius: 22px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-end;
+  min-height: 108px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.gradient-card--light {
+  background: linear-gradient(61.85deg, #f1f8f6 1.13%, #e0efeb 97.73%);
+  color: #2e564d;
+  border: 1px solid var(--rule);
+}
+
+.gradient-card--dark {
+  background: linear-gradient(61.85deg, #0b1311 1.13%, #040b0a 97.73%);
+  color: #cbe2dc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ramp {
+  display: grid;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.swatch {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  min-height: clamp(96px, 12vw, 168px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: 12px 10px;
+  text-align: start;
+  transition: transform 260ms cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+.swatch:hover,
+.swatch:focus-visible {
+  transform: translateY(-8px);
+  outline: none;
+}
+
+.swatch b {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.swatch span {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
+
+.specimens {
+  display: grid;
+  gap: clamp(18px, 2vw, 28px);
+}
+
+.specimen {
+  border: 1px solid var(--rule);
+  border-radius: 22px;
+  padding: clamp(24px, 3vw, 48px);
+  background: var(--card);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr);
+  gap: clamp(20px, 3vw, 52px);
+  align-items: center;
+  transition: background-color 500ms ease, border-color 500ms ease;
+}
+
+.specimen__glyph {
+  font-size: clamp(90px, 13vw, 210px);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  color: var(--b600);
+}
+
+html.brand-dark .specimen__glyph {
+  color: var(--b300);
+}
+
+.specimen__name {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(24px, 2.6vw, 40px);
+  margin-bottom: 6px;
+}
+
+.specimen__role {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--b600);
+  margin-bottom: 18px;
+}
+
+html.brand-dark .specimen__role {
+  color: var(--b300);
+}
+
+.specimen__line {
+  font-size: clamp(19px, 2vw, 32px);
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.specimen__scale {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+.is-serif {
+  font-family: var(--font-serif);
+}
+.is-sans {
+  font-family: var(--font-sans);
+}
+.is-arabic {
+  font-family: var(--font-arabic);
+}
+
+/* --------------------------------------------------------------------------
+   Logos
+   -------------------------------------------------------------------------- */
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.logo-tile {
+  border-radius: 22px;
+  min-height: clamp(180px, 22vw, 300px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.logo-tile--light {
+  background: linear-gradient(61.85deg, #f1f8f6 1.13%, #e0efeb 97.73%);
+  border: 1px solid var(--rule);
+}
+
+.logo-tile--dark {
+  background: linear-gradient(61.85deg, #0b1311 1.13%, #040b0a 97.73%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-tile img {
+  height: clamp(58px, 7.4vw, 104px);
+  width: auto;
+  display: block;
+}
+
+.logo-tile__tag {
+  position: absolute;
+  inset-block-start: 16px;
+  inset-inline-start: 20px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.logo-tile--light .logo-tile__tag {
+  color: #2e564d;
+}
+.logo-tile--dark .logo-tile__tag {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* --------------------------------------------------------------------------
+   Certification — the shipping chip, shown large
+   -------------------------------------------------------------------------- */
+
+.cert-stage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 4vw, 72px);
+  align-items: center;
+  justify-content: center;
+  padding: clamp(36px, 5vw, 80px);
+  border-radius: 26px;
+  background: var(--page-2);
+  border: 1px solid var(--rule);
+  transition: background-color 500ms ease;
+}
+
+.cert-stage .cert-chip {
+  --chip-size: clamp(120px, 17vw, 210px);
+}
+
+/* --------------------------------------------------------------------------
+   Language tiles + the typing line
+   -------------------------------------------------------------------------- */
+
+.motion-stage {
+  border-radius: 26px;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  padding: clamp(28px, 4vw, 64px);
+  transition: background-color 500ms ease;
+}
+
+.motion-stage .feedback__artwork {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(20px, 2.6vw, 40px);
+  container-type: inline-size;
+}
+
+.motion-stage .feedback__line {
+  color: var(--ink);
+  /* the component caps at 48px for the site; here it is the exhibit */
+  font-size: clamp(34px, 6.4cqi, 96px);
+}
+
+.motion-stage .feedback__tile {
+  --tile: clamp(66px, 9.4vw, 148px);
+  transition: transform 420ms cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+.motion-stage .feedback__tiles:hover .feedback__tile {
+  transform: translateY(-10px);
+}
+
+.motion-stage .feedback__tiles .feedback__tile:nth-child(2) {
+  transition-delay: 60ms;
+}
+.motion-stage .feedback__tiles .feedback__tile:nth-child(3) {
+  transition-delay: 120ms;
+}
+.motion-stage .feedback__tiles .feedback__tile:nth-child(4) {
+  transition-delay: 180ms;
+}
+
+html.brand-dark .motion-stage .feedback__tile:nth-child(even) {
+  background: #131b19;
+}
+
+/* a row of Arabic words, each one a different weight of the Arabic face */
+.arabic-row {
+  margin-top: clamp(32px, 4vw, 60px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(18px, 3vw, 54px);
+  align-items: baseline;
+  font-family: var(--font-arabic);
+  direction: rtl;
+}
+
+.arabic-row span {
+  font-size: clamp(30px, 4.4vw, 72px);
+  line-height: 1.4;
+  color: var(--b600);
+  transition: color 300ms ease, opacity 300ms ease;
+  opacity: 0.85;
+}
+
+.arabic-row span:hover {
+  color: var(--b400);
+  opacity: 1;
+}
+
+html.brand-dark .arabic-row span {
+  color: var(--b300);
+}
+
+.arabic-row small {
+  display: block;
+  direction: ltr;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin-top: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Theme control + copy toast
+   -------------------------------------------------------------------------- */
+
+.theme-toggle {
+  position: fixed;
+  inset-block-start: clamp(16px, 2vw, 28px);
+  inset-inline-end: clamp(16px, 2vw, 28px);
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background-color 400ms ease, color 400ms ease, border-color 400ms ease;
+}
+
+.theme-toggle__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--b400);
+}
+
+html.brand-dark .theme-toggle__dot {
+  background: var(--b300);
+}
+
+.toast {
+  position: fixed;
+  inset-block-end: 28px;
+  inset-inline-start: 50%;
+  transform: translate(-50%, 16px);
+  z-index: 30;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--b800);
+  color: #fff;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.brand-foot {
+  padding: clamp(40px, 5vw, 80px) 0 clamp(56px, 6vw, 96px);
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--ink-2);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .swatch,
+  .motion-stage .feedback__tile {
+    transition: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .colour-hero,
+  .specimen,
+  .logo-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ramp {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .specimen__glyph {
+    text-align: center;
+  }
+}

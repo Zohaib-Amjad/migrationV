@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HOF Migration — Airplane Window Hero (Light)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles-window-light.css" />
+</head>
+<body>
+
+  <section class="hero-v3">
+    <div class="hero-v3__inner">
+      <header class="nav">
+        <div class="nav__group">
+          <a href="/" class="nav__logo">
+            <img src="assets/icons-v2/logo-mark.svg" alt="" class="nav__logo-mark" />
+            <span>HOF Migration</span>
+          </a>
+
+          <nav class="nav__links" aria-label="Primary">
+            <a href="#services" class="nav__link nav__link--dropdown">
+              Services
+              <img src="assets/icons-v2/chevron-down.svg" alt="" class="nav__chevron" />
+            </a>
+            <a href="#destinations" class="nav__link">Destinations</a>
+            <a href="#about" class="nav__link">About Us</a>
+          </nav>
+        </div>
+
+        <div class="nav__group nav__group--right">
+          <a href="#" class="nav__lang" dir="auto">العربية</a>
+          <span class="nav__divider" aria-hidden="true"></span>
+          <button type="button" class="nav__icon-btn" aria-label="Change language / region">
+            <img src="assets/icons-v2/globe.svg" alt="" />
+          </button>
+          <a href="#consultation" class="btn btn--panel">
+            Book a free consultation
+            <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+          </a>
+        </div>
+      </header>
+
+      <div class="hero-v3__row">
+        <div class="hero-v3__content">
+          <div class="badge">
+            <img src="assets/icons-v2/badge-icon.png" alt="" class="badge__icon" />
+            <span class="badge__text">ICCRC &amp; MARA Certified</span>
+            <span class="badge__logos">
+              <img src="assets/icons-v2/partner-logo-1.png" alt="ICCRC" class="badge__logo" />
+              <img src="assets/icons-v2/partner-logo-2.png" alt="MARA" class="badge__logo" />
+            </span>
+          </div>
+
+          <div class="hero-v3__copy">
+            <h1 class="hero-v3__title">The Gulf&rsquo;s #1<br />Trusted Immigration Consultancy</h1>
+            <p class="hero-v3__subtitle">Your Right Migration Starts With The Right Guidance</p>
+          </div>
+
+          <a href="#contact" class="btn btn--white">
+            Let&rsquo;s Talk
+            <img src="assets/icons-v2/arrow-up-right.svg" alt="" class="btn__icon" />
+          </a>
+        </div>
+
+        <!--
+          Airplane window — porthole bezel image with the glass punched
+          transparent, layered over a crossfading carousel of destination
+          photos (Sydney, New York, Toronto).
+        -->
+        <div class="window">
+          <div class="window__glass" data-carousel data-interval="4500">
+            <div class="window__slide is-active">
+              <img src="assets/destinations/sydney.jpg" alt="Sydney Opera House, Australia" />
+            </div>
+            <div class="window__slide">
+              <img src="assets/destinations/new-york.jpg" alt="Brooklyn Bridge, New York, USA" />
+            </div>
+            <div class="window__slide">
+              <img src="assets/destinations/toronto.jpg" alt="Toronto skyline, Canada" />
+            </div>
+          </div>
+          <img class="window__frame" src="assets/window-v3/window-frame.png" alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="carousel.js"></script>
+</body>
+</html>
