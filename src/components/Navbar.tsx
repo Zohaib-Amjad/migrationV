@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useI18n } from '@/components/I18nProvider'
 import { SERVICES } from '@/data/site-content'
-
+import { SearchModal } from '@/components/SearchModal'
 function BrandLogo({ centerColor }: { centerColor?: string }) {
   const stemColor = centerColor || '#8DABA4'
   return (
@@ -44,6 +44,7 @@ export function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesAccordionOpen, setServicesAccordionOpen] = useState(false)
+  const [searchModalOpen, setSearchModalOpen] = useState(false)
   const [isCompacted, setIsCompacted] = useState(false)
   const navRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
@@ -260,6 +261,7 @@ export function Navbar() {
           type="button"
           className="nav__icon-btn"
           aria-label="Search"
+          onClick={() => setSearchModalOpen(true)}
         >
           <svg
             width="17"
@@ -484,6 +486,7 @@ export function Navbar() {
       )}
         </header>
       </div>
+      <SearchModal isOpen={searchModalOpen} onClose={() => setSearchModalOpen(false)} />
     </div>
   )
 }

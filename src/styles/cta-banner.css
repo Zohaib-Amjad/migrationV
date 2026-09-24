@@ -11,6 +11,7 @@
 .expert-cta {
   background: #fff;
   padding: clamp(40px, 4vw, 64px) var(--container-pad, clamp(20px, 6.82vw, 131px));
+  scroll-margin-top: 100px;
 }
 
 .expert-cta__card {

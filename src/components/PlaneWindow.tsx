@@ -103,11 +103,12 @@ export function PlaneWindow() {
       aria-pressed={!isOpen}
       aria-label="Close the window shade to switch the site to dark mode"
     >
-      <img className="plane-window__frame" src="/assets/window-svg/window-frame.svg" alt="" />
+      <img className="plane-window__frame" src="/assets/window-svg/window-frame.svg" alt="" decoding="async" />
       <img
         className="plane-window__frame plane-window__frame--dark"
         src="/assets/window-svg/window-frame-dark.svg"
         alt=""
+        decoding="async"
       />
 
       <div className="plane-window__view">
@@ -119,7 +120,7 @@ export function PlaneWindow() {
               key={dest.src}
               className={`plane-window__slide ${isActive ? 'is-active' : ''} ${isLeaving ? 'is-leaving' : ''}`}
             >
-              <img src={dest.src} alt={dest.alt} />
+              <img src={dest.src} alt={dest.alt} decoding="async" />
             </div>
           )
         })}

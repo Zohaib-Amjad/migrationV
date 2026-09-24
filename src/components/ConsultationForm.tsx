@@ -75,7 +75,7 @@ export function ConsultationForm() {
   }
 
   return (
-    <section className="expert-cta" id="consultation-form">
+    <section className="expert-cta" id="consultation">
       <div
         ref={cardRef}
         className={`expert-cta__card ${isFlying ? 'is-flying' : ''}`}
@@ -369,7 +369,7 @@ export function ConsultationForm() {
             </ul>
           </div>
 
-          <div className="expert-cta__form-card" id="consultation">
+          <div className="expert-cta__form-card">
             {status === 'success' ? (
               <div className="py-8 text-center text-white">
                 <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#179b66]">
