@@ -49,7 +49,7 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
           }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <I18nProvider>
           <Navbar />
           <main className="w-full">{children}</main>
