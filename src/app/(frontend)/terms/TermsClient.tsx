@@ -13,8 +13,8 @@ export function TermsClient() {
       desc: 'HOF Migration provides strategic consultancy, profile criteria evaluation, document authentication guidance, and authorized submission management for individuals seeking migration, study, or investment visas.',
       bullets: [
         'Advisory Boundary: Services are strictly limited to the agreed retainer scope outlined in your official Client Engagement Agreement.',
-        'Regulatory Compliance: All consultations are performed in accordance with certified migration codes of conduct (including MARA and ICCRC regulatory standards).',
-        'Independent Representation: HOF Migration acts as your legal/authorized consultant; we do not operate as a government agency or immigration department.',
+        'Regulatory Compliance: All consultations are performed in accordance with certified migration codes of conduct and international regulatory standards.',
+        'Independent Representation: HOF Migration acts as your legal consultant; we do not operate as a government department.',
       ],
     },
     {
@@ -33,8 +33,8 @@ export function TermsClient() {
       desc: 'While HOF Migration maintains rigorous accuracy standards and an industry-leading success rate, immigration outcome authority rests solely with statutory government officers.',
       bullets: [
         'Sole Authority: Government immigration officers hold absolute discretionary authority over visa approvals, interview requirements, and processing timelines.',
-        'No Absolute Guarantees: No consultancy, lawyer, or agent can legally guarantee visa issuance. Any claims of guaranteed outcomes by third parties are fraudulent.',
-        'Regulatory Policy Shifts: HOF Migration is not liable for changes in government migration policies, quota closures, or CRS score draw increases enacted after filing.',
+        'No Absolute Guarantees: No consultancy or lawyer can legally guarantee visa issuance. Any claims of guaranteed outcomes by third parties are fraudulent.',
+        'Regulatory Policy Shifts: HOF Migration is not liable for changes in government migration policies, quota closures, or score draw increases enacted after filing.',
       ],
     },
     {
@@ -71,11 +71,11 @@ export function TermsClient() {
     {
       id: 'scope',
       title: '١. نطاق التمثيل والخدمات الاستشارية',
-      desc: 'تقدم HOF Migration خدمات التوجيه الاستراتيجي، تقييم معايير الأهلية، تدقيق المستندات الرسمية، وإدارة تقديم المعاملات للهجرة، الدراسة، وتأشيرات الاستثمار.',
+      desc: 'تقدم الشركة خدمات التوجيه الاستراتيجي، تقييم معايير الأهلية، تدقيق المستندات الرسمية، وإدارة تقديم المعاملات لبرامج الهجرة، الدراسة، وتأشيرات الاستثمار.',
       bullets: [
-        'حدود الاستشارة: تقتصر الخدمات على النطاق المحدد صراحة في اتفاقية التعاقد الرسمية الموقعة بين الطرفين.',
-        'الامتثال التنظيمي: يتم تقديم كافة الاستشارات وفق ميثاق الشرف للهيئات المنظمة (مثل MARA و ICCRC).',
-        'التمثيل المستقل: تعمل HOF Migration بصفتها مستشاركم القانوني المعتمد، ولا تمثل أي جهة أو وزارة حكومية.',
+        'حدود الاستشارة المهنية: تقتصر الخدمات على النطاق المحدد صراحة في اتفاقية التعاقد الرسمية الموقعة بين الطرفين.',
+        'الامتثال التنظيمي: يتم تقديم كافة الاستشارات وفق ميثاق الشرف واللوائح المهنية الصادرة عن الهيئات الدولية المنظمة.',
+        'التمثيل المستقل: تعمل الشركة بصفتها مستشاركم القانوني المعتمد، ولا تمثل أي وزارة أو دائرة حكومية.',
       ],
     },
     {
@@ -84,14 +84,14 @@ export function TermsClient() {
       desc: 'يُعد الإفصاح الصادق والدقيق ركيزة أساسية لإعداد ملفات الهجرة القانونية، ويلتزم العميل بتقديم الوثائق والمستندات المطلوبة في أوقاتها المحددة.',
       bullets: [
         'ضمانة صحة الوثائق: يقر العميل بصحة وموثوقية كافة الشهادات الأكاديمية، خطابات الخبرة، والسجلات المالية المقدمة.',
-        'الالتزام بالمواعيد: تقديم المستندات المطلوبة خلال الأطر الزمنية المحددة لضمان جاهزية وصلاحية الملف.',
+        'الالتزام بالأطر الزمنية: تقديم المستندات المطلوبة خلال الأوقات المحددة لضمان جاهزية وصلاحية المعاملة.',
         'الإفصاح الفوري: إبلاغ المستشار فوراً بأي رفض سابق للتأشيرات أو أي سجلات جنائية أو صحية قد تؤثر على الأهلية.',
       ],
     },
     {
       id: 'disclaimer',
       title: '٣. إخلاء المسؤولية عن قرارات التأشيرة',
-      desc: 'على الرغم من التزام HOF Migration بأعلى درجات الدقة ونسب النجاح المرتفعة، إلا أن سلطة إصدار التأشيرات تعود حصراً للضباط والقوانين الحكومية.',
+      desc: 'على الرغم من التزام الشركة بأعلى درجات الدقة ونسب النجاح المرتفعة، إلا أن سلطة إصدار التأشيرات تعود حصراً للضباط والقوانين الحكومية.',
       bullets: [
         'السلطة التقديرية الحصرية: تملك دوائر الهجرة الرسمية السلطة المطلقة في فحص والموافقة على أو رفض أي طلب تأشيرة.',
         'عدم تقديم ضمانات مطلقة: لا يمكن لأي مستشار أو محامٍ تقديم ضمان قانوني بالقبول، وأي ادعاء بضمان القبول يعد مضللاً.',
@@ -111,7 +111,7 @@ export function TermsClient() {
     {
       id: 'liability',
       title: '٥. حدود المسؤولية والقوة القاهرة',
-      desc: 'تحدد HOF Migration مسؤوليتها التشغيلية إلى أقصى حد تسمح به القوانين والأنظمة المعمول بها.',
+      desc: 'تحدد الشركة مسؤوليتها التشغيلية إلى أقصى حد تسمح به القوانين والأنظمة المعمول بها.',
       bullets: [
         'الأضرار غير المباشرة: لا تتحمل الشركة مسؤولية الخسائر التبعية مثل حجوزات السفر أو قرارات الاستقالة الوظيفية.',
         'القوة القاهرة: لا يتحمل أي من الطرفين مسؤولية التأخير الناتج عن إغلاق السفارات أو الظروف الطارئة الخارجة عن السيطرة.',
@@ -149,7 +149,7 @@ export function TermsClient() {
             </h1>
             <p className="page-head__lede">
               {isArabic
-                ? 'يرجى قراءة هذه الشروط والأحكام بدقة قبل الدخول في اتفاقيات التمثيل أو طلب تقييم ملفات الهجرة والتأشيرات لدى HOF Migration.'
+                ? 'يرجى قراءة هذه الشروط والأحكام بدقة قبل الدخول في اتفاقيات التمثيل أو طلب تقييم ملفات الهجرة والتأشيرات.'
                 : 'Effective Date: September 2026. Please review these governing terms and conditions prior to executing consultancy agreements or requesting profile evaluations.'}
             </p>
           </div>

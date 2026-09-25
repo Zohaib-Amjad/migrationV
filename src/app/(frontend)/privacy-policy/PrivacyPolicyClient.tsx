@@ -21,9 +21,9 @@ export function PrivacyPolicyClient() {
     {
       id: 'processing',
       title: '2. Legal Basis & Purpose of Processing',
-      desc: 'Your data is processed strictly under statutory legal bases including contract performance, legitimate advisory interest, and regulatory compliance with official migration bodies (such as MARA and CICC).',
+      desc: 'Your data is processed strictly under statutory legal bases including contract performance, legitimate advisory interest, and regulatory compliance with official migration bodies.',
       bullets: [
-        'Assessing qualification thresholds for points-based Express Entry, PNP, and subclass visas.',
+        'Assessing qualification thresholds for points-based Express Entry, provincial nominee programs, and subclass visas.',
         'Preparing and lodging formal visa applications with official government immigration departments.',
         'Communicating timeline updates, document requests, and statutory fee payments.',
         'Fulfilling mandatory audit compliance mandated by certified immigration regulatory authorities.',
@@ -34,7 +34,7 @@ export function PrivacyPolicyClient() {
       title: '3. Data Confidentiality & Protection Protocols',
       desc: 'HOF Migration maintains strict institutional confidentiality standards aligned with professional codes of conduct. Client files are safeguarded using enterprise-grade technical and organizational measures.',
       bullets: [
-        'End-to-End Encryption: Sensitive files and communications are encrypted in transit (TLS 1.3) and at rest (AES-256).',
+        'End-to-End Encryption: Sensitive files and communications are encrypted in transit and at rest using modern cryptography.',
         'Strict Access Control: Information access is restricted exclusively to senior case managers and assigned legal advisors.',
         'Zero Data Sale Guarantee: We NEVER sell, rent, monetize, or trade client personal information to marketing networks or third parties.',
       ],
@@ -44,9 +44,9 @@ export function PrivacyPolicyClient() {
       title: '4. Third-Party Sharing & Regulatory Disclosures',
       desc: 'Personal information is only shared with third parties under explicit operational necessity or statutory compulsion.',
       bullets: [
-        'Official Immigration Authorities: IRCC (Canada), Department of Home Affairs (Australia), USCIS (United States), and relevant European embassies.',
-        'Authorized Assessment Bodies: Educational credential evaluators (WES, IQAS) and skills assessment authorities (ACS, Engineers Australia, VETASSESS).',
-        'Legal & Financial Partners: Certified translators, notarization agents, and secure escrow payment processors.',
+        'Official Immigration Authorities: Department of Immigration in Canada, Australia, the United States, and relevant European embassies.',
+        'Authorized Assessment Bodies: Educational credential evaluators and skills assessment authorities.',
+        'Legal & Financial Partners: Certified translators, notarization agents, and secure payment processors.',
       ],
     },
     {
@@ -62,7 +62,7 @@ export function PrivacyPolicyClient() {
     {
       id: 'rights',
       title: '6. Your Rights as a Data Subject',
-      desc: 'Under applicable privacy legislation (including GDPR principles and international client protection frameworks), you hold comprehensive rights regarding your personal information.',
+      desc: 'Under applicable privacy legislation and international client protection frameworks, you hold comprehensive rights regarding your personal information.',
       bullets: [
         'Right to Access & Rectification: Request copies of your personal file or correct inaccuracies at any time.',
         'Right to Erasure: Request deletion of non-statutory records when processing is no longer required.',
@@ -74,64 +74,64 @@ export function PrivacyPolicyClient() {
   const sectionsAr = [
     {
       id: 'collection',
-      title: '١. المعلومات التي نجمعها',
-      desc: 'لتقديم خدمات استشارية مخصصة للهجرة، وتقييم الأهلية القانونية، وإعداد ملفات التأشيرات الرسمية، تجمع HOF Migration البيانات الشخصية والمهنية مباشرة من العملاء.',
+      title: '١. المعلومات التي نقوم بجمعها',
+      desc: 'لتقديم خدمات استشارية مخصصة للهجرة، وتقييم الأهلية القانونية، وإعداد ملفات التأشيرات الرسمية، تقوم الشركة بجمع البيانات الشخصية، المهنية، والأكاديمية مباشرة من العميل.',
       bullets: [
-        'البيانات التعريفية: الاسم القانوني الكامل، تاريخ الميلاد، تفاصيل جواز السفر، الجنسية، وبيانات الاتصال.',
-        'المؤهلات الأكاديمية والمهنية: السير الذاتية، الشهادات الجامعية، كشوف الدرجات، والخبرات الوظيفية.',
-        'الإثباتات المالية والمدنية: كشوف الحسابات البنكية، إثبات الملاءة المالية، ووثائق الحالة المدنية للأسرة.',
-        'سجلات الاستشارات: المراسلات المكتوبة، استمارات التقييم الأولي، والملاحظات المستخلصة أثناء جلسات العمل.',
+        'البيانات التعريفية الأساسية: الاسم القانوني الكامل، تاريخ الميلاد، بيانات جواز السفر، الجنسية، ومعلومات التواصل الرسمية.',
+        'المؤهلات الأكاديمية والخبرات المهنية: السير الذاتية، الشهادات الجامعية، كشوف الدرجات والخبرات المهنية السابقة.',
+        'الإثباتات المالية والمدنية: كشوفات الحسابات المصرفية، إثبات الملاءة المالية، والوثائق العائلية اللازمة لمعايير التأشيرة.',
+        'سجلات الجلسات الاستشارية: المراسلات المكتوبة، استمارات تقييم الملف، والملاحظات المستخلصة أثناء دراسة الحالة.',
       ],
     },
     {
       id: 'processing',
-      title: '٢. الأساس القانوني وأغراض المعالجة',
-      desc: 'تتم معالجة بياناتكم وفق أسس قانونية صارمة تشمل تنفيذ العقود، المصالح المهنية المشروعة، والامتثال لهيئات تنظيم الهجرة الدولية المعتمدة (مثل MARA و CICC).',
+      title: '٢. الأساس القانوني وأهداف المعالجة',
+      desc: 'تتم معالجة بياناتكم وفق أسس نظامية صارمة تشمل تنفيذ اتفاقيات التمثيل، المصالح المهنية المشروعة، والامتثال لهيئات تنظيم الهجرة الدولية المعتمدة.',
       bullets: [
-        'حساب نقاط التأهيل لبرامج الدخول السريع (Express Entry) والترشيح الإقليمي (PNP).',
-        'إعداد وتقديم طلبات الهجرة والتأشيرات لدى الجهات والوزارات الحكومية المختصة.',
-        'إبلاغكم بمستجدات الملف، طلبات المستندات الإضافية، ومواعيد سداد الرسوم الحكومية.',
-        'الالتزام بمتطلبات التدقيق القانوني الإلزامية لمكاتب الهجرة المرخصة رسمياً.',
+        'احتساب نقاط التأهيل لبرامج الهجرة السريعة، برامج الترشيح الإقليمي، ومسارات الإقامة القانونية.',
+        'إعداد وصياغة وتقديم طلبات الهجرة والتأشيرات لدى الوزارات والجهات الحكومية المختصة.',
+        'إبلاغكم بمستجدات المعاملة، طلبات الوثائق الإضافية، ومواعيد سداد الرسوم النظامية.',
+        'الالتزام بمتطلبات التدقيق الإلزامية لمكاتب استشارات الهجرة المرخصة والمعتمدة دولياً.',
       ],
     },
     {
       id: 'confidentiality',
-      title: '٣. سرية البيانات وبروتوكولات الحماية',
-      desc: 'تلتزم HOF Migration بأعلى معايير السرية المؤسسية وحماية الخصوصية وفق ميثاق الشرف المهني، وتعتمد أحدث التدابير الأمنية المتقدمة.',
+      title: '٣. سرية البيانات وبروتوكولات الأمان',
+      desc: 'تلتزم الشركة بأعلى درجات السرية المؤسسية والمهنية لحماية ملفات العملاء، بالاعتماد على تدابير تقنية وإجرائية متطورة لمنع أي وصول غير مصرح به.',
       bullets: [
-        'التشفير الشامل: حماية الملفات والمراسلات الحساسة عبر بروتوكولات تشفير معتمدة عالمياً (TLS 1.3 و AES-256).',
-        'صلاحيات وصول مقيدة: حصر الاطلاع على الملفات لمديري الحالات والمستشارين القانونيين المعينين لملفكم فقط.',
-        'ضمانة عدم البيع: نحن لا نبيع ولا نؤجر أو نتاجر ببيانات العملاء مع أي شركات إعلانية أو جهات خارجية إطلاقاً.',
+        'التشفير الكامل للبيانات: تشفير الملفات والمراسلات أثناء النقل والتخزين بأحدث تقنيات التشفير المعتمدة عالمياً.',
+        'صلاحيات وصول محددة: قصر الاطلاع على الملفات لمديري الحالات والمستشارين القانونيين المخصصين لمتابعة ملفكم.',
+        'ضمانة عدم مشاركة البيانات تجارياً: نلتزم بعدم بيع أو تأجير أو مشاركة بيانات العملاء مع أي جهات تسويقية أو أطراف خارجية.',
       ],
     },
     {
       id: 'disclosures',
       title: '٤. مشاركة البيانات مع الجهات الرسمية',
-      desc: 'لا تتم مشاركة البيانات الشخصية إلا عند الضرورة التشغيلية أو الامتثال القانوني والإجرائي المطلوب لمعاملتكم.',
+      desc: 'لا تتم مشاركة البيانات الشخصية إلا في الحدود الضرورية لتنفيذ الإجراءات الرسمية أو للامتثال للمتطلبات القانونية.',
       bullets: [
-        'هيئات الهجرة الحكومية: إدارة الهجرة الكندية (IRCC)، الهجرة الأسترالية، دائرة خدمات الهجرة الأمريكية (USCIS)، والسفارات المعنية.',
-        'جهات تقييم المؤهلات: مؤسسات المعادلة الأكاديمية (WES) وهيئات الاعتماد المهني التخصصية.',
-        'الشركاء القانونيون: المترجمون المحلفون المعتمدون، وجهات التصديق والتوثيق القانوني.',
+        'الجهات والوزارات الحكومية: دوائر الهجرة الرسمية في كندا، أستراليا، الولايات المتحدة الأمريكية، والسفارات الأوروبية.',
+        'هيئات تقييم المؤهلات: مؤسسات المعادلة الأكاديمية والجهات المعتمدة لتقييم المهارات والخبرات التخصصية.',
+        'الشركاء المهنيون المعتمدون: المترجمون القانونيون المحلفون، ومكاتب التوثيق والتصديق العدلي.',
       ],
     },
     {
       id: 'retention',
-      title: '٥. حفظ البيانات والإتلاف الرقمي الآمن',
-      desc: 'تُحفظ ملفات العملاء بأمان طوال فترة المعاملة، ويتم الاحتفاظ بها بعد الإنجاز للفترات القانونية المحددة للتدقيق المهني.',
+      title: '٥. فترات الحفظ والإتلاف الآمن',
+      desc: 'تُحفظ ملفات العملاء بأمان طوال فترة معالجة المعاملة، ويتم الاحتفاظ بها للفترات النظامية المحددة للامتثال لمتطلبات التدقيق القانوني.',
       bullets: [
-        'الملفات النشطة: تُحفظ حتى صدور القرار النهائي للتأشيرة واكتمال خدمات الاستقرار.',
-        'الملفات المؤرشفة: تُحفظ لمدة تصل إلى ٧ سنوات للامتثال لمتطلبات السجلات القانونية للمستشارين المرخصين.',
-        'الإتلاف الآمن: يتم محو وتدمير الملفات الرقمية بشكل نهائي ومشفر بعد انقضاء المدة النظامية.',
+        'الملفات قيد المعالجة: تُحفظ حتى صدور القرار النهائي للتأشيرة واكتمال خدمات الاستقرار.',
+        'الملفات المؤرشفة: تُحفظ بأمان لمدة تصل إلى سبع سنوات للامتثال لمتطلبات السجلات القانونية والتنظيمية.',
+        'الإتلاف الرقمي الآمن: يتم محو وتدمير الملفات الرقمية بصورة نهائية ومشفرة بعد انتهاء مدة الحفظ القانونية.',
       ],
     },
     {
       id: 'rights',
-      title: '٦. حقوقكم القانونية في حماية البيانات',
-      desc: 'بموجب تشريعات حماية الخصوصية العالمية، تتمتعون بكامل الحقوق في إدارة بياناتكم الشخصية المسجلة لدينا.',
+      title: '٦. حقوقكم القانونية في الخصوصية',
+      desc: 'وفقاً للأنظمة والتشريعات الدولية لحماية البيانات والخصوصية، يتمتع كل عميل بكامل الحقوق في إدارة بياناته الشخصية.',
       bullets: [
-        'حق الاطلاع والتصحيح: طلب نسخة من بياناتكم أو تحديث وتعديل أي تفاصيل غير دقيقة في أي وقت.',
-        'حق الحذف: طلب محو السجلات غير الإلزامية قانونياً عند انتهاء الحاجة لخدمات التمثيل.',
-        'حق الاعتراض: إلغاء الاشتراك في الرسائل الإخبارية أو التحديثات العامة غير المرتبطة مباشرة بملفكم.',
+        'حق الاطلاع والتعديل: طلب نسخة من بياناتكم المسجلة وتصحيح أو تحديث أي معلومات في أي وقت.',
+        'حق الحذف النهائي: طلب مسح السجلات غير الإلزامية قانونياً عند انتهاء خدمات التمثيل.',
+        'حق الاعتراض: إلغاء الاشتراك في الرسائل الإخبارية أو التحديثات العامة غير المتعلقة بملفكم.',
       ],
     },
   ]
@@ -157,7 +157,7 @@ export function PrivacyPolicyClient() {
             </h1>
             <p className="page-head__lede">
               {isArabic
-                ? 'توضح هذه الوثيقة الشاملة كيفية جمع وحماية ومعالجة البيانات الشخصية لعملاء HOF Migration وفق المعايير المهنية الدولية.'
+                ? 'توضح هذه الوثيقة الشاملة كيفية جمع وحماية ومعالجة البيانات الشخصية لعملائنا وفق أعلى المعايير المهنية والأمنية الدولية.'
                 : 'Last updated: September 2026. This policy describes how HOF Migration collects, safeguards, and processes personal data provided during consultation and case representation.'}
             </p>
           </div>
@@ -207,13 +207,13 @@ export function PrivacyPolicyClient() {
               </h3>
               <p className="legal-contact-card__desc">
                 {isArabic
-                  ? 'فريق الامتثال وحماية البيانات لدينا جاهز للإجابة على جميع استفساراتكم ومساعدتكم في إدارة حقوق الخصوصية.'
+                  ? 'فريق الامتثال وحماية الخصوصية لدينا جاهز للإجابة على كافة استفساراتكم ومساعدتكم في ممارسة حقوقكم القانونية.'
                   : 'Our designated Data Protection Officer is available to handle inquiries, record updates, and compliance requests.'}
               </p>
               <div className="legal-contact-card__links">
-                <a href="mailto:privacy@hofmigration.com">
-                  ✉ privacy@hofmigration.com
-                </a>
+                <Link href="/contact">
+                  {isArabic ? 'تواصل مع فريق حماية الخصوصية' : 'Contact Privacy Team'}
+                </Link>
                 <span>•</span>
                 <Link href="/#consultation">
                   {isArabic ? 'احجز استشارة مجانية' : 'Book a Consultation'}

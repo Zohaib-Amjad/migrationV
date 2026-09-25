@@ -13,7 +13,7 @@ export function CookiesClient() {
       desc: 'Cookies and browser local storage are small data fragments saved on your computer, smartphone, or tablet when you visit websites. They help websites remember your preferences, active settings, and browsing context across visits.',
       bullets: [
         'Cookies: Small data fragments sent from web servers and stored by your web browser.',
-        'Local Storage: Modern HTML5 browser storage mechanism used to persist UI state (such as dark mode and language preference) without expiring on session end.',
+        'Local Storage: Modern browser storage mechanism used to persist UI state (such as dark mode and language preference) without expiring on session end.',
       ],
     },
     {
@@ -21,8 +21,8 @@ export function CookiesClient() {
       title: '2. How HOF Migration Uses Local Storage',
       desc: 'HOF Migration uses browser storage strictly for functional UI preferences to provide a seamless browsing experience.',
       bullets: [
-        'Theme Preference (`hof-theme`): Stores your selected visual theme (Light Mode or Dark Mode) so your preference is retained when navigating between pages.',
-        'Language Preference (`hof-lang`): Stores your preferred language (English or Arabic) so the automated translation engine renders instantly without flash.',
+        'Theme Preference: Stores your selected visual theme (Light Mode or Dark Mode) so your preference is retained when navigating between pages.',
+        'Language Preference: Stores your preferred language (English or Arabic) so the automated translation engine renders instantly without flash.',
         'Form Draft Preservation: Temporarily preserves incomplete callback consultation entries locally to prevent data loss if your connection drops.',
       ],
     },
@@ -39,10 +39,10 @@ export function CookiesClient() {
     {
       id: 'third-party',
       title: '4. Third-Party Services & Embedded Content',
-      desc: 'Our website incorporates minimal essential third-party scripts to deliver security and media elements.',
+      desc: 'Our website incorporates minimal essential third-party scripts to deliver security and typography.',
       bullets: [
-        'Google Fonts: Used for web typography rendering; no personal tracking cookies are placed.',
-        'Payload CMS API: Handles secure form submissions and document intake; utilizes session cookies exclusively during administrative access.',
+        'Web Typography: Used for clear typography rendering; no personal tracking cookies are placed.',
+        'Secure API & Data Services: Handles secure form submissions and document intake exclusively during consultations.',
       ],
     },
     {
@@ -50,8 +50,8 @@ export function CookiesClient() {
       title: '5. Managing & Disabling Storage Settings',
       desc: 'You have complete control over how your browser handles cookies and local storage.',
       bullets: [
-        'Browser Controls: You can clear, block, or receive alerts for cookies via your browser settings (Chrome, Safari, Firefox, Edge).',
-        'Clearing Site Data: Clearing your browser history and site data for HOF Migration will reset theme and language toggles back to default.',
+        'Browser Controls: You can clear, block, or receive alerts for cookies via your browser settings.',
+        'Clearing Site Data: Clearing your browser history and site data will reset theme and language toggles back to default.',
         'Impact of Disabling: Disabling essential local storage will cause theme and language selections to reset on every page refresh.',
       ],
     },
@@ -61,19 +61,19 @@ export function CookiesClient() {
     {
       id: 'overview',
       title: '١. ما هي ملفات تعريف الارتباط والتخزين المحلي؟',
-      desc: 'ملفات تعريف الارتباط (الكوكيز) والتخزين المحلي للمتصفح هي عناصر بيانات صغيرة تُحفظ على جهازك عند زيارة الموقع لمساعدته على تذكر تفضيلاتك وسياق تصفحك.',
+      desc: 'ملفات تعريف الارتباط والتخزين المحلي للمتصفح هي عناصر تقنية صغيرة تُحفظ على جهازك عند زيارة الموقع لمساعدته على تذكر تفضيلاتك وتوفير تجربة تصفح سريعة.',
       bullets: [
-        'ملفات الكوكيز: ملفات بيانات نصية صغيرة تُرسل من خوادم الويب وتُخزن في متصفحك.',
-        'التخزين المحلي (Local Storage): تقنية حديثة من HTML5 تُستخدم لحفظ تفضيلات واجهة المستخدم مثل النمط الليلي واللغة المختارة.',
+        'ملفات تعريف الارتباط: بيانات نصية خفيفة تُحفظ في متصفح الويب الخاص بك لتسهيل التنقل.',
+        'التخزين المحلي للمتصفح: آلية تقنية حديثة تُستخدم لحفظ تفضيلات واجهة المستخدم مثل النمط الليلي واللغة المختارة.',
       ],
     },
     {
       id: 'usage',
-      title: '٢. كيفية استخدام HOF Migration لبيانات التخزين',
-      desc: 'تستخدم HOF Migration بيانات التخزين المحلي فقط للأغراض التشغيلية وتفضيلات التصفح لضمان تجربة مستخدم سلسة.',
+      title: '٢. كيفية استخدام بيانات التخزين بالموقع',
+      desc: 'تستخدم الشركة بيانات التخزين المحلي فقط للأغراض التشغيلية وتفضيلات التصفح لضمان تجربة مستخدم سلسة.',
       bullets: [
-        'تفضيل النمط والمظهر (`hof-theme`): لحفظ اختيارك بين النمط الفاتح أو الداكن أثناء التنقل بين الصفحات.',
-        'تفضيل اللغة (`hof-lang`): لحفظ اختيار اللغة (العربية أو الإنجليزية) وعرض المحتوى المترجم دون وميض.',
+        'تفضيل مظهر الواجهة: لحفظ اختيارك بين النمط الفاتح أو الداكن أثناء التنقل بين الصفحات.',
+        'تفضيل اللغة المختارة: لحفظ اختيار اللغة (العربية أو الإنجليزية) وعرض المحتوى بسلاسة تامة.',
         'حفظ مسودات النماذج: حفظ مؤقت للمعلومات المدخلة في طلب الاستشارة لتجنب فقدان البيانات في حال انقطاع الاتصال.',
       ],
     },
@@ -83,17 +83,17 @@ export function CookiesClient() {
       desc: 'نحن نصنف بيانات التخزين بدقة لحماية خصوصية المستخدم والالتزام بالشفافية الكاملة.',
       bullets: [
         'تخزين وظيفي أساسي: ضروري لعمل الموقع والتنقل والتبديل بين اللغات وإرسال النماذج.',
-        'الأداء والتحليل: قياسات مجهولة لتحسين سرعة تحميل الصفحات وتجربة الاستخدام.',
-        'خالٍ من متتبعات الإعلانات: لا نستخدم أي ملفات كوكيز إعلانية أو أدوات تتبع لطرف ثالث.',
+        'الأداء وسرعة التصفح: قياسات تقنية عامة لتحسين سرعة تحميل الصفحات وتجربة الاستخدام.',
+        'خالٍ تماماً من المتتبعات الإعلانية: لا نستخدم أي ملفات إعلانية أو أدوات تتبع لأطراف خارجية.',
       ],
     },
     {
       id: 'third-party',
-      title: '٤. خدمات الطرف الثالث والمحتوى المضمن',
-      desc: 'يقتصر استخدام البرمجيات الخارجية على الخدمات التقنية الضرورية للأمان وعرض الخطوط.',
+      title: '٤. الخدمات التقنية المساعدة',
+      desc: 'يقتصر استخدام البرمجيات المساعدة على الخدمات التقنية الضرورية للأمان وعرض الخطوط بوضوح.',
       bullets: [
-        'خطوط Google Fonts: تُستخدم لعرض الخطوط الطباعية بأعلى دقة دون جمع بيانات تعريفية.',
-        'واجهة برمجة Payload CMS: لمعالجة وتأمين استقبال طلبات الاستشارة والوثائق بأمان.',
+        'عرض الخطوط الطباعية: تُستخدم لضمان وضوح النصوص الطباعية دون جمع أي بيانات شخصية.',
+        'بوابات الاستقبال الآمن: لمعالجة وتأمين استقبال طلبات الاستشارة والوثائق بأعلى معايير الحماية.',
       ],
     },
     {
@@ -101,8 +101,8 @@ export function CookiesClient() {
       title: '٥. التحكم في إعدادات ملفات الارتباط والتخزين',
       desc: 'لديك كامل الصلاحية للتحكم في كيفية إدارة المتصفح لملفات تعريف الارتباط والتخزين المحلي.',
       bullets: [
-        'إعدادات المتصفح: يمكنك مسح أو حظر ملفات الكوكيز من إعدادات متصفحك (كروم، سفاري، فايرفوكس، إيدج).',
-        'مسح بيانات الموقع: مسح سجل المتصفح سيعيد ضبط اختيارات اللغة والنمط إلى الحالة الافتراضية.',
+        'إعدادات المتصفح: يمكنك مسح أو حظر ملفات تعريف الارتباط مباشرة من إعدادات متصفحك.',
+        'مسح بيانات الموقع: مسح سجل المتصفح سيعيد ضبط اختيارات اللغة والمظهر إلى الحالة الافتراضية.',
         'تأثير التعطيل: تعطيل التخزين المحلي قد يؤدي إلى إعادة تعيين تفضيلات العرض مع كل تحديث للصفحة.',
       ],
     },
@@ -129,7 +129,7 @@ export function CookiesClient() {
             </h1>
             <p className="page-head__lede">
               {isArabic
-                ? 'تعرف على كيفية استخدام HOF Migration لتقنيات التخزين المحلي وملفات الكوكيز للحفاظ على تفضيلات التصفح وضمان الأداء الأمثل للموقع.'
+                ? 'تعرف على كيفية استخدام تقنيات التخزين المحلي وملفات الارتباط للحفاظ على تفضيلات التصفح وضمان الأداء الأمثل للموقع.'
                 : 'Effective Date: September 2026. Learn how HOF Migration utilizes essential local storage and cookie technologies to preserve UI preferences and ensure optimal browsing performance.'}
             </p>
           </div>
