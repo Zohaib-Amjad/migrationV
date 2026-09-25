@@ -26,18 +26,193 @@ interface SearchResult {
   category: 'Service' | 'Story' | 'Team' | 'FAQ' | 'Page'
   url: string
   tag?: string
+  icon?: string
 }
 
-const STATIC_PAGES = [
-  { title: 'Home Page', subtitle: 'HOF Migration main overview and hero', category: 'Page' as const, url: '/' },
-  { title: 'About Us', subtitle: 'Leadership team, core mission, and accreditation', category: 'Page' as const, url: '/about' },
-  { title: 'All Services', subtitle: 'Explore the 5 Pillars of Migration', category: 'Page' as const, url: '/services' },
-  { title: 'Success Stories', subtitle: 'Client journeys and case studies', category: 'Page' as const, url: '/success-stories' },
-  { title: 'Contact Us', subtitle: 'Global offices, callback request & location info', category: 'Page' as const, url: '/#consultation' },
-  { title: 'Branding & Identity', subtitle: 'Visual identity and brand guidelines', category: 'Page' as const, url: '/branding' },
-  { title: 'Privacy Policy', subtitle: 'Data privacy, security, and client data handling', category: 'Page' as const, url: '/privacy-policy' },
-  { title: 'Terms of Service', subtitle: 'Consultancy terms, agreement & disclaimers', category: 'Page' as const, url: '/terms' },
-  { title: 'Cookie Policy', subtitle: 'Local storage, preferences, and cookie usage', category: 'Page' as const, url: '/cookies' },
+interface DefaultSearchCategory {
+  titleEn: string
+  titleAr: string
+  items: {
+    titleEn: string
+    titleAr: string
+    descEn: string
+    descAr: string
+    url: string
+    icon: string
+    tagEn: string
+    tagAr: string
+  }[]
+}
+
+const DEFAULT_CATEGORIES: DefaultSearchCategory[] = [
+  {
+    titleEn: 'Leadership & Team',
+    titleAr: 'القيادة وفريق العمل',
+    items: [
+      {
+        titleEn: 'Leadership',
+        titleAr: 'فريق القيادة التنفيذية',
+        descEn: 'Meet our Managing Partner & Senior Practice Directors',
+        descAr: 'تعرف على الشركاء الإداريين ومديري أقسام الهجرة',
+        url: '/about#leadership',
+        icon: '👑',
+        tagEn: 'About',
+        tagAr: 'من نحن',
+      },
+      {
+        titleEn: 'Our Core Team',
+        titleAr: 'فريق العمل الرئيسي',
+        descEn: 'Case managers, legal specialists, and authorized advisors',
+        descAr: 'مستشارو الهجرة المعتمدون وأخصائيو معالجة الملفات',
+        url: '/about#team',
+        icon: '👥',
+        tagEn: 'Team',
+        tagAr: 'الفريق',
+      },
+    ],
+  },
+  {
+    titleEn: 'Services & Visa Detail Pages',
+    titleAr: 'خدمات وصفحات تفاصيل التأشيرات',
+    items: [
+      {
+        titleEn: 'Skilled Migration',
+        titleAr: 'هجرة الكفاءات وأصحاب المهن',
+        descEn: 'Canada Express Entry, Australia PR Subclass 189/190, UK & NZ visas',
+        descAr: 'الهجرة السريعة لكندا والإقامة الدائمة لأستراليا ونيوزيلندا وبريطانيا',
+        url: '/services/skilled-migration',
+        icon: '🇨🇦',
+        tagEn: 'Service',
+        tagAr: 'خدمة',
+      },
+      {
+        titleEn: 'Study Abroad',
+        titleAr: 'الدراسة في الخارج والتأشيرات الطلابية',
+        descEn: 'Top university admissions, post-study work permits & student visas',
+        descAr: 'القبول بالجامعات العالمية وتصاريح العمل بعد التخرج',
+        url: '/services/study-abroad',
+        icon: '🎓',
+        tagEn: 'Service',
+        tagAr: 'خدمة',
+      },
+      {
+        titleEn: 'Family & Spouse Sponsorship',
+        titleAr: 'لم شمل الأسرة ورعاية الزوجين',
+        descEn: 'Spousal sponsorship, dependent child & parent reunion visas',
+        descAr: 'تأشيرات إلحاق الزوجين والأبناء ولم شمل الوالدين',
+        url: '/services/family-sponsorship',
+        icon: '👨‍👩‍👧',
+        tagEn: 'Service',
+        tagAr: 'خدمة',
+      },
+      {
+        titleEn: 'U.S. Visas & EB-2 NIW',
+        titleAr: 'تأشيرات أمريكا وإعفاء المصلحة الوطنية',
+        descEn: 'National Interest Waiver (EB-2 NIW), EB-5 investor & L-1 transfer',
+        descAr: 'تأشيرات إعفاء المصلحة الوطنية ونقل المديرين والاستثمار في أمريكا',
+        url: '/services/usa-visas',
+        icon: '🇺🇸',
+        tagEn: 'Service',
+        tagAr: 'خدمة',
+      },
+      {
+        titleEn: 'Europe Visas & Global Residency',
+        titleAr: 'تأشيرات أوروبا والإقامة الذهبية',
+        descEn: 'EU Golden Visas, Schengen business visas & European citizenship',
+        descAr: 'الإقامة الذهبية الأوروبية وتأشيرات شنغن الاستثمارية',
+        url: '/services/europe-visas',
+        icon: '🇪🇺',
+        tagEn: 'Service',
+        tagAr: 'خدمة',
+      },
+    ],
+  },
+  {
+    titleEn: 'All Pages',
+    titleAr: 'كافة صفحات الموقع',
+    items: [
+      {
+        titleEn: 'Home Page',
+        titleAr: 'الصفحة الرئيسية',
+        descEn: 'HOF Migration main overview and hero experience',
+        descAr: 'الواجهة الرئيسية واستكشاف خدمات الهجرة والتأشيرات',
+        url: '/',
+        icon: '🏠',
+        tagEn: 'Page',
+        tagAr: 'صفحة',
+      },
+      {
+        titleEn: 'About Us',
+        titleAr: 'من نحن',
+        descEn: 'Our history, licensed accreditations, and firm values',
+        descAr: 'مسيرة الشركة والاعتمادات الرسمية والقيم المهنية',
+        url: '/about',
+        icon: '🏛️',
+        tagEn: 'Page',
+        tagAr: 'صفحة',
+      },
+      {
+        titleEn: 'All Services Overview',
+        titleAr: 'نظرة عامة على الخدمات',
+        descEn: 'Explore the 5 Pillars of Migration',
+        descAr: 'استكشف ركائز الهجرة والتأشيرات الخمسة',
+        url: '/services',
+        icon: '🧭',
+        tagEn: 'Page',
+        tagAr: 'صفحة',
+      },
+      {
+        titleEn: 'Success Stories',
+        titleAr: 'قصص النجاح',
+        descEn: 'Verified client migration journeys & case studies',
+        descAr: 'تجارب وقصص نجاح عملائنا في الهجرة والحصول على الإقامة',
+        url: '/success-stories',
+        icon: '🌟',
+        tagEn: 'Page',
+        tagAr: 'صفحة',
+      },
+      {
+        titleEn: 'Book a Consultation',
+        titleAr: 'حجز استشارة',
+        descEn: 'Global offices, callback request & expert evaluation',
+        descAr: 'طلب استشارة مجانية والتواصل مع مكاتبنا حول العالم',
+        url: '/#consultation',
+        icon: '📅',
+        tagEn: 'Form',
+        tagAr: 'نموذج',
+      },
+      {
+        titleEn: 'Privacy Policy',
+        titleAr: 'سياسة الخصوصية',
+        descEn: 'Client data protection and international privacy standards',
+        descAr: 'حماية بيانات العملاء ومعايير الخصوصية الدولية',
+        url: '/privacy-policy',
+        icon: '🔒',
+        tagEn: 'Legal',
+        tagAr: 'قانوني',
+      },
+      {
+        titleEn: 'Terms of Service',
+        titleAr: 'شروط الخدمة',
+        descEn: 'Advisory agreements, retainer terms, and governance',
+        descAr: 'شروط التعاقد والتمثيل الاستشاري والحوكمة',
+        url: '/terms',
+        icon: '📜',
+        tagEn: 'Legal',
+        tagAr: 'قانوني',
+      },
+      {
+        titleEn: 'Cookie Policy',
+        titleAr: 'سياسة ملفات الارتباط',
+        descEn: 'Local storage and browsing preference management',
+        descAr: 'إدارة التخزين المحلي وتفضيلات التصفح',
+        url: '/cookies',
+        icon: '🍪',
+        tagEn: 'Legal',
+        tagAr: 'قانوني',
+      },
+    ],
+  },
 ]
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
@@ -76,12 +251,51 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   if (!isOpen) return null
 
-  // Compute search results
+  // Compute search results when typing
   const q = query.trim().toLowerCase()
   const results: SearchResult[] = []
 
   if (q.length > 0) {
-    // 1. Services
+    // 1. Explicit matches for Leadership & Core Team sections
+    if (
+      'leadership'.includes(q) ||
+      'قيادة'.includes(q) ||
+      'leaders'.includes(q) ||
+      'directors'.includes(q)
+    ) {
+      results.push({
+        id: 'section-leadership',
+        title: isArabic ? 'فريق القيادة التنفيذية' : 'Leadership',
+        subtitle: isArabic
+          ? 'تعرف على الشركاء الإداريين ومديري أقسام الهجرة'
+          : 'Meet our Managing Partner & Senior Practice Directors',
+        category: 'Team',
+        url: '/about#leadership',
+        tag: isArabic ? 'من نحن' : 'About',
+        icon: '👑',
+      })
+    }
+
+    if (
+      'our core team'.includes(q) ||
+      'core team'.includes(q) ||
+      'فريق العمل'.includes(q) ||
+      'team'.includes(q)
+    ) {
+      results.push({
+        id: 'section-core-team',
+        title: isArabic ? 'فريق العمل الرئيسي' : 'Our Core Team',
+        subtitle: isArabic
+          ? 'مستشارو الهجرة المعتمدون وأخصائيو معالجة الملفات'
+          : 'Case managers, legal specialists, and authorized advisors',
+        category: 'Team',
+        url: '/about#team',
+        tag: isArabic ? 'الفريق' : 'Team',
+        icon: '👥',
+      })
+    }
+
+    // 2. Services
     SERVICES.forEach((s: ServiceItem) => {
       if (
         s.navName.toLowerCase().includes(q) ||
@@ -97,11 +311,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           category: 'Service',
           url: `/services/${s.routeSlug}`,
           tag: s.navName,
+          icon: '✈️',
         })
       }
     })
 
-    // 2. Success Stories
+    // 3. Success Stories
     STORIES.forEach((st: SuccessStoryItem) => {
       if (
         st.name.toLowerCase().includes(q) ||
@@ -117,11 +332,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           category: 'Story',
           url: `/success-stories/${st.routeSlug}`,
           tag: 'Case Study',
+          icon: '🌟',
         })
       }
     })
 
-    // 3. Team Members (LEADERSHIP + CORE_TEAM)
+    // 4. Team Members (LEADERSHIP + CORE_TEAM)
     const teamMembers: TeamMemberItem[] = [...LEADERSHIP, ...CORE_TEAM]
     teamMembers.forEach((tm: TeamMemberItem) => {
       if (
@@ -136,11 +352,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           category: 'Team',
           url: `/team/${tm.routeSlug}`,
           tag: tm.role,
+          icon: '👤',
         })
       }
     })
 
-    // 4. FAQs
+    // 5. FAQs
     FAQS.forEach((faq, idx: number) => {
       if (faq.q.toLowerCase().includes(q) || faq.a.toLowerCase().includes(q)) {
         results.push({
@@ -150,23 +367,27 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           category: 'FAQ',
           url: '/#faq',
           tag: 'FAQ',
+          icon: '❓',
         })
       }
     })
 
-    // 5. Static pages
-    STATIC_PAGES.forEach((page) => {
+    // 6. Static / Core Pages
+    DEFAULT_CATEGORIES[2].items.forEach((page) => {
       if (
-        page.title.toLowerCase().includes(q) ||
-        page.subtitle.toLowerCase().includes(q)
+        page.titleEn.toLowerCase().includes(q) ||
+        page.titleAr.toLowerCase().includes(q) ||
+        page.descEn.toLowerCase().includes(q) ||
+        page.descAr.toLowerCase().includes(q)
       ) {
         results.push({
           id: `page-${page.url}`,
-          title: page.title,
-          subtitle: page.subtitle,
+          title: isArabic ? page.titleAr : page.titleEn,
+          subtitle: isArabic ? page.descAr : page.descEn,
           category: 'Page',
           url: page.url,
-          tag: 'Navigation',
+          tag: isArabic ? page.tagAr : page.tagEn,
+          icon: page.icon,
         })
       }
     })
@@ -183,15 +404,6 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     }
   }
 
-  const popularTags = [
-    { label: 'Skilled Migration', url: '/services/skilled-migration', icon: '🇨🇦' },
-    { label: 'Study Abroad', url: '/services/study-abroad', icon: '🎓' },
-    { label: 'USA NIW', url: '/services/usa-visas', icon: '🇺🇸' },
-    { label: 'Australia PR', url: '/services/skilled-migration', icon: '🇦🇺' },
-    { label: 'Success Stories', url: '/success-stories', icon: '🌟' },
-    { label: 'Book Consultation', url: '/#consultation', icon: '📅' },
-  ]
-
   return (
     <div
       className="search-modal-backdrop"
@@ -199,6 +411,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       role="dialog"
       aria-modal="true"
       aria-label="Search website"
+      dir={isArabic ? 'rtl' : 'ltr'}
     >
       <div
         className="search-modal-container"
@@ -221,8 +434,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             className="search-modal-input"
             placeholder={
               isArabic
-                ? 'ابحث عن الخدمات، التأشيرات، فريق العمل، أو الأسئلة الشائعة...'
-                : 'Search services, visas, team, success stories, FAQs...'
+                ? 'ابحث عن الخدمات، القيادة، فريق العمل، أو صفحات الموقع...'
+                : 'Search services, leadership, core team, pages...'
             }
             value={query}
             onChange={(e) => {
@@ -255,23 +468,45 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         {/* Modal Body / Results */}
         <div className="search-modal-body">
           {query.trim() === '' ? (
-            <div>
-              <div className="search-modal-section-title">
-                {isArabic ? 'عمليات البحث الشائعة' : 'Popular Searches'}
-              </div>
-              <div className="search-modal-pills">
-                {popularTags.map((tag) => (
-                  <Link
-                    key={tag.label}
-                    href={tag.url}
-                    onClick={onClose}
-                    className="search-modal-pill"
-                  >
-                    <span>{tag.icon}</span>
-                    <span>{tag.label}</span>
-                  </Link>
-                ))}
-              </div>
+            /* Categorized Initial State when Search is Opened */
+            <div className="space-y-6">
+              {DEFAULT_CATEGORIES.map((cat, catIdx) => (
+                <div key={catIdx} className="mb-5 last:mb-0">
+                  <div className="search-modal-section-title">
+                    {isArabic ? cat.titleAr : cat.titleEn}
+                  </div>
+                  <div className="search-modal-results">
+                    {cat.items.map((item, itemIdx) => (
+                      <Link
+                        key={itemIdx}
+                        href={item.url}
+                        onClick={onClose}
+                        className="search-modal-item"
+                      >
+                        <div className="search-modal-item-badge">
+                          <span>{item.icon}</span>
+                        </div>
+                        <div className="search-modal-item-info">
+                          <div className="search-modal-item-top">
+                            <span className="search-modal-item-title">
+                              {isArabic ? item.titleAr : item.titleEn}
+                            </span>
+                            <span className="search-modal-item-category">
+                              {isArabic ? item.tagAr : item.tagEn}
+                            </span>
+                          </div>
+                          <div className="search-modal-item-desc">
+                            {isArabic ? item.descAr : item.descEn}
+                          </div>
+                        </div>
+                        <span className="search-modal-item-arrow" aria-hidden="true">
+                          {isArabic ? '←' : '→'}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           ) : results.length > 0 ? (
             <div>
@@ -289,11 +524,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       className={`search-modal-item ${isSelected ? 'is-selected' : ''}`}
                     >
                       <div className="search-modal-item-badge">
-                        {res.category === 'Service' && '✈️'}
-                        {res.category === 'Story' && '🌟'}
-                        {res.category === 'Team' && '👤'}
-                        {res.category === 'FAQ' && '❓'}
-                        {res.category === 'Page' && '📄'}
+                        <span>{res.icon || '📄'}</span>
                       </div>
                       <div className="search-modal-item-info">
                         <div className="search-modal-item-top">
@@ -304,7 +535,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                         </div>
                         <div className="search-modal-item-desc">{res.subtitle}</div>
                       </div>
-                      <span className="search-modal-item-arrow" aria-hidden="true">→</span>
+                      <span className="search-modal-item-arrow" aria-hidden="true">
+                        {isArabic ? '←' : '→'}
+                      </span>
                     </Link>
                   )
                 })}
@@ -317,8 +550,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               </div>
               <div className="search-modal-empty-desc">
                 {isArabic
-                  ? 'جرب البحث عن كلمات أخرى مثل "كندا"، "أستراليا"، "استشارة"'
-                  : 'Try searching for keywords like "Canada", "Australia", "Consultation"'}
+                  ? 'جرب البحث عن "القيادة"، "فريق العمل"، "كندا"، "أستراليا"، أو "استشارة"'
+                  : 'Try searching for "Leadership", "Core Team", "Canada", "Australia", or "Consultation"'}
               </div>
             </div>
           )}
@@ -326,11 +559,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
         {/* Footer */}
         <div className="search-modal-footer">
-          <span>HOF Migration Spotlight</span>
+          <span>{isArabic ? 'HOF Migration — البحث السريع' : 'HOF Migration Spotlight'}</span>
           <div className="search-modal-shortcuts">
-            <span className="search-modal-kbd"><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
-            <span className="search-modal-kbd"><kbd>↵</kbd> Select</span>
-            <span className="search-modal-kbd"><kbd>ESC</kbd> Close</span>
+            <span className="search-modal-kbd"><kbd>↑</kbd><kbd>↓</kbd> {isArabic ? 'تنقل' : 'Navigate'}</span>
+            <span className="search-modal-kbd"><kbd>↵</kbd> {isArabic ? 'اختيار' : 'Select'}</span>
+            <span className="search-modal-kbd"><kbd>ESC</kbd> {isArabic ? 'إغلاق' : 'Close'}</span>
           </div>
         </div>
       </div>

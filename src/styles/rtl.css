@@ -81,14 +81,44 @@ html[dir='rtl'] .service-card {
   padding-right: calc(var(--card-w, 1079px) * 0.0593);
 }
 
-html[dir='rtl'] .service-card__image {
-  left: auto;
-  right: calc(var(--card-w, 1079px) * 0.6209);
+@media (min-width: 901px) {
+  html[dir='rtl'] .service-card__image {
+    left: auto;
+    right: calc(var(--card-w, 1079px) * 0.6209);
+  }
 }
 
 @media (max-width: 900px) {
   html[dir='rtl'] .service-card {
-    padding: 28px;
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: stretch !important;
+  }
+
+  html[dir='rtl'] .service-card__image {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    height: 195px !important;
+    transform: none !important;
+    order: -1 !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    border-bottom: 3.5px solid var(--card-accent, #0095ff) !important;
+    display: block !important;
+  }
+
+  html[dir='rtl'] .service-card__img {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    display: block !important;
   }
 }
 
