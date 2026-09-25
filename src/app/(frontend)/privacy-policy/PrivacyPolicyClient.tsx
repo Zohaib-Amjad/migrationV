@@ -139,6 +139,7 @@ export function PrivacyPolicyClient() {
 
   const sections = isArabic ? sectionsAr : sectionsEn
   const [activeId, setActiveId] = useState<string>(sections[0]?.id || '')
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -199,7 +200,9 @@ export function PrivacyPolicyClient() {
                 <a
                   key={sec.id}
                   href={`#${sec.id}`}
-                  className={`legal-sidebar__link ${activeId === sec.id ? 'is-active' : ''}`}
+                  className={`legal-sidebar__link ${activeId === sec.id ? 'is-active' : ''} ${hoveredId === sec.id ? 'is-hovered' : ''}`}
+                  onMouseEnter={() => setHoveredId(sec.id)}
+                  onMouseLeave={() => setHoveredId(null)}
                   onClick={(e) => {
                     e.preventDefault()
                     const target = document.getElementById(sec.id)
@@ -219,7 +222,13 @@ export function PrivacyPolicyClient() {
           {/* Cards Content */}
           <div className="legal-content">
             {sections.map((sec) => (
-              <section key={sec.id} id={sec.id} className="legal-card">
+              <section
+                key={sec.id}
+                id={sec.id}
+                className={`legal-card ${hoveredId === sec.id ? 'is-hovered' : ''}`}
+                onMouseEnter={() => setHoveredId(sec.id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
                 <h2 className="legal-card__title">{sec.title}</h2>
                 <p className="legal-card__desc">{sec.desc}</p>
                 {sec.bullets && (
