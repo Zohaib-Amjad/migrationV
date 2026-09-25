@@ -215,13 +215,13 @@ html.is-dark .btn--dark {
 }
 
 html.is-dark .btn--dark:hover {
-  background: color-mix(in srgb, var(--page-theme-accent) 22%, var(--dk-text));
-  box-shadow: 0 12px 28px -6px var(--page-theme-glow);
+  background: #f8fafc;
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.4);
   color: #141a19;
 }
 
 html.is-dark .btn--dark:active {
-  background: color-mix(in srgb, var(--page-theme-accent) 38%, var(--dk-text));
+  background: #e2e8f0;
 }
 
 html.is-dark .btn--dark .btn__icon {

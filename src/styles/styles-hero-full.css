@@ -972,15 +972,15 @@ html.is-dark .nav__link.is-active {
 }
 
 .btn--dark:hover {
-  background: color-mix(in srgb, var(--page-theme-accent) 35%, #14161a);
-  border-color: color-mix(in srgb, var(--page-theme-accent) 60%, transparent);
-  box-shadow: 0 12px 28px -6px var(--page-theme-glow), 0 4px 14px rgba(20, 22, 26, 0.35);
+  background: #262a32;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 24px -4px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.2);
   color: #ffffff;
 }
 
 .btn--dark:active {
-  background: color-mix(in srgb, var(--page-theme-accent) 55%, #000000);
-  border-color: color-mix(in srgb, var(--page-theme-accent) 80%, transparent);
+  background: #0d0f12;
+  border-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.4);
 }
 
