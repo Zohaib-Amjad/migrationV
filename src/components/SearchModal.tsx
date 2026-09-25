@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useI18n } from '@/components/I18nProvider'
 import {
   SERVICES,
@@ -216,10 +217,29 @@ const DEFAULT_CATEGORIES: DefaultSearchCategory[] = [
 ]
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
+  const router = useRouter()
   const { isArabic } = useI18n()
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  const handleNavigate = useCallback(
+    (url: string) => {
+      onClose()
+      if (url.startsWith('/#')) {
+        const hash = url.replace('/', '')
+        if (typeof window !== 'undefined' && window.location.pathname === '/') {
+          const el = document.querySelector(hash)
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' })
+            return
+          }
+        }
+      }
+      router.push(url)
+    },
+    [onClose, router]
+  )
 
   useEffect(() => {
     if (isOpen) {
@@ -228,13 +248,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       setTimeout(() => {
         inputRef.current?.focus()
       }, 50)
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
 
-    return () => {
-      document.body.style.overflow = ''
+      const prevBodyOverflow = document.body.style.overflow
+      const prevHtmlOverflow = document.documentElement.style.overflow
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+
+      return () => {
+        document.body.style.overflow = prevBodyOverflow
+        document.documentElement.style.overflow = prevHtmlOverflow
+      }
     }
   }, [isOpen])
 
@@ -401,6 +424,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
       setSelectedIndex((prev) => (prev - 1 + results.length) % results.length)
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      if (results[selectedIndex]) {
+        handleNavigate(results[selectedIndex].url)
+      }
     }
   }
 
@@ -408,6 +436,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     <div
       className="search-modal-backdrop"
       onClick={onClose}
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose()
+        }
+      }}
       role="dialog"
       aria-modal="true"
       aria-label="Search website"
@@ -416,6 +449,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       <div
         className="search-modal-container"
         onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         onKeyDown={handleKeyDownNav}
       >
         {/* Search Input Bar */}
@@ -480,7 +514,10 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <Link
                         key={itemIdx}
                         href={item.url}
-                        onClick={onClose}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleNavigate(item.url)
+                        }}
                         className="search-modal-item"
                       >
                         <div className="search-modal-item-badge">
@@ -520,7 +557,10 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     <Link
                       key={res.id}
                       href={res.url}
-                      onClick={onClose}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleNavigate(res.url)
+                      }}
                       className={`search-modal-item ${isSelected ? 'is-selected' : ''}`}
                     >
                       <div className="search-modal-item-badge">
