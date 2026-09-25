@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useI18n } from '@/components/I18nProvider'
 
@@ -129,6 +130,27 @@ export function TermsClient() {
   ]
 
   const sections = isArabic ? sectionsAr : sectionsEn
+  const [activeId, setActiveId] = useState<string>(sections[0]?.id || '')
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 220
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i].id)
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY
+          if (scrollPosition >= top) {
+            setActiveId(sections[i].id)
+            break
+          }
+        }
+      }
+    }
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [sections])
 
   return (
     <div className="page-shell" dir={isArabic ? 'rtl' : 'ltr'}>
@@ -166,7 +188,20 @@ export function TermsClient() {
             </div>
             <nav className="legal-sidebar__nav">
               {sections.map((sec) => (
-                <a key={sec.id} href={`#${sec.id}`} className="legal-sidebar__link">
+                <a
+                  key={sec.id}
+                  href={`#${sec.id}`}
+                  className={`legal-sidebar__link ${activeId === sec.id ? 'is-active' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const target = document.getElementById(sec.id)
+                    if (target) {
+                      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      setActiveId(sec.id)
+                      history.replaceState(null, '', `#${sec.id}`)
+                    }
+                  }}
+                >
                   {sec.title}
                 </a>
               ))}
