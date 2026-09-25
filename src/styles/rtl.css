@@ -258,11 +258,11 @@ html[dir='rtl'] .footer__subscribe:active .footer__subscribe-icon {
 }
 
 html[dir='rtl'] .footer__subscribe:hover .footer__subscribe-icon svg {
-  transform: scaleX(-1) rotate(-45deg);
+  transform: scaleX(-1) rotate(45deg);
 }
 
 html[dir='rtl'] .footer__subscribe:active .footer__subscribe-icon svg {
-  transform: scaleX(-1) rotate(-45deg) scale(0.92);
+  transform: scaleX(-1) rotate(45deg) scale(0.92);
 }
 
 /* --------------------------------------------------------------------------
