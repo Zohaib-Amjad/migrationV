@@ -222,6 +222,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const handleNavigate = useCallback(
     (url: string) => {
@@ -240,6 +241,25 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     },
     [onClose, router]
   )
+
+  // Document level click-outside listener
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        onClose()
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+    document.addEventListener('touchstart', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+      document.removeEventListener('touchstart', handleOutsideClick)
+    }
+  }, [isOpen, onClose])
 
   useEffect(() => {
     if (isOpen) {
@@ -447,6 +467,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       dir={isArabic ? 'rtl' : 'ltr'}
     >
       <div
+        ref={containerRef}
         className="search-modal-container"
         onClick={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
