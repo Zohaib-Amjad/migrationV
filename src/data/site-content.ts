@@ -1205,39 +1205,59 @@ export const ALL_TEAM: TeamMemberItem[] = [...LEADERSHIP, ...CORE_TEAM]
 export const REVIEWS = [
   {
     name: 'Sarah & Marcus Jenkins',
+    nameAr: 'سارة وماركوس جنكينز',
     initial: 'S',
+    initialAr: 'س',
     avatarBg: '#4A90E2',
     date: '14 August 2026',
+    dateAr: '14 أغسطس 2026',
     platform: 'Google',
     text:
       'HOF Migration made my move to Canada seamless. Their team explained every step clearly and kept me updated throughout the entire process. I couldn’t have asked for better guidance through such a big life decision.',
+    textAr:
+      'جعلت إتش أو إف مايجريشن انتقالي إلى كندا سلسًا وميسرًا للغاية. شرح فريقهم كل خطوة بوضوح وأبقاني على اطلاع مستمر طوال العملية. لم أكن لأتمنى إرشادًا أفضل في مثل هذا القرار المصيري الكبير.',
   },
   {
     name: 'Sara K.',
+    nameAr: 'سارة ك.',
     initial: 'S',
+    initialAr: 'س',
     avatarBg: '#16A085',
     date: '2 September 2026',
-    platform: 'Trustpilot',
+    dateAr: '2 سبتمبر 2026',
+    platform: 'Google',
     text:
       'From our first consultation to the final visa approval, the HOF team was incredibly professional. They helped my whole family relocate to Australia without any stress at all — truly grateful for their support.',
+    textAr:
+      'من استشارتنا الأولى حتى الموافقة النهائية على التأشيرة، كان فريق إتش أو إف في غاية الاحترافية. لقد ساعدوا عائلتي بأكملها على الانتقال إلى أستراليا دون أي توتر على الإطلاق — ممتنون حقًا لدعمهم الكبير.',
   },
   {
     name: 'Michael D.',
+    nameAr: 'مايكل د.',
     initial: 'M',
+    initialAr: 'م',
     avatarBg: '#E67E22',
     date: '20 July 2026',
+    dateAr: '20 يوليو 2026',
     platform: 'Google',
     text:
       'Excellent service from start to finish. My US investor visa application was handled with real expertise — highly recommend HOF Migration to anyone considering the move.',
+    textAr:
+      'خدمة ممتازة من البداية إلى النهاية. تم التعامل مع طلب تأشيرة المستثمر الأمريكي الخاص بي بخبرة واحترافية حقيقية — أوصي بشدة بـ إتش أو إف مايجريشن لكل من يفكر في الانتقال.',
   },
   {
     name: 'Fatima A.',
+    nameAr: 'فاطمة ع.',
     initial: 'F',
+    initialAr: 'ف',
     avatarBg: '#E84393',
     date: '5 June 2026',
-    platform: 'Trustpilot',
+    dateAr: '5 يونيو 2026',
+    platform: 'Google',
     text:
       'Professional, responsive, and genuinely caring about our situation. HOF Migration guided us through the UK study visa process with total clarity from day one.',
+    textAr:
+      'فريق احترافي وسريع الاستجابة ومهتم بصدق بوضعنا. أرشدتنا إتش أو إف مايجريشن خلال عملية تأشيرة الدراسة في المملكة المتحدة بوضوح تام منذ اليوم الأول.',
   },
 ]
 

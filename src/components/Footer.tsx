@@ -56,7 +56,7 @@ export function Footer() {
                     <path
                       d="M7 17L17 7M17 7H9M17 7v8"
                       stroke="#14161a"
-                      strokeWidth="2"
+                      strokeWidth="2.2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
@@ -102,27 +102,38 @@ export function Footer() {
       <div className="footer__info">
         <div className="footer__info-item">
           <span className="footer__info-label">Email</span>
-          <span className="footer__info-value">info@hofmigration.com</span>
+          <a href="mailto:info@hofmigration.com" className="footer__info-value">
+            info@hofmigration.com
+          </a>
         </div>
         <div className="footer__info-item">
           <span className="footer__info-label">Visit Us</span>
-          <span className="footer__info-value">Business Bay, Dubai, UAE</span>
+          <a
+            href="https://maps.google.com/?q=Business+Bay,+Dubai,+UAE"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="footer__info-value"
+          >
+            Business Bay, Dubai, UAE
+          </a>
         </div>
         <div className="footer__info-item">
           <span className="footer__info-label">Call Us Now</span>
-          <span className="footer__info-value">+971 4 385 2200</span>
+          <a href="tel:+97143852200" className="footer__info-value">
+            +971 4 385 2200
+          </a>
         </div>
       </div>
 
       <div className="footer__bottom">
         <div className="footer__bottom-top">
-          <div className="footer__brand">
+          <Link href="/" className="footer__brand" aria-label="HOF Migration Home">
             <img
               src="/assets/icons-v2/logo-brand-white.svg"
               alt="HOF Migration"
               className="footer__brand-logo"
             />
-          </div>
+          </Link>
           <div className="footer__legal">
             <Link href="/privacy-policy">Privacy Policy</Link>
             <span>•</span>

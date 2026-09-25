@@ -229,7 +229,7 @@ html[dir='rtl'] .callback-form__field select {
    -------------------------------------------------------------------------- */
 
 html[dir='rtl'] .footer__subscribe {
-  padding: 12px 22px 12px 10px;
+  padding: 10px 22px 10px 8px;
 }
 
 /* --------------------------------------------------------------------------
@@ -250,11 +250,19 @@ html[dir='rtl'] .btn:active .btn__icon {
 }
 
 html[dir='rtl'] .footer__subscribe:hover .footer__subscribe-icon {
-  transform: scaleX(-1) translate(-2.5px, -2.5px);
+  transform: translateX(-3px);
 }
 
 html[dir='rtl'] .footer__subscribe:active .footer__subscribe-icon {
-  transform: scaleX(-1) translate(0, 0);
+  transform: translateX(-1px);
+}
+
+html[dir='rtl'] .footer__subscribe:hover .footer__subscribe-icon svg {
+  transform: scaleX(-1) rotate(-45deg);
+}
+
+html[dir='rtl'] .footer__subscribe:active .footer__subscribe-icon svg {
+  transform: scaleX(-1) rotate(-45deg) scale(0.92);
 }
 
 /* --------------------------------------------------------------------------

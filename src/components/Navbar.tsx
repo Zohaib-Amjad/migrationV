@@ -104,14 +104,14 @@ export function Navbar() {
 
         <nav className="nav__links" aria-label="Primary">
           <div
-            className={`nav__item ${dropdownOpen ? 'is-open' : ''}`}
+            className={`nav__item ${dropdownOpen ? 'is-open' : ''} ${pathname?.startsWith('/services') ? 'is-active' : ''}`}
             data-nav-menu=""
             onMouseEnter={() => setDropdownOpen(true)}
             onMouseLeave={() => setDropdownOpen(false)}
           >
             <Link
               href="/#services"
-              className="nav__link nav__link--dropdown"
+              className={`nav__link nav__link--dropdown ${pathname?.startsWith('/services') ? 'is-active' : ''}`}
               aria-haspopup="true"
               aria-expanded={dropdownOpen}
               onClick={(e) => {
@@ -128,7 +128,7 @@ export function Navbar() {
 
             <div className="nav__menu" data-nav-panel="">
               <Link
-                className="nav__menu-item"
+                className={`nav__menu-item ${pathname?.includes('skilled-migration') ? 'is-active' : ''}`}
                 href="/services/skilled-migration"
                 style={{ ['--dot']: '#0095ff' }}
                 onClick={() => setDropdownOpen(false)}
@@ -140,7 +140,7 @@ export function Navbar() {
                 </span>
               </Link>
               <Link
-                className="nav__menu-item"
+                className={`nav__menu-item ${pathname?.includes('study-abroad') ? 'is-active' : ''}`}
                 href="/services/study-abroad"
                 style={{ ['--dot']: '#ff5900' }}
                 onClick={() => setDropdownOpen(false)}
@@ -152,7 +152,7 @@ export function Navbar() {
                 </span>
               </Link>
               <Link
-                className="nav__menu-item"
+                className={`nav__menu-item ${pathname?.includes('family-sponsorship') ? 'is-active' : ''}`}
                 href="/services/family-sponsorship"
                 style={{ ['--dot']: '#179b66' }}
                 onClick={() => setDropdownOpen(false)}
@@ -164,7 +164,7 @@ export function Navbar() {
                 </span>
               </Link>
               <Link
-                className="nav__menu-item"
+                className={`nav__menu-item ${pathname?.includes('usa-visas') ? 'is-active' : ''}`}
                 href="/services/usa-visas"
                 style={{ ['--dot']: '#6b81cf' }}
                 onClick={() => setDropdownOpen(false)}
@@ -176,7 +176,7 @@ export function Navbar() {
                 </span>
               </Link>
               <Link
-                className="nav__menu-item"
+                className={`nav__menu-item ${pathname?.includes('europe-visas') ? 'is-active' : ''}`}
                 href="/services/europe-visas"
                 style={{ ['--dot']: '#fd0148' }}
                 onClick={() => setDropdownOpen(false)}
@@ -188,7 +188,7 @@ export function Navbar() {
                 </span>
               </Link>
               <Link
-                className="nav__menu-all"
+                className={`nav__menu-all ${pathname === '/services' ? 'is-active' : ''}`}
                 href="/services"
                 onClick={() => setDropdownOpen(false)}
               >
@@ -197,13 +197,19 @@ export function Navbar() {
             </div>
           </div>
 
-          <Link href="/success-stories" className="nav__link">
+          <Link
+            href="/success-stories"
+            className={`nav__link ${pathname?.startsWith('/success-stories') ? 'is-active' : ''}`}
+          >
             Success Stories
           </Link>
           <Link href="/#reviews" className="nav__link">
             Reviews
           </Link>
-          <Link href="/about" className="nav__link">
+          <Link
+            href="/about"
+            className={`nav__link ${pathname === '/about' ? 'is-active' : ''}`}
+          >
             About Us
           </Link>
         </nav>
@@ -276,7 +282,7 @@ export function Navbar() {
           <div className="nav__drawer-services-group">
             <button
               type="button"
-              className={`nav__drawer-accordion-btn ${servicesAccordionOpen ? 'is-active' : ''}`}
+              className={`nav__drawer-accordion-btn ${servicesAccordionOpen ? 'is-active' : ''} ${pathname?.startsWith('/services') ? 'is-current-page' : ''}`}
               onClick={() => setServicesAccordionOpen(!servicesAccordionOpen)}
               aria-expanded={servicesAccordionOpen}
             >
@@ -303,7 +309,7 @@ export function Navbar() {
               <div className="nav__drawer-subitems-panel">
                 <div className="nav__drawer-subitems-list">
                   <Link
-                    className="nav__drawer-subitem"
+                    className={`nav__drawer-subitem ${pathname?.includes('skilled-migration') ? 'is-active' : ''}`}
                     href="/services/skilled-migration"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -318,7 +324,7 @@ export function Navbar() {
                   </Link>
 
                   <Link
-                    className="nav__drawer-subitem"
+                    className={`nav__drawer-subitem ${pathname?.includes('study-abroad') ? 'is-active' : ''}`}
                     href="/services/study-abroad"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -333,7 +339,7 @@ export function Navbar() {
                   </Link>
 
                   <Link
-                    className="nav__drawer-subitem"
+                    className={`nav__drawer-subitem ${pathname?.includes('family-sponsorship') ? 'is-active' : ''}`}
                     href="/services/family-sponsorship"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -348,7 +354,7 @@ export function Navbar() {
                   </Link>
 
                   <Link
-                    className="nav__drawer-subitem"
+                    className={`nav__drawer-subitem ${pathname?.includes('usa-visas') ? 'is-active' : ''}`}
                     href="/services/usa-visas"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -363,7 +369,7 @@ export function Navbar() {
                   </Link>
 
                   <Link
-                    className="nav__drawer-subitem"
+                    className={`nav__drawer-subitem ${pathname?.includes('europe-visas') ? 'is-active' : ''}`}
                     href="/services/europe-visas"
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -379,7 +385,7 @@ export function Navbar() {
                 </div>
 
                 <Link
-                  className="nav__drawer-all-link"
+                  className={`nav__drawer-all-link ${pathname === '/services' ? 'is-active' : ''}`}
                   href="/services"
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -393,7 +399,7 @@ export function Navbar() {
           <div className="nav__drawer-links">
             <Link
               href="/success-stories"
-              className="nav__drawer-link"
+              className={`nav__drawer-link ${pathname?.startsWith('/success-stories') ? 'is-active' : ''}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               <span>Success Stories</span>
@@ -411,7 +417,7 @@ export function Navbar() {
 
             <Link
               href="/about"
-              className="nav__drawer-link"
+              className={`nav__drawer-link ${pathname === '/about' ? 'is-active' : ''}`}
               onClick={() => setMobileMenuOpen(false)}
             >
               <span>About Us</span>

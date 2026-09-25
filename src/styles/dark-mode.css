@@ -359,6 +359,16 @@ html.is-dark .service-card__link {
   color: var(--dk-text);
 }
 
+@media (max-width: 900px) {
+  html.is-dark .service-card__link,
+  html.is-dark .service-card:hover .service-card__link,
+  html.is-dark .service-card:focus-within .service-card__link,
+  html.is-dark .service-card__link:hover,
+  html.is-dark .service-card__link:active {
+    color: #ffffff !important;
+  }
+}
+
 /* --------------------------------------------------------------------------
    Reviews
    -------------------------------------------------------------------------- */

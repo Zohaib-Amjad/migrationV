@@ -26,26 +26,40 @@ const ATTR_SELECTORS = '[' + ATTRS.join('],[') + ']'
 const SAVED_ATTR_SELECTORS = '[' + ATTRS.map((a) => 'data-en-' + a).join('],[') + ']'
 
 function walkTextNodes(root: Node, fn: (node: Text) => void) {
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-    acceptNode(node) {
-      const p = node.parentNode as HTMLElement | null
-      if (!p) return NodeFilter.FILTER_REJECT
-      const tag = p.nodeName
-      if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') {
-        return NodeFilter.FILTER_REJECT
+  function traverse(currentRoot: Node) {
+    const walker = document.createTreeWalker(currentRoot, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const p = node.parentNode as HTMLElement | null
+        if (!p) return NodeFilter.FILTER_REJECT
+        const tag = p.nodeName
+        if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') {
+          return NodeFilter.FILTER_REJECT
+        }
+        if (p.closest && p.closest('[data-lang-toggle], .nav__lang, .nav__drawer-lang, [data-no-translate]')) {
+          return NodeFilter.FILTER_REJECT
+        }
+        return node.nodeValue && node.nodeValue.trim()
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT
+      },
+    })
+    let node: Node | null
+    while ((node = walker.nextNode())) {
+      fn(node as Text)
+    }
+
+    if (currentRoot instanceof Element || currentRoot instanceof Document) {
+      const allEls = currentRoot.querySelectorAll('*')
+      for (let i = 0; i < allEls.length; i++) {
+        const el = allEls[i]
+        if (el.shadowRoot) {
+          traverse(el.shadowRoot)
+        }
       }
-      if (p.closest && p.closest('[data-lang-toggle], .nav__lang, .nav__drawer-lang, [data-no-translate]')) {
-        return NodeFilter.FILTER_REJECT
-      }
-      return node.nodeValue && node.nodeValue.trim()
-        ? NodeFilter.FILTER_ACCEPT
-        : NodeFilter.FILTER_REJECT
-    },
-  })
-  let node: Node | null
-  while ((node = walker.nextNode())) {
-    fn(node as Text)
+    }
   }
+
+  traverse(root)
 }
 
 interface I18nTextNode extends Text {

@@ -288,6 +288,13 @@ html.is-dark .nav__drawer {
   box-shadow: 0 2px 8px color-mix(in srgb, var(--page-theme-accent) 15%, transparent);
 }
 
+.nav__drawer-accordion-btn.is-current-page {
+  background: color-mix(in srgb, var(--page-theme-accent, #179b66) 12%, #ffffff);
+  border-color: color-mix(in srgb, var(--page-theme-accent, #179b66) 40%, transparent);
+  color: color-mix(in srgb, var(--page-theme-accent, #179b66) 92%, #000000);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--page-theme-accent, #179b66) 15%, transparent);
+}
+
 html.is-dark .nav__drawer-accordion-btn {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.05);
@@ -298,9 +305,11 @@ html.is-dark .nav__drawer-accordion-btn:hover {
   background: rgba(255, 255, 255, 0.08);
 }
 
-html.is-dark .nav__drawer-accordion-btn.is-active {
+html.is-dark .nav__drawer-accordion-btn.is-active,
+html.is-dark .nav__drawer-accordion-btn.is-current-page {
   background: rgba(23, 155, 102, 0.15);
   border-color: rgba(52, 211, 153, 0.4);
+  color: #ffffff;
 }
 
 .nav__drawer-accordion-left {
@@ -438,9 +447,20 @@ html.is-dark .nav__drawer-subitems-panel {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
+.nav__drawer-subitem.is-active {
+  background: color-mix(in srgb, var(--page-theme-accent, #179b66) 10%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--page-theme-accent, #179b66) 30%, transparent);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--page-theme-accent, #179b66) 10%, transparent);
+}
+
 html.is-dark .nav__drawer-subitem:hover,
 html.is-dark .nav__drawer-subitem:active {
   background: rgba(255, 255, 255, 0.06);
+}
+
+html.is-dark .nav__drawer-subitem.is-active {
+  background: rgba(52, 211, 153, 0.14);
+  border: 1px solid rgba(52, 211, 153, 0.35);
 }
 
 .nav__drawer-subitem-icon {
@@ -525,21 +545,30 @@ html.is-dark .nav__drawer-subitem-desc {
   border-style: solid;
 }
 
+.nav__drawer-all-link.is-active {
+  background: color-mix(in srgb, var(--page-theme-accent, #179b66) 14%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--page-theme-accent, #179b66) 40%, transparent);
+  font-weight: 700;
+}
+
 html.is-dark .nav__drawer-all-link {
   background: rgba(52, 211, 153, 0.1);
   border-color: rgba(52, 211, 153, 0.3);
   color: #34d399;
 }
 
-html.is-dark .nav__drawer-all-link:hover {
+html.is-dark .nav__drawer-all-link:hover,
+html.is-dark .nav__drawer-all-link.is-active {
   background: rgba(52, 211, 153, 0.18);
+  border-style: solid;
 }
 
 .nav__drawer-all-arrow {
   transition: transform 160ms ease;
 }
 
-.nav__drawer-all-link:hover .nav__drawer-all-arrow {
+.nav__drawer-all-link:hover .nav__drawer-all-arrow,
+.nav__drawer-all-link.is-active .nav__drawer-all-arrow {
   transform: translateX(3px);
 }
 
@@ -569,6 +598,20 @@ html.is-dark .nav__drawer-all-link:hover {
   color: var(--brand, #179b66);
 }
 
+.nav__drawer-link.is-active {
+  background: color-mix(in srgb, var(--page-theme-accent, #179b66) 10%, #f8fafc);
+  color: color-mix(in srgb, var(--page-theme-accent, #179b66) 92%, #000000);
+  border: 1px solid color-mix(in srgb, var(--page-theme-accent, #179b66) 28%, transparent);
+  font-weight: 600;
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--page-theme-accent, #179b66) 10%, transparent);
+}
+
+.nav__drawer-link.is-active .nav__drawer-link-arrow {
+  opacity: 1;
+  color: var(--page-theme-accent, #179b66);
+  transform: translateX(3px);
+}
+
 html.is-dark .nav__drawer-link {
   color: #ffffff;
 }
@@ -578,20 +621,13 @@ html.is-dark .nav__drawer-link:hover {
   color: #34d399;
 }
 
-.nav__drawer-link-arrow {
-  font-size: 14px;
-  color: #94a3b8;
-  opacity: 0.4;
-  transition: all 160ms ease;
+html.is-dark .nav__drawer-link.is-active {
+  background: rgba(52, 211, 153, 0.15);
+  border-color: rgba(52, 211, 153, 0.35);
+  color: #ffffff;
 }
 
-.nav__drawer-link:hover .nav__drawer-link-arrow {
-  opacity: 1;
-  transform: translateX(3px);
-  color: #179b66;
-}
-
-html.is-dark .nav__drawer-link:hover .nav__drawer-link-arrow {
+html.is-dark .nav__drawer-link.is-active .nav__drawer-link-arrow {
   color: #34d399;
 }
 
@@ -706,6 +742,44 @@ html[lang='ar'] .nav__logo-img--ar {
   font-weight: 500;
   color: #1b232e;
   white-space: nowrap;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 180ms ease,
+              border-color 180ms ease,
+              color 180ms ease,
+              box-shadow 180ms ease;
+  border: 1.5px solid transparent;
+}
+
+.nav__link:hover {
+  color: color-mix(in srgb, var(--page-theme-accent, #179b66) 92%, #000000);
+  background: color-mix(in srgb, var(--page-theme-accent, #179b66) 8%, transparent);
+}
+
+.nav__link.is-active {
+  color: color-mix(in srgb, var(--page-theme-accent, #179b66) 92%, #000000);
+  background: color-mix(in srgb, var(--page-theme-accent, #179b66) 12%, #ffffff);
+  border-color: color-mix(in srgb, var(--page-theme-accent, #179b66) 30%, transparent);
+  font-weight: 600;
+  box-shadow: 0 2px 10px -2px color-mix(in srgb, var(--page-theme-accent, #179b66) 25%, transparent);
+}
+
+html.is-dark .nav__link {
+  color: #d1d5db;
+}
+
+html.is-dark .nav__link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html.is-dark .nav__link.is-active {
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.16);
+  border-color: rgba(52, 211, 153, 0.35);
+  box-shadow: 0 2px 12px -2px rgba(52, 211, 153, 0.3);
 }
 
 .nav__chevron {
@@ -1509,6 +1583,15 @@ html[lang='ar'] .nav__logo-img--ar {
   background: color-mix(in srgb, var(--dot, #8daba4) 10%, #fff);
 }
 
+.nav__menu-item.is-active {
+  background: color-mix(in srgb, var(--dot, #8daba4) 14%, #ffffff);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dot, #8daba4) 30%, transparent);
+}
+
+.nav__menu-item.is-active .nav__menu-copy b {
+  color: color-mix(in srgb, var(--dot, #8daba4) 90%, #000000);
+}
+
 .nav__menu-dot {
   flex-shrink: 0;
   width: 8px;
@@ -1545,7 +1628,8 @@ html[lang='ar'] .nav__logo-img--ar {
   text-align: center;
 }
 
-.nav__menu-all:hover {
+.nav__menu-all:hover,
+.nav__menu-all.is-active {
   background: color-mix(in srgb, var(--brand) 26%, #fff);
 }
 
