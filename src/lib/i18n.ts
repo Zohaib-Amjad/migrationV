@@ -760,7 +760,6 @@ export const AR_DICTIONARY: Record<string, string> = {
   "Jobs": "فرص العمل",
   "Joined": "سنة الانضمام",
   "Joint finances going back six years, correspondence, travel records, statements from family on both sides, and a written statement from each of them in their own words. Assembled to be followed by a stranger.": "قمنا بجمع حسابات بنكية مشتركة لـ 6 سنوات، ومراسلات، وسجلات سفر، وشهادات قانونية من عائلتيهما، وإفادة مفصلة من كل منهما بكلماته الخاصة، وصيغ الملف بوضوح يسهل على مدقق الهجرة استيعابه.",
-  "journey": "رحلة",
   "journeys": "رحلات",
   "Keep your window open": "أبقِ نافذتك مفتوحة",
   "Khalid is the first person most clients speak to and the one who follows up when something is outstanding.": "خالد هو أول شخص يتحدث إليه معظم العملاء، والشخص الذي يتابع استيفاء أي وثيقة متبقية بانتظام.",
@@ -900,7 +899,7 @@ export const AR_DICTIONARY: Record<string, string> = {
   "Previous reviews": "التقييمات السابقة",
   "Primary": "رئيسي",
   "Priority category": "فئة ذات أولوية قصوى",
-  "Privacy Policy": "سياسة الخصوصية",
+  "Privacy Policy": "سياسة الخصوصية وحماية البيانات",
   "Priya": "بريا",
   "Priya had a competitive Express Entry score that was still short of the cut-off in every recent round. Rather than wait, we mapped the provincial streams where her occupation was actually in demand.": "كانت بريا تمتلك نقاطًا تنافسية في نظام الدخول السريع لكنها كانت تقل قليلاً عن الحد الأدنى في السحوبات الأخيرة. وبدلاً من الانتظار غير المجدي، حددنا لها مسارات المقاطعات التي كان تخصصها مطلوبًا فيها بشدة.",
   "Priya had a competitive Express Entry score that was still short of the cut–off in every recent round. Rather than wait, we mapped the provincial streams where her occupation was actually in demand.": "كانت بريا تمتلك نقاطًا تنافسية في نظام الدخول السريع لكنها كانت تقل قليلاً عن الحد الأدنى في السحوبات الأخيرة. وبدلاً من الانتظار غير المجدي، حددنا لها مسارات المقاطعات التي كان تخصصها مطلوبًا فيها بشدة.",
@@ -963,7 +962,6 @@ export const AR_DICTIONARY: Record<string, string> = {
   "RI": "إقامة استثمارية",
   "Role": "المنصب الوظيفي",
   "Route": "المسار",
-  "routes": "مسارات",
   "routes covered": "المسارات المشمولة",
   "Runs the practice day to day. Owns the part of the process where a case stops being advice and becomes a filed file.": "يدير العمليات اليومية للشركة. يشرف على المرحلة التي تتحول فيها المعاملة من مجرد استشارة إلى طلب رسمي مكتمل ومودع لدى السلطات.",
   "SA": "س.ع",
@@ -1226,14 +1224,10 @@ export const AR_DICTIONARY: Record<string, string> = {
   "YR": "ي.ر",
   "Yusuf manages skilled migration files end to end, which means he is the person who notices that a language result expires three weeks before an expected draw.": "يدير يوسف ملفات الهجرة المهارية بالكامل، وهو الشخص الذي يكتشف انتهاء صلاحية نتيجة اختبار اللغة قبل ثلاثة أسابيع من موعد السحب المتوقع.",
   "Yusuf Rahman": "يوسف رحمن",
-  "العربية": "العربية"
-};
-
-export const AR_ATTRS: Record<string, string> = {
+  "العربية": "العربية",
   "Let's transform your vision into results.": "دعنا نحول رؤيتك وطموحك إلى نتائج ملموسة.",
   "Terms of Service": "شروط الخدمة",
   "Cookie Policy": "سياسة ملفات تعريف الارتباط",
-  "Privacy Policy": "سياسة الخصوصية وحماية البيانات",
   "Legal & Governance": "الشؤون القانونية والحوكمة",
   "Policy Navigation": "أقسام السياسة",
   "Terms Navigation": "أقسام الشروط",
@@ -1335,4 +1329,7 @@ export const AR_ATTRS: Record<string, string> = {
   "View Privacy Policy": "عرض سياسة الخصوصية",
   "Contact Privacy Team": "تواصل مع فريق حماية الخصوصية"
 };
+
+export const AR_ATTRS: Record<string, string> = AR_DICTIONARY;
+
 
