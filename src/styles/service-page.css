@@ -34,26 +34,7 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   color: color-mix(in srgb, var(--svc-accent) 85%, #000000);
   font-weight: 500;
-  cursor: pointer;
   user-select: none;
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 180ms ease,
-              border-color 180ms ease,
-              box-shadow 180ms ease;
-}
-
-.service-page .page-head__chip:hover {
-  background: color-mix(in srgb, var(--svc-accent) 8%, #ffffff);
-  border-color: var(--svc-accent);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px -2px color-mix(in srgb, var(--svc-accent) 30%, transparent);
-}
-
-.service-page .page-head__chip:active {
-  transform: translateY(1px) scale(0.96);
-  background: color-mix(in srgb, var(--svc-accent) 20%, #ffffff);
-  box-shadow: 0 2px 6px color-mix(in srgb, var(--svc-accent) 25%, transparent);
-  transition-duration: 70ms;
 }
 
 .service-page .crumbs {
