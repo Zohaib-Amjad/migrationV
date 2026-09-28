@@ -14,10 +14,17 @@ export function ReviewsCarousel() {
     const container = trustindexRef.current
     if (!container) return
 
+    setTrustindexReady(false)
+    container.innerHTML = ''
+
+    const scriptSrc = isArabic
+      ? 'https://cdn.trustindex.io/loader.js?b4ca2d982c17404a428604abe9c'
+      : 'https://cdn.trustindex.io/loader.js?289b017822e2088a4c26a8ad6c2'
+
     const observer = new MutationObserver(() => {
       if (container.querySelector('.ti-widget')) {
         setTrustindexReady(true)
-        if (document.documentElement.getAttribute('lang') === 'ar') {
+        if (isArabic || document.documentElement.getAttribute('lang') === 'ar') {
           setTimeout(translateToArabic, 60)
           setTimeout(translateToArabic, 250)
           setTimeout(translateToArabic, 600)
@@ -27,7 +34,7 @@ export function ReviewsCarousel() {
     observer.observe(container, { childList: true, subtree: true })
 
     const script = document.createElement('script')
-    script.src = 'https://cdn.trustindex.io/loader.js?289b017822e2088a4c26a8ad6c2'
+    script.src = scriptSrc
     script.async = true
     script.defer = true
     container.appendChild(script)
@@ -35,8 +42,9 @@ export function ReviewsCarousel() {
     return () => {
       observer.disconnect()
       script.remove()
+      container.innerHTML = ''
     }
-  }, [])
+  }, [isArabic])
 
   useEffect(() => {
     if (isArabic) {
@@ -70,6 +78,7 @@ export function ReviewsCarousel() {
       <div className="reviews__divider"></div>
 
       <div
+        key={isArabic ? 'trustindex-ar' : 'trustindex-en'}
         ref={trustindexRef}
         className="reviews__trustindex"
         aria-label={isArabic ? 'تقييمات العملاء المباشرة' : 'Live customer reviews'}
