@@ -2,10 +2,16 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { FAQS } from '@/data/site-content'
+import type { CmsFaq } from '@/lib/cms'
 
-export function FaqAccordion() {
+export function FaqAccordion({ faqs }: { faqs?: CmsFaq[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  const items = (faqs || [])
+    .filter((faq) => Boolean(faq?.question))
+    .map((faq) => ({ q: faq.question, a: faq.answer || '' }))
+
+  if (items.length === 0) return null
 
   const toggle = (i: number) => {
     setOpenIndex(openIndex === i ? null : i)
@@ -28,7 +34,7 @@ export function FaqAccordion() {
         </div>
 
         <div className="faq__list" data-faq>
-          {FAQS.map((faq, i) => {
+          {items.map((faq, i) => {
             const isOpen = openIndex === i
             return (
               <div key={i} className="faq-item" data-open={isOpen ? 'true' : 'false'}>

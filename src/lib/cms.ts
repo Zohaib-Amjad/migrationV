@@ -33,19 +33,58 @@ export type CmsTestimonial = {
   quote: string
   author: string
   role: string
-  imageUrl: string
+  imageUrl?: string | null
+  initial?: string
+  avatarBg?: string
+  platform?: 'Google' | 'Trustpilot'
+  date?: string
 }
 
 export type CmsService = {
   id: string | number
+  slug: string
   num: string
   title: string
   desc: string
   bullets: string[]
   imageUrl: string
   iconUrl: string | null
+  accent?: string
+  tint?: string
   category: 'featured' | 'pathway'
+  detailContent?: Record<string, any> | null
 }
+
+export type CmsCaseStudy = {
+  id: string | number
+  title: string
+  slug: string
+  clientName: string
+  summary: string
+  results: { stat: string; label: string }[]
+  imageUrl?: string | null
+  storyDetails?: {
+    route?: string
+    caption?: string
+    quote?: string
+    prose?: [string, string][]
+  } | null
+}
+
+export type CmsTeamMember = {
+  id: string | number
+  name: string
+  slug: string
+  role: string
+  initials: string
+  mono: string
+  short: string
+  group: 'leadership' | 'core'
+  facts: [string, string][]
+  prose: [string, string][]
+}
+
+export type CmsOffice = { id: string | number; city: string; country: string; address: string; phone: string }
 
 export type CmsInsight = {
   id: string | number
@@ -88,8 +127,6 @@ export async function getFaqs(page?: FaqPage): Promise<CmsFaq[]> {
   try {
     const payload = await getPayloadClient()
 
-    // Exact page match only — homepage FAQs (page: home) must not appear elsewhere.
-    // Non-home pages with no CMS entries return [] so FaqSection can show dummy FALLBACK_FAQS.
     if (page && page !== 'all') {
       const specific = await payload.find({
         collection: 'faqs',
@@ -98,8 +135,11 @@ export async function getFaqs(page?: FaqPage): Promise<CmsFaq[]> {
         sort: 'order',
         where: { page: { equals: page } },
       })
-
-      return specific.docs.map((doc: Faq) => ({
+      const shared = await payload.find({
+        collection: 'faqs', depth: 0, limit: 50, sort: 'order',
+        where: { page: { equals: 'all' } },
+      })
+      return [...specific.docs, ...shared.docs].map((doc: any) => ({
         id: doc.id,
         question: doc.question,
         answer: doc.answer,
@@ -111,10 +151,9 @@ export async function getFaqs(page?: FaqPage): Promise<CmsFaq[]> {
       depth: 0,
       limit: 50,
       sort: 'order',
-      where: { page: { equals: 'all' } },
     })
 
-    return result.docs.map((doc: Faq) => ({
+    return result.docs.map((doc: any) => ({
       id: doc.id,
       question: doc.question,
       answer: doc.answer,
@@ -134,31 +173,32 @@ export async function getTestimonials(): Promise<CmsTestimonial[]> {
       sort: 'order',
     })
 
-    return result.docs
-      .map((doc: Testimonial) => {
-        const imageUrl = mediaUrl(doc.image as Media | number | null)
-        if (!imageUrl) return null
-        return {
-          id: doc.id,
-          quote: doc.quote,
-          author: doc.author,
-          role: doc.role || '',
-          imageUrl,
-        }
-      })
-      .filter(Boolean) as CmsTestimonial[]
+    return result.docs.map((doc: any) => {
+      const imageUrl = mediaUrl(doc.image as Media | number | null)
+      return {
+        id: doc.id,
+        quote: doc.quote,
+        author: doc.author,
+        role: doc.role || '',
+        initial: doc.initial || (doc.author ? doc.author[0] : 'S'),
+        avatarBg: doc.avatarBg || '#224036',
+        platform: doc.platform || 'Google',
+        date: doc.date || 'Recent',
+        imageUrl,
+      }
+    })
   } catch {
     return []
   }
 }
 
-const DEFAULT_FEATURED_IMAGES = [
-  '/assets/services-v2/australia.jpg',
-  '/assets/services-v2/canada.jpg',
-  '/assets/services-v2/uk.jpg',
-  '/assets/services-v2/usa.jpg',
-  '/assets/services-v2/europe.jpg',
-]
+const DEFAULT_FEATURED_IMAGES: Record<string, string> = {
+  'skilled-migration': '/assets/services-v2/skilled-migration.jpg',
+  'study-abroad': '/assets/services-v2/study-abroad.jpg',
+  'family-sponsorship': '/assets/services-v2/family-sponsorship.jpg',
+  'usa-visas': '/assets/services-v2/usa-visas.jpg',
+  'europe-visas': '/assets/services-v2/europe-visas.jpg',
+}
 
 export async function getServices(
   category?: 'featured' | 'pathway',
@@ -175,20 +215,102 @@ export async function getServices(
         : {}),
     })
 
-    return result.docs.map((doc: Service, index: number) => ({
+    return result.docs.map((doc: any, index: number) => {
+      const slug = doc.slug || (doc.title ? doc.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') : '')
+      return {
+        id: doc.id,
+        slug,
+        num: doc.numberLabel || `0${index + 1}`,
+        title: doc.title,
+        desc: doc.description,
+        bullets: (doc.bullets || []).map((b: any) => b.text),
+        imageUrl:
+          mediaUrl(doc.image as Media | number | null) ||
+          DEFAULT_FEATURED_IMAGES[slug] ||
+          '/assets/services-v2/skilled-migration.jpg',
+        iconUrl: mediaUrl(doc.icon as Media | number | null),
+        accent: doc.accent || '#0095FF',
+        tint: doc.tint || '#DFEDF7',
+        category: doc.category || 'featured',
+        detailContent: doc.detailContent || null,
+      }
+    })
+  } catch {
+    return []
+  }
+}
+
+export async function getCaseStudies(): Promise<CmsCaseStudy[]> {
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'case-studies',
+      depth: 1,
+      limit: 10,
+    })
+
+    return result.docs.map((doc: any) => ({
       id: doc.id,
-      num: doc.numberLabel || '',
       title: doc.title,
-      desc: doc.description,
-      bullets: (doc.bullets || []).map((b) => b.text),
-      imageUrl:
-        mediaUrl(doc.image as Media | number | null) ||
-        (doc.category === 'featured'
-          ? DEFAULT_FEATURED_IMAGES[index % DEFAULT_FEATURED_IMAGES.length]
-          : ''),
-      iconUrl: mediaUrl(doc.icon as Media | number | null),
-      category: doc.category,
+      slug: doc.slug,
+      clientName: doc.clientName,
+      summary: doc.summary || '',
+      results: (doc.results || []).map((r: any) => ({
+        stat: r.stat,
+        label: r.label,
+      })),
+      imageUrl: mediaUrl(doc.featuredImage as Media | number | null),
+      storyDetails: doc.storyDetails || null,
     }))
+  } catch {
+    return []
+  }
+}
+
+export async function getServiceBySlug(slug: string): Promise<CmsService | null> {
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'services', depth: 1, limit: 1,
+      where: { slug: { equals: slug } },
+    })
+    const doc: any = result.docs[0]
+    if (!doc) return null
+    const mediaImage = mediaUrl(doc.image as Media | number | null)
+    return {
+      id: doc.id,
+      slug: doc.slug || slug,
+      num: doc.numberLabel || '01',
+      title: doc.title,
+      desc: doc.description || '',
+      bullets: (doc.bullets || []).map((b: any) => b.text),
+      imageUrl: mediaImage || DEFAULT_FEATURED_IMAGES[slug] || '',
+      iconUrl: mediaUrl(doc.icon as Media | number | null),
+      accent: doc.accent || '#0095FF',
+      tint: doc.tint || '#DFEDF7',
+      category: doc.category || 'featured',
+      detailContent: doc.detailContent || null,
+    }
+  } catch {
+    return null
+  }
+}
+
+export async function getTeamMembers(): Promise<CmsTeamMember[]> {
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({ collection: 'team-members', depth: 0, limit: 100, sort: 'order' })
+    return result.docs as CmsTeamMember[]
+  } catch {
+    return []
+  }
+}
+
+export async function getOffices(): Promise<CmsOffice[]> {
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({ collection: 'offices', depth: 0, limit: 100, sort: 'order' })
+    return result.docs as CmsOffice[]
   } catch {
     return []
   }

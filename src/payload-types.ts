@@ -74,6 +74,8 @@ export interface Config {
     faqs: Faq;
     testimonials: Testimonial;
     'case-studies': CaseStudy;
+    'team-members': TeamMember;
+    offices: Office;
     'form-submissions': FormSubmission;
     'newsletter-subscriptions': NewsletterSubscription;
     media: Media;
@@ -92,6 +94,8 @@ export interface Config {
     faqs: FaqsSelect<false> | FaqsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
+    offices: OfficesSelect<false> | OfficesSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
     'newsletter-subscriptions': NewsletterSubscriptionsSelect<false> | NewsletterSubscriptionsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -349,6 +353,30 @@ export interface Service {
   description: string;
   category: 'featured' | 'pathway';
   /**
+   * URL slug, e.g. skilled-migration, study-abroad, family-sponsorship, usa-visas, europe-visas
+   */
+  slug?: string | null;
+  /**
+   * Hex accent color, e.g. #0095FF
+   */
+  accent?: string | null;
+  /**
+   * Hex tint background color, e.g. #DFEDF7
+   */
+  tint?: string | null;
+  /**
+   * Full service detail page content. Edit this JSON to update the detail page sections.
+   */
+  detailContent?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
    * Display number, e.g. [01] or 01
    */
   numberLabel?: string | null;
@@ -406,7 +434,20 @@ export interface Testimonial {
    * Job title or role shown under the name.
    */
   role?: string | null;
-  image: number | Media;
+  /**
+   * First letter or initial shown in the avatar if no image is uploaded.
+   */
+  initial?: string | null;
+  /**
+   * Hex color for avatar background, e.g. #224036 or #3B82F6
+   */
+  avatarBg?: string | null;
+  platform?: ('Google' | 'Trustpilot') | null;
+  /**
+   * Relative date string, e.g. "2 weeks ago"
+   */
+  date?: string | null;
+  image?: (number | null) | Media;
   /**
    * Lower numbers appear first.
    */
@@ -440,6 +481,18 @@ export interface CaseStudy {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Story route, video caption, quote, narrative sections, and case facts.
+   */
+  storyDetails?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   results?:
     | {
         stat: string;
@@ -448,6 +501,55 @@ export interface CaseStudy {
       }[]
     | null;
   publishedDate?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-members".
+ */
+export interface TeamMember {
+  id: number;
+  name: string;
+  slug: string;
+  role: string;
+  initials?: string | null;
+  mono?: string | null;
+  short?: string | null;
+  group: 'leadership' | 'core';
+  facts?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  prose?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offices".
+ */
+export interface Office {
+  id: number;
+  city: string;
+  country: string;
+  address: string;
+  phone: string;
+  order?: number | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -535,6 +637,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'case-studies';
         value: number | CaseStudy;
+      } | null)
+    | ({
+        relationTo: 'team-members';
+        value: number | TeamMember;
+      } | null)
+    | ({
+        relationTo: 'offices';
+        value: number | Office;
       } | null)
     | ({
         relationTo: 'form-submissions';
@@ -704,6 +814,10 @@ export interface ServicesSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   category?: T;
+  slug?: T;
+  accent?: T;
+  tint?: T;
+  detailContent?: T;
   numberLabel?: T;
   bullets?:
     | T
@@ -737,6 +851,10 @@ export interface TestimonialsSelect<T extends boolean = true> {
   quote?: T;
   author?: T;
   role?: T;
+  initial?: T;
+  avatarBg?: T;
+  platform?: T;
+  date?: T;
   image?: T;
   order?: T;
   updatedAt?: T;
@@ -753,6 +871,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   featuredImage?: T;
   summary?: T;
   content?: T;
+  storyDetails?: T;
   results?:
     | T
     | {
@@ -761,6 +880,37 @@ export interface CaseStudiesSelect<T extends boolean = true> {
         id?: T;
       };
   publishedDate?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-members_select".
+ */
+export interface TeamMembersSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  role?: T;
+  initials?: T;
+  mono?: T;
+  short?: T;
+  group?: T;
+  facts?: T;
+  prose?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "offices_select".
+ */
+export interface OfficesSelect<T extends boolean = true> {
+  city?: T;
+  country?: T;
+  address?: T;
+  phone?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }

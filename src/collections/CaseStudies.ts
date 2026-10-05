@@ -46,6 +46,13 @@ export const CaseStudies: CollectionConfig = {
       type: 'richText',
     },
     {
+      name: 'storyDetails',
+      type: 'json',
+      admin: {
+        description: 'Story route, video caption, quote, narrative sections, and case facts.',
+      },
+    },
+    {
       name: 'results',
       type: 'array',
       fields: [

@@ -3,33 +3,30 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
-import { STORIES } from '@/data/site-content'
+import { getCaseStudies } from '@/lib/cms'
 
 interface Props {
   params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
-  return STORIES.flatMap((story) => [
-    { slug: story.routeSlug },
-    ...(story.slug && story.slug !== story.routeSlug ? [{ slug: story.slug }] : []),
-  ])
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const story = STORIES.find((s) => s.routeSlug === slug || s.slug === slug)
+  const entry = (await getCaseStudies()).find((s) => s.slug === slug)
+  const story = entry && entry.storyDetails
   if (!story) return { title: 'Story Not Found | HOF Migration' }
 
   return {
-    title: `${story.headline} | HOF Migration`,
-    description: story.excerpt,
+    title: `${entry.title} | HOF Migration`,
+    description: entry.summary,
   }
 }
 
 export default async function StoryDetailPage({ params }: Props) {
   const { slug } = await params
-  const story = STORIES.find((s) => s.routeSlug === slug || s.slug === slug)
+  const entry = (await getCaseStudies()).find((s) => s.slug === slug)
+  const story = entry?.storyDetails
 
   if (!story) {
     notFound()
@@ -44,13 +41,13 @@ export default async function StoryDetailPage({ params }: Props) {
             <span className="crumbs__sep" aria-hidden="true">/</span>
             <Link href="/success-stories">Success Stories</Link>
             <span className="crumbs__sep" aria-hidden="true">/</span>
-            <span aria-current="page">{story.name}</span>
+            <span aria-current="page">{entry.clientName}</span>
           </nav>
 
           <div className="page-head">
             <span className="page-head__eyebrow">Case study</span>
-            <h1 className="page-head__title">{story.headline}</h1>
-            <p className="page-head__lede">{story.excerpt}</p>
+            <h1 className="page-head__title">{entry.title}</h1>
+            <p className="page-head__lede">{entry.summary}</p>
             <div className="page-head__meta">
               <span className="page-head__chip">{story.route}</span>
             </div>
@@ -80,14 +77,14 @@ export default async function StoryDetailPage({ params }: Props) {
           <div className="wrap">
             <div className="story-body">
               <article className="story-prose">
-                {story.prose.map(([heading, text], pIdx) => {
+                {(story.prose || []).map(([heading, text], pIdx) => {
                   if (pIdx === 0) {
                     return (
                       <div key={pIdx}>
                         <p>{text}</p>
                         <blockquote className="story-quote">
                           <p>&ldquo;{story.quote}&rdquo;</p>
-                          <cite>{story.name}</cite>
+                          <cite>{entry.clientName}</cite>
                         </blockquote>
                       </div>
                     )
@@ -103,7 +100,7 @@ export default async function StoryDetailPage({ params }: Props) {
 
               <dl className="facts">
                 <span className="facts__title">Case summary</span>
-                {story.facts.map(([factKey, factVal], fIdx) => (
+                {(entry.results || []).map(({ label: factKey, stat: factVal }, fIdx) => (
                   <div key={fIdx} className="facts__row">
                     <dt>{factKey}</dt>
                     <dd>{factVal}</dd>

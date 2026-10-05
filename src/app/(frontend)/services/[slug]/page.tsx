@@ -4,22 +4,19 @@ import type { Metadata } from 'next'
 import type { CSSProperties } from 'react'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
-import { SERVICES, HELP_STEPS } from '@/data/site-content'
+import { getServiceBySlug } from '@/lib/cms'
+import type { ServiceItem } from '@/data/site-content'
 
 interface Props {
   params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
-  return SERVICES.flatMap((svc) => [
-    { slug: svc.routeSlug },
-    ...(svc.slug && svc.slug !== svc.routeSlug ? [{ slug: svc.slug }] : []),
-  ])
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const svc = SERVICES.find((s) => s.routeSlug === slug || s.slug === slug)
+  const service = await getServiceBySlug(slug)
+  const svc = service?.detailContent as unknown as (ServiceItem & { helpSteps?: [string, string][] }) | undefined
   if (!svc) return { title: 'Service Not Found | HOF Migration' }
 
   return {
@@ -30,7 +27,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params
-  const svc = SERVICES.find((s) => s.routeSlug === slug || s.slug === slug)
+  const service = await getServiceBySlug(slug)
+  const svc = service?.detailContent as unknown as (ServiceItem & { helpSteps?: [string, string][] }) | undefined
 
   if (!svc) {
     notFound()
@@ -154,7 +152,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
 
             <div className="svc-help">
-              {HELP_STEPS.map(([stepTitle, stepDesc], sIdx) => (
+              {(svc.helpSteps || []).map(([stepTitle, stepDesc], sIdx) => (
                 <article key={sIdx} className="svc-help__step">
                   <h3 className="svc-help__title">{stepTitle}</h3>
                   <p className="svc-help__text">{stepDesc}</p>

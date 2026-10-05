@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Brandmark } from '@/components/Brandmark'
-import { LEADERSHIP, CORE_TEAM } from '@/data/site-content'
+import { getTeamMembers } from '@/lib/cms'
 
 export const metadata: Metadata = {
   title: 'About Us | HOF Migration',
@@ -9,7 +9,12 @@ export const metadata: Metadata = {
     'HOF Migration advises on skilled migration, study, family sponsorship, and investor routes from Dubai — and declines cases it cannot honestly help with.',
 }
 
-export default function AboutPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function AboutPage() {
+  const team = await getTeamMembers()
+  const leadership = team.filter((person) => person.group === 'leadership')
+  const coreTeam = team.filter((person) => person.group === 'core')
   return (
     <div className="about-page">
       <div className="page-band">
@@ -117,11 +122,11 @@ export default function AboutPage() {
             </div>
 
             <div className="people">
-              {LEADERSHIP.map((person) => (
+              {leadership.map((person) => (
                 <Link
                   key={person.slug}
                   className="person reveal is-in"
-                  href={`/team/${person.routeSlug}`}
+                  href={`/team/${person.slug}`}
                   style={{ '--mono': person.mono } as React.CSSProperties}
                 >
                   <span className="person__mono" aria-hidden="true">
@@ -146,11 +151,11 @@ export default function AboutPage() {
             </div>
 
             <div className="people">
-              {CORE_TEAM.map((person) => (
+              {coreTeam.map((person) => (
                 <Link
                   key={person.slug}
                   className="person reveal is-in"
-                  href={`/team/${person.routeSlug}`}
+                  href={`/team/${person.slug}`}
                   style={{ '--mono': person.mono } as React.CSSProperties}
                 >
                   <span className="person__mono" aria-hidden="true">

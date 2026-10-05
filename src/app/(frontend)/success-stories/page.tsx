@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
-import { STORIES } from '@/data/site-content'
+import { getCaseStudies } from '@/lib/cms'
 
 export const metadata: Metadata = {
   title: 'Success Stories | HOF Migration',
@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     'Four real client stories, including the setbacks and pivots that shaped their journeys. Names and details are shared with permission.',
 }
 
-export default function SuccessStoriesPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function SuccessStoriesPage() {
+  const stories = await getCaseStudies()
   return (
     <div className="story-page">
       <div className="page-band">
@@ -44,7 +47,7 @@ export default function SuccessStoriesPage() {
         <section className="section-block">
           <div className="wrap">
             <div className="story-list">
-              {STORIES.map((story) => (
+              {stories.map((story) => (
                 <article key={story.slug} className="story-card reveal is-in">
                   <div className="stories__video">
                     <div className="stories__video-noise"></div>
@@ -53,17 +56,17 @@ export default function SuccessStoriesPage() {
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </button>
-                    <span className="stories__video-caption">{story.caption}</span>
+                    <span className="stories__video-caption">{story.storyDetails?.caption || `Watch ${story.clientName}’s story`}</span>
                   </div>
 
                   <div className="story-card__body">
                     <span className="story-card__eyebrow">Success story</span>
-                    <h2 className="story-card__name">{story.headline}</h2>
-                    <span className="story-card__route">{story.route}</span>
-                    <p className="story-card__text">{story.excerpt}</p>
+                    <h2 className="story-card__name">{story.title}</h2>
+                    <span className="story-card__route">{story.storyDetails?.route || story.clientName}</span>
+                    <p className="story-card__text">{story.summary}</p>
                     <Link
                       className="story-card__link"
-                      href={`/success-stories/${story.routeSlug}`}
+                      href={`/success-stories/${story.slug}`}
                     >
                       Read the full story
                     </Link>

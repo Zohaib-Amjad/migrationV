@@ -37,6 +37,34 @@ export const Services: CollectionConfig = {
       ],
     },
     {
+      name: 'slug',
+      type: 'text',
+      admin: {
+        description: 'URL slug, e.g. skilled-migration, study-abroad, family-sponsorship, usa-visas, europe-visas',
+      },
+    },
+    {
+      name: 'accent',
+      type: 'text',
+      admin: {
+        description: 'Hex accent color, e.g. #0095FF',
+      },
+    },
+    {
+      name: 'tint',
+      type: 'text',
+      admin: {
+        description: 'Hex tint background color, e.g. #DFEDF7',
+      },
+    },
+    {
+      name: 'detailContent',
+      type: 'json',
+      admin: {
+        description: 'Full service detail page content. Edit this JSON to update the detail page sections.',
+      },
+    },
+    {
       name: 'numberLabel',
       type: 'text',
       admin: {

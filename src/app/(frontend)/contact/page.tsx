@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
-import { OFFICES } from '@/data/site-content'
+import { getOffices } from '@/lib/cms'
 
 export const metadata: Metadata = {
   title: 'Contact Us | HOF Migration',
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
     'Book a free consultation with our licensed immigration consultants in Dubai. Visit our offices or reach out via WhatsApp, phone, or email.',
 }
 
-export default function ContactPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function ContactPage() {
+  const offices = await getOffices()
   return (
     <div className="page-shell">
       <div className="page-band">
@@ -93,7 +96,7 @@ export default function ContactPage() {
           <div className="mt-12">
             <h2 className="mb-6 text-2xl font-bold">Our Global Presence</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {OFFICES.map((office) => (
+              {offices.map((office) => (
                 <div
                   key={office.city}
                   className="rounded-xl border border-gray-100 bg-[#f7faf9] p-5 dark:border-gray-800 dark:bg-[#171a1e]"

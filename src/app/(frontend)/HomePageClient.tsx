@@ -8,7 +8,24 @@ import { FaqAccordion } from '@/components/FaqAccordion'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
 
-export function HomePageClient() {
+import type { CmsService, CmsCaseStudy, CmsTestimonial, CmsFaq } from '@/lib/cms'
+
+interface HomePageClientProps {
+  services?: CmsService[]
+  caseStudies?: CmsCaseStudy[]
+  testimonials?: CmsTestimonial[]
+  faqs?: CmsFaq[]
+}
+
+export function HomePageClient({
+  services,
+  caseStudies,
+  testimonials,
+  faqs,
+}: HomePageClientProps) {
+  const displayServices = services || []
+  const featuredStory = caseStudies?.[0] || null
+
   useEffect(() => {
     const scrollEl = document.querySelector<HTMLElement>('[data-services-scroll]')
     if (!scrollEl) return
@@ -105,7 +122,7 @@ export function HomePageClient() {
         mq.removeListener(onResize)
       }
     }
-  }, [])
+  }, [displayServices])
 
   return (
     <>
@@ -213,161 +230,45 @@ export function HomePageClient() {
 
             <div className="services__viewport">
               <div className="services__track">
-                {/* 1. Skilled Migration */}
-                <article
-                  className="service-card"
-                  style={
-                    {
-                      '--card-bg': '#DFEDF7',
-                      '--card-accent': '#0095FF',
-                      '--card-accent-text': '#0671BE',
-                    } as React.CSSProperties
-                  }
-                >
-                  <div className="service-card__content">
-                    <h3 className="service-card__title">Skilled Migration Canada &amp; Australia</h3>
-                    <ul className="service-card__text">
-                      <li>
-                        <b>Canada</b> | Express Entry &amp; Provincial Nominee Programs (PNP)
-                      </li>
-                      <li>
-                        <b>Australia</b> | Skilled Independent (189), Skilled Nominated (190) &amp;
-                        Skilled Work Regional (491)
-                      </li>
-                    </ul>
-                    <Link href="/services/skilled-migration" className="service-card__link">
-                      See how we can help
-                    </Link>
-                  </div>
-                  <div className="service-card__image">
-                    <img
-                      className="service-card__img"
-                      src="/assets/services-v2/skilled-migration.jpg"
-                      alt="Toronto skyline, Canada"
-                    />
-                  </div>
-                </article>
-
-                {/* 2. Study Abroad */}
-                <article
-                  className="service-card"
-                  style={
-                    {
-                      '--card-bg': '#F7E9DF',
-                      '--card-accent': '#FF5900',
-                      '--card-accent-text': '#BD5D35',
-                    } as React.CSSProperties
-                  }
-                >
-                  <div className="service-card__content">
-                    <h3 className="service-card__title">
-                      Study Abroad &amp;
-                      <br />
-                      Student Visas
-                    </h3>
-                    <p className="service-card__text">
-                      Explore study opportunities worldwide, including Australia’s Subclass 500,
-                      the UK Student Visa, Canada’s Study Permit, Germany’s Student Visa, and the
-                      USA’s F-1 Visa.
-                    </p>
-                    <Link href="/services/study-abroad" className="service-card__link">
-                      See how we can help
-                    </Link>
-                  </div>
-                  <div className="service-card__image">
-                    <img
-                      className="service-card__img"
-                      src="/assets/services-v2/study-abroad.jpg"
-                      alt="Graduate in cap and gown"
-                    />
-                  </div>
-                </article>
-
-                {/* 3. Family Sponsorship */}
-                <article
-                  className="service-card"
-                  style={
-                    {
-                      '--card-bg': '#F7FFFA',
-                      '--card-accent': '#179B66',
-                    } as React.CSSProperties
-                  }
-                >
-                  <div className="service-card__content">
-                    <h3 className="service-card__title">Family Sponsorship &amp; Reunification</h3>
-                    <p className="service-card__text">
-                      Bring your loved ones together with expert guidance for family sponsorship and
-                      reunification.
-                    </p>
-                    <Link href="/services/family-sponsorship" className="service-card__link">
-                      See how we can help
-                    </Link>
-                  </div>
-                  <div className="service-card__image">
-                    <img
-                      className="service-card__img"
-                      src="/assets/services-v2/family-sponsorship.jpg"
-                      alt="Family portrait outdoors"
-                    />
-                  </div>
-                </article>
-
-                {/* 4. USA EB-2 NIW */}
-                <article
-                  className="service-card"
-                  style={
-                    {
-                      '--card-bg': '#ECF1FF',
-                      '--card-accent': '#6B81CF',
-                    } as React.CSSProperties
-                  }
-                >
-                  <div className="service-card__content">
-                    <h3 className="service-card__title">USA EB-2 NIW &amp; Investor Visas</h3>
-                    <p className="service-card__text">
-                      EB-2 US National Interest Waiver Petitions, E-2 Investor and L-1 Transfer Visas
-                    </p>
-                    <Link href="/services/usa-visas" className="service-card__link">
-                      See how we can help
-                    </Link>
-                  </div>
-                  <div className="service-card__image">
-                    <img
-                      className="service-card__img"
-                      src="/assets/services-v2/usa-visas.jpg"
-                      alt="Statue of Liberty, USA"
-                    />
-                  </div>
-                </article>
-
-                {/* 5. Europe Golden Visa */}
-                <article
-                  className="service-card"
-                  style={
-                    {
-                      '--card-bg': '#FFE8EF',
-                      '--card-accent': '#FD0148',
-                      '--card-accent-text': '#E30246',
-                    } as React.CSSProperties
-                  }
-                >
-                  <div className="service-card__content">
-                    <h3 className="service-card__title">Europe Golden Visa &amp; Visitor Visas</h3>
-                    <p className="service-card__text">
-                      EB-2 US National Interest Waiver Petitions, E-2 Investor and L-1 Transfer Visas
-                    </p>
-                    <Link href="/services/europe-visas" className="service-card__link">
-                      See how we can help
-                    </Link>
-                  </div>
-                  <div className="service-card__image">
-                    <img
-                      className="service-card__img"
-                      src="/assets/services-v2/europe-visas.jpg"
-                      alt="Eiffel Tower, Paris"
-                    />
-                  </div>
-                </article>
+                {displayServices.map((service, idx) => {
+                  const targetSlug = service.slug || 'skilled-migration'
+                  return (
+                    <article
+                      key={service.id || idx}
+                      className="service-card"
+                      style={
+                        {
+                          '--card-bg': service.tint || '#DFEDF7',
+                          '--card-accent': service.accent || '#0095FF',
+                          '--card-accent-text': service.accent || '#0671BE',
+                        } as React.CSSProperties
+                      }
+                    >
+                      <div className="service-card__content">
+                        <h3 className="service-card__title">{service.title}</h3>
+                        {service.bullets && service.bullets.length > 0 ? (
+                          <ul className="service-card__text">
+                            {service.bullets.map((b, bIdx) => (
+                              <li key={bIdx}>{b}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="service-card__text">{service.desc}</p>
+                        )}
+                        <Link href={`/services/${targetSlug}`} className="service-card__link">
+                          See how we can help
+                        </Link>
+                      </div>
+                      <div className="service-card__image">
+                        <img
+                          className="service-card__img"
+                          src={service.imageUrl || '/assets/services-v2/skilled-migration.jpg'}
+                          alt={service.title}
+                        />
+                      </div>
+                    </article>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -375,7 +276,7 @@ export function HomePageClient() {
       </section>
 
       {/* Reviews Carousel */}
-      <ReviewsCarousel />
+      <ReviewsCarousel testimonials={testimonials} />
 
       {/* Success Stories */}
       <section className="stories" id="stories">
@@ -394,20 +295,28 @@ export function HomePageClient() {
                 <path d="M8 5v14l11-7z"></path>
               </svg>
             </button>
-            <span className="stories__video-caption">Watch Ahmed’s story</span>
+            <span className="stories__video-caption">
+              {featuredStory ? `Watch ${featuredStory.clientName}’s story` : ''}
+            </span>
           </div>
 
           <div className="stories__content">
             <span className="stories__eyebrow">Success Story</span>
-            <h3 className="stories__name">Ahmed’s Journey to the United States</h3>
-            <span className="stories__route">Manufacturing Professional · Dubai, UAE → United States</span>
+            <h3 className="stories__name">
+              {featuredStory?.title || ''}
+            </h3>
+            <span className="stories__route">
+              {featuredStory?.results?.[0]
+                ? `${featuredStory.clientName} · ${featuredStory.results[0].label} → ${featuredStory.results[0].stat}`
+                : ''}
+            </span>
             <p className="stories__text">
-              Ahmed had been living and working in Dubai for the past 15 years in the manufacturing
-              industry. He had been considering moving to the United States and wanted professional
-              guidance on the right migration pathway. HOF Migration helped him understand his options
-              and guided him through the process.
+              {featuredStory?.summary || ''}
             </p>
-            <Link href="/success-stories/ahmed" className="btn btn--white stories__cta">
+            <Link
+              href={featuredStory ? `/success-stories/${featuredStory.slug}` : '/success-stories'}
+              className="btn btn--white stories__cta"
+            >
               Read Full Story
               <img src="/assets/icons-v2/arrow-up-right.svg" alt="" className="btn__icon" />
             </Link>
@@ -416,7 +325,7 @@ export function HomePageClient() {
       </section>
 
       {/* FAQ Accordion */}
-      <FaqAccordion />
+      <FaqAccordion faqs={faqs} />
 
       {/* Work with Experts Consultation */}
       <ConsultationForm />

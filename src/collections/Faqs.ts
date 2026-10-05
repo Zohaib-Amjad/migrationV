@@ -13,7 +13,7 @@ export const Faqs: CollectionConfig = {
     defaultColumns: ['question', 'page', 'order', 'updatedAt'],
     group: 'Content',
     description:
-      'FAQ accordion per page. Set page = Home for homepage only. Other pages show dummy content until you add FAQs for Contact / Services / etc.',
+      'FAQ accordion per page. Set page = Home for homepage only, or All pages to share an FAQ across pages.',
   },
   access: {
     create: authenticated,

@@ -12,10 +12,12 @@ import { FormSubmissions } from './collections/FormSubmissions'
 import { Insights } from './collections/Insights'
 import { Media } from './collections/Media'
 import { NewsletterSubscriptions } from './collections/NewsletterSubscriptions'
+import { Offices } from './collections/Offices'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import { Services } from './collections/Services'
 import { Testimonials } from './collections/Testimonials'
+import { TeamMembers } from './collections/TeamMembers'
 import { Users } from './collections/Users'
 import { Footer } from './globals/Footer'
 import { Header } from './globals/Header'
@@ -42,6 +44,8 @@ export default buildConfig({
     Faqs,
     Testimonials,
     CaseStudies,
+    TeamMembers,
+    Offices,
     FormSubmissions,
     NewsletterSubscriptions,
     Media,

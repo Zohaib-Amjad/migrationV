@@ -79,6 +79,7 @@ Legacy routes (`/destinations/*`, `/visa-types/*`, `/case-studies/*`) are redire
 3. FAQs are **page-scoped** — `getFaqs` matches the exact `page` field so Home FAQs do not leak onto other pages.
 4. Contact form → **Form Submissions**; newsletter → **Newsletter Subscriptions**.
 5. After schema changes: `pnpm generate:types` (and `pnpm generate:importmap` if admin UI components change).
+6. To load the current static FAQ, review, service, story, team, and office content into Payload, run `pnpm seed:cms`. The seed only creates missing entries or fills missing service/story fields; it preserves existing edits.
 
 Do **not**: enable Supabase Auth/RLS, hand-run SQL migrations, or hardcode copy that belongs in Payload (except intentional static destination/fallback data).
 
@@ -128,6 +129,7 @@ pnpm generate:importmap
 - Home FAQ set is separate from other-page FAQ fallbacks.
 - Site Settings exist in Payload; frontend metadata may still be hardcoded in `layout.tsx` until wired.
 - Automated Arabic localization engine: `I18nProvider.tsx` runs a 5-tier translation pipeline (exact dictionary, normalized lookup, delimiter decomposition, greedy substring matching, and `AR_WORD_DICTIONARY` regex token fallback) with memory caching. Any newly introduced English content is automatically translated into Arabic when the Arabic toggle is active.
+- Public-facing copy and data that editors need to change must be stored in Payload and fetched dynamically by the frontend. When existing static content is first moved to Payload, seed its current values so they remain editable; do not add new frontend-only copy for fields that belong in CMS.
 - Hero consultants team photo: `.people-band` and `.people-band__wrap img` use responsive scaling (`max-width: min(100%, 540px)`, `aspect-ratio: 2200 / 625`, `object-fit: contain`) on screens `<= 900px` so every team member is fully visible on mobile viewports without left/right cropping.
 - Language toggle: Navbar button renders `"العربية"` in Arabic script when in English mode, and `"English"` when in Arabic mode.
 - Service detail pages logo center line: On `/services/[slug]`, the center vertical line (stem/trunk) of the navbar brandmark logo dynamically takes the exact background color of Section 1 (`svc.tint`), while all radiating fronds and the wordmark remain solid black (`#000000`). On non-service pages, it retains the brand sage color `#8DABA4`.

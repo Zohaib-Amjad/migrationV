@@ -1,14 +1,23 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { REVIEWS } from '@/data/site-content'
 import { useI18n, translateToArabic } from '@/components/I18nProvider'
+import type { CmsTestimonial } from '@/lib/cms'
 
-export function ReviewsCarousel() {
+export function ReviewsCarousel({ testimonials }: { testimonials?: CmsTestimonial[] }) {
   const { isArabic } = useI18n()
   const trackRef = useRef<HTMLDivElement>(null)
   const trustindexRef = useRef<HTMLDivElement>(null)
   const [trustindexReady, setTrustindexReady] = useState(false)
+
+  const items = (testimonials || []).map((t) => ({
+        name: t.author,
+        initial: t.initial || (t.author ? t.author[0] : 'S'),
+        avatarBg: t.avatarBg || '#224036',
+        date: t.date || 'Recent',
+        platform: t.platform || 'Google',
+        text: t.quote,
+      }))
 
   useEffect(() => {
     const container = trustindexRef.current
@@ -106,7 +115,7 @@ export function ReviewsCarousel() {
         </button>
 
         <div className="reviews__track" ref={trackRef}>
-          {REVIEWS.map((review, i) => {
+          {items.map((review, i) => {
             const r = review as {
               name: string
               nameAr?: string

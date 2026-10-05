@@ -3,21 +3,17 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
-import { ALL_TEAM } from '@/data/site-content'
+import { getTeamMembers } from '@/lib/cms'
 
 interface Props {
   params: Promise<{ slug: string }>
 }
 
-export async function generateStaticParams() {
-  return ALL_TEAM.map((person) => ({
-    slug: person.routeSlug,
-  }))
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const person = ALL_TEAM.find((p) => p.routeSlug === slug || p.slug === slug)
+  const person = (await getTeamMembers()).find((p) => p.slug === slug)
   if (!person) return { title: 'Team Member Not Found | HOF Migration' }
 
   return {
@@ -28,7 +24,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function TeamMemberPage({ params }: Props) {
   const { slug } = await params
-  const person = ALL_TEAM.find((p) => p.routeSlug === slug || p.slug === slug)
+  const person = (await getTeamMembers()).find((p) => p.slug === slug)
 
   if (!person) {
     notFound()

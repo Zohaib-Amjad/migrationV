@@ -2,7 +2,10 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
-import { SERVICES } from '@/data/site-content'
+
+import { getServices } from '@/lib/cms'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Services | HOF Migration',
@@ -10,7 +13,19 @@ export const metadata: Metadata = {
     'Explore our five core migration and education services across Canada, Australia, the UK, the US, and Europe.',
 }
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const cmsServices = await getServices()
+  const displayServices = cmsServices.map((s) => ({
+        slug: s.slug,
+        routeSlug: s.slug,
+        title: s.title,
+        cardText: s.desc,
+        image: s.imageUrl,
+        alt: s.title,
+        tint: s.tint || '#DFEDF7',
+        accent: s.accent || '#0095FF',
+      }))
+
   return (
     <div className="page-shell">
       <div className="page-band">
@@ -33,7 +48,7 @@ export default function ServicesPage() {
               truly competitive, and what the path looks like once a decision is made.
             </p>
             <div className="page-head__meta">
-              <span className="page-head__chip">5 services</span>
+              <span className="page-head__chip">{displayServices.length} services</span>
               <span className="page-head__chip">Canada &bull; Australia &bull; UK &bull; US &bull; Europe</span>
             </div>
           </div>
@@ -44,7 +59,7 @@ export default function ServicesPage() {
         <section className="section-block">
           <div className="wrap">
             <div className="svc-index">
-              {SERVICES.map((svc) => (
+              {displayServices.map((svc) => (
                 <Link
                   key={svc.slug}
                   className="svc-index__card"
