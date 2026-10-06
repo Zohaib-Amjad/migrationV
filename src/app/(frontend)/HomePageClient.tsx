@@ -15,6 +15,21 @@ interface HomePageClientProps {
   caseStudies?: CmsCaseStudy[]
   testimonials?: CmsTestimonial[]
   faqs?: CmsFaq[]
+  content?: Record<string, unknown> | null
+}
+
+interface HomePageCopy {
+  hero?: {
+    badge?: string
+    titleLine1?: string
+    titleLine2?: string
+    subtitle?: string
+    cta?: string
+    teamAlt?: string
+  }
+  experience?: { title?: string; body?: string }
+  services?: { title?: string; explore?: string; cardCta?: string }
+  stories?: { title?: string; viewAll?: string; eyebrow?: string; readCta?: string }
 }
 
 export function HomePageClient({
@@ -22,9 +37,11 @@ export function HomePageClient({
   caseStudies,
   testimonials,
   faqs,
+  content,
 }: HomePageClientProps) {
   const displayServices = services || []
   const featuredStory = caseStudies?.[0] || null
+  const copy = content as HomePageCopy | null | undefined
 
   useEffect(() => {
     const scrollEl = document.querySelector<HTMLElement>('[data-services-scroll]')
@@ -149,7 +166,7 @@ export function HomePageClient({
                         />
                       </svg>
                     </span>
-                    <span className="badge__text">ICCRC &amp; MARA Certified</span>
+                    <span className="badge__text">{copy?.hero?.badge || ''}</span>
                   </div>
                   <span className="badge-row__divider" aria-hidden="true"></span>
                   <span className="badge__logos">
@@ -176,14 +193,14 @@ export function HomePageClient({
 
                 <div className="hero__copy">
                   <h1 className="hero__title">
-                    The Gulf’s #1<br />
-                    Trusted Immigration Consultancy
+                    {copy?.hero?.titleLine1 || ''}<br />
+                    {copy?.hero?.titleLine2 || ''}
                   </h1>
-                  <p className="hero__subtitle">Your Right Migration Starts With The Right Guidance</p>
+                  <p className="hero__subtitle">{copy?.hero?.subtitle || ''}</p>
                 </div>
 
                 <Link href="/#consultation" className="btn btn--white">
-                  Let’s Talk
+                  {copy?.hero?.cta || ''}
                   <img src="/assets/icons-v2/arrow-up-right.svg" alt="" className="btn__icon" />
                 </Link>
               </div>
@@ -198,7 +215,7 @@ export function HomePageClient({
           <div className="people-band__wrap">
             <img
               src="/assets/window-final/people-post.png"
-              alt="The HOF Migration consultant team"
+              alt={copy?.hero?.teamAlt || ''}
             />
           </div>
         </section>
@@ -208,11 +225,10 @@ export function HomePageClient({
       <section className="experience">
         <div className="experience__inner">
           <h2 className="experience__heading">
-            6 Years of Experience in Immigration Consultancy
+            {copy?.experience?.title || ''}
           </h2>
           <p className="experience__text">
-            Navigate your immigration journey with experienced consultants who provide expert,
-            end-to-end guidance for multiple destinations.
+            {copy?.experience?.body || ''}
           </p>
         </div>
       </section>
@@ -222,9 +238,9 @@ export function HomePageClient({
         <div className="services__scroll" data-services-scroll>
           <div className="services__sticky">
             <div className="services__header">
-              <h2 className="services__title">Immigration &amp; Education Consultancy Services</h2>
+              <h2 className="services__title">{copy?.services?.title || ''}</h2>
               <Link href="/services" className="services__explore">
-                Explore all Services
+                {copy?.services?.explore || ''}
               </Link>
             </div>
 
@@ -256,7 +272,7 @@ export function HomePageClient({
                           <p className="service-card__text">{service.desc}</p>
                         )}
                         <Link href={`/services/${targetSlug}`} className="service-card__link">
-                          See how we can help
+                          {copy?.services?.cardCta || ''}
                         </Link>
                       </div>
                       <div className="service-card__image">
@@ -281,9 +297,9 @@ export function HomePageClient({
       {/* Success Stories */}
       <section className="stories" id="stories">
         <div className="stories__header">
-          <h2 className="stories__title">Success Stories</h2>
+          <h2 className="stories__title">{copy?.stories?.title || ''}</h2>
           <Link href="/success-stories" className="stories__view-all">
-            View All
+            {copy?.stories?.viewAll || ''}
           </Link>
         </div>
 
@@ -301,7 +317,7 @@ export function HomePageClient({
           </div>
 
           <div className="stories__content">
-            <span className="stories__eyebrow">Success Story</span>
+            <span className="stories__eyebrow">{copy?.stories?.eyebrow || ''}</span>
             <h3 className="stories__name">
               {featuredStory?.title || ''}
             </h3>
@@ -317,7 +333,7 @@ export function HomePageClient({
               href={featuredStory ? `/success-stories/${featuredStory.slug}` : '/success-stories'}
               className="btn btn--white stories__cta"
             >
-              Read Full Story
+              {copy?.stories?.readCta || ''}
               <img src="/assets/icons-v2/arrow-up-right.svg" alt="" className="btn__icon" />
             </Link>
           </div>

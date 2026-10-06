@@ -1574,6 +1574,7 @@ html.is-dark .nav__link.is-active {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-height: 60px;
   padding: 10px 12px;
   border-radius: 12px;
   transition: background 160ms ease;

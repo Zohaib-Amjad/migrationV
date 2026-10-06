@@ -1,4 +1,6 @@
 import 'dotenv/config'
+import fs from 'node:fs/promises'
+import path from 'node:path'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
 import {
@@ -11,10 +13,80 @@ import {
   SERVICES,
   STORIES,
 } from '../src/data/site-content'
+import { PAGE_CONTENT_SEED } from '../src/data/page-content'
 
 async function seed() {
   console.log('🌱 Starting Payload CMS database seed...')
   const payload = await getPayload({ config })
+
+  // Import local site assets into Payload Media once. Existing records keep any
+  // editor changes; the sourcePath keeps each public URL resolvable.
+  console.log('Seeding site media...')
+  const publicRoot = path.resolve(process.cwd(), 'public')
+  const mediaExtensions = new Set(['.gif', '.ico', '.jpeg', '.jpg', '.png', '.svg', '.webp'])
+  const getMediaFiles = async (directory: string): Promise<string[]> => {
+    const entries = await fs.readdir(directory, { withFileTypes: true })
+    const nested = await Promise.all(
+      entries.map((entry) => {
+        const fullPath = path.join(directory, entry.name)
+        if (entry.isDirectory()) return getMediaFiles(fullPath)
+        return mediaExtensions.has(path.extname(entry.name).toLowerCase()) ? [fullPath] : []
+      }),
+    )
+    return nested.flat()
+  }
+
+  const publicFiles = await getMediaFiles(publicRoot)
+  for (const filePath of publicFiles) {
+    const sourcePath = `/${path.relative(publicRoot, filePath).split(path.sep).join('/')}`
+    const existing = await payload.find({
+      collection: 'media',
+      where: { sourcePath: { equals: sourcePath } },
+      limit: 1,
+    })
+
+    if (existing.totalDocs > 0) continue
+
+    const filename = path.basename(filePath, path.extname(filePath))
+    const alt = filename.replace(/[-_]+/g, ' ').replace(/\s+/g, ' ').trim()
+    await payload.create({
+      collection: 'media',
+      data: { sourcePath, alt },
+      filePath,
+    })
+    console.log(`  + Imported ${sourcePath}`)
+  }
+
+  // Seed page headings and copy as editable Payload page data. Repeated runs
+  // only fill empty page content, leaving editor updates intact.
+  console.log('Seeding page content...')
+  for (const pageSeed of PAGE_CONTENT_SEED) {
+    const existing = await payload.find({
+      collection: 'pages',
+      where: { slug: { equals: pageSeed.slug } },
+      limit: 1,
+    })
+    const page = existing.docs[0]
+
+    if (!page) {
+      await payload.create({
+        collection: 'pages',
+        data: {
+          title: pageSeed.title,
+          slug: pageSeed.slug,
+          contentData: pageSeed.contentData,
+        },
+      })
+      console.log(`  + Created page content: ${pageSeed.slug}`)
+    } else if (!page.contentData) {
+      await payload.update({
+        collection: 'pages',
+        id: page.id,
+        data: { contentData: pageSeed.contentData },
+      })
+      console.log(`  ~ Added page content: ${pageSeed.slug}`)
+    }
+  }
 
   // 1. Seed FAQs
   console.log('Seeding FAQs...')
@@ -76,6 +148,12 @@ async function seed() {
   console.log('Seeding Services...')
   for (let i = 0; i < SERVICES.length; i++) {
     const s = SERVICES[i]
+    const serviceMedia = await payload.find({
+      collection: 'media',
+      where: { sourcePath: { equals: s.image } },
+      limit: 1,
+    })
+    const imageId = serviceMedia.docs[0]?.id
     const existing = await payload.find({
       collection: 'services',
       where: { title: { equals: s.title } },
@@ -87,12 +165,15 @@ async function seed() {
         collection: 'services',
         data: {
           title: s.title,
+          navTitle: s.navName,
+          navDescription: s.navDescription,
           slug: s.routeSlug,
           description: s.cardText || s.lede,
           category: 'featured',
           numberLabel: `0${i + 1}`,
           accent: s.accent,
           tint: s.tint,
+          ...(imageId ? { image: imageId } : {}),
           bullets: s.chips.map((chip) => ({ text: chip })),
           detailContent: { ...s, helpSteps: HELP_STEPS },
           order: i + 1,
@@ -103,9 +184,12 @@ async function seed() {
       const doc = existing.docs[0] as any
       const data: Record<string, unknown> = {}
       if (!doc.slug) data.slug = s.routeSlug
+      if (!doc.navTitle) data.navTitle = s.navName
+      if (!doc.navDescription) data.navDescription = s.navDescription
       if (!doc.accent) data.accent = s.accent
       if (!doc.tint) data.tint = s.tint
       if (!doc.numberLabel) data.numberLabel = `0${i + 1}`
+      if (!doc.image && imageId) data.image = imageId
       if (!doc.bullets?.length) data.bullets = s.chips.map((chip) => ({ text: chip }))
       if (!doc.detailContent) data.detailContent = { ...s, helpSteps: HELP_STEPS }
       if (Object.keys(data).length > 0) {

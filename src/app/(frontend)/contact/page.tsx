@@ -2,7 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
-import { getOffices } from '@/lib/cms'
+import { getOffices, getPageContent } from '@/lib/cms'
 
 export const metadata: Metadata = {
   title: 'Contact Us | HOF Migration',
@@ -13,7 +13,12 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function ContactPage() {
-  const offices = await getOffices()
+  const [offices, contentData] = await Promise.all([getOffices(), getPageContent('contact')])
+  const content = contentData as {
+    hero?: { eyebrow?: string; titleLine1?: string; titleLine2?: string; lede?: string }
+    cards?: { eyebrow: string; title: string; body: string; value: string; href: string }[]
+    officesTitle?: string
+  } | null
   return (
     <div className="page-shell">
       <div className="page-band">
@@ -21,20 +26,17 @@ export default async function ContactPage() {
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span className="crumbs__sep" aria-hidden="true">/</span>
-            <span aria-current="page">Contact Us</span>
+            <span aria-current="page">{content?.hero?.eyebrow || ''}</span>
           </nav>
 
           <div className="page-head">
-            <span className="page-head__eyebrow">Contact</span>
+            <span className="page-head__eyebrow">{content?.hero?.eyebrow || ''}</span>
             <h1 className="page-head__title">
-              Speak with a Licensed
+              {content?.hero?.titleLine1 || ''}
               <br />
-              Immigration Consultant
+              {content?.hero?.titleLine2 || ''}
             </h1>
-            <p className="page-head__lede">
-              We review your profile honestly, outline your eligible pathways, and explain every step
-              before any fee is discussed.
-            </p>
+            <p className="page-head__lede">{content?.hero?.lede || ''}</p>
           </div>
         </div>
       </div>
@@ -42,59 +44,25 @@ export default async function ContactPage() {
       <main className="page-main py-12">
         <div className="wrap mb-12">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#1b1e24]">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#8daba4]">
-                Email Us
-              </span>
-              <h3 className="mt-2 text-xl font-bold">General Inquiries</h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                Detailed profile assessments and general queries.
-              </p>
-              <a
-                href="mailto:info@hofmigration.com"
-                className="mt-4 inline-block font-semibold text-gray-900 underline hover:text-[#8daba4] dark:text-white"
-              >
-                info@hofmigration.com
-              </a>
-            </div>
-
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#1b1e24]">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#8daba4]">
-                Call Us
-              </span>
-              <h3 className="mt-2 text-xl font-bold">Direct Line</h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                Speak with our client liaison team during UAE office hours.
-              </p>
-              <a
-                href="tel:+97140000000"
-                className="mt-4 inline-block font-semibold text-gray-900 underline hover:text-[#8daba4] dark:text-white"
-              >
-                +971 4 000 0000
-              </a>
-            </div>
-
-            <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#1b1e24]">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#8daba4]">
-                Instant Chat
-              </span>
-              <h3 className="mt-2 text-xl font-bold">WhatsApp Direct</h3>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                Quick questions and document verification status.
-              </p>
-              <a
-                href="https://wa.me/971500000000"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-block font-semibold text-emerald-600 underline hover:text-emerald-700 dark:text-emerald-400"
-              >
-                +971 50 000 0000
-              </a>
-            </div>
+            {(content?.cards || []).map((card) => (
+              <div key={card.eyebrow} className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-[#1b1e24]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#8daba4]">{card.eyebrow}</span>
+                <h3 className="mt-2 text-xl font-bold">{card.title}</h3>
+                <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">{card.body}</p>
+                <a
+                  href={card.href}
+                  target={card.href.startsWith('https://') ? '_blank' : undefined}
+                  rel={card.href.startsWith('https://') ? 'noopener noreferrer' : undefined}
+                  className="mt-4 inline-block font-semibold text-gray-900 underline hover:text-[#8daba4] dark:text-white"
+                >
+                  {card.value}
+                </a>
+              </div>
+            ))}
           </div>
 
           <div className="mt-12">
-            <h2 className="mb-6 text-2xl font-bold">Our Global Presence</h2>
+            <h2 className="mb-6 text-2xl font-bold">{content?.officesTitle || ''}</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {offices.map((office) => (
                 <div

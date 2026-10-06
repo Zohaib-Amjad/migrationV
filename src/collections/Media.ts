@@ -39,6 +39,14 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
+      name: 'sourcePath',
+      type: 'text',
+      unique: true,
+      admin: {
+        description: 'Original public path for an existing site asset, such as /assets/services-v2/example.jpg.',
+      },
+    },
+    {
       name: 'alt',
       type: 'text',
       admin: {

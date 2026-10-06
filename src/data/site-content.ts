@@ -21,6 +21,7 @@ export interface ServiceItem {
   slug: string
   routeSlug: string
   navName: string
+  navDescription: string
   title: string
   short: string
   accent: string
@@ -106,6 +107,7 @@ export const SERVICES: ServiceItem[] = [
     slug: 'service-skilled-migration',
     routeSlug: 'skilled-migration',
     navName: 'Skilled Migration',
+    navDescription: 'Canada & Australia',
     title: 'Skilled Migration to Canada & Australia',
     short: 'Skilled Migration',
     accent: '#0095ff',
@@ -229,6 +231,7 @@ export const SERVICES: ServiceItem[] = [
     slug: 'service-study-abroad',
     routeSlug: 'study-abroad',
     navName: 'Study Abroad',
+    navDescription: 'Student Visas',
     title: 'Study Abroad & Student Visas',
     short: 'Study Abroad',
     accent: '#ff5900',
@@ -380,6 +383,7 @@ export const SERVICES: ServiceItem[] = [
     slug: 'service-family-sponsorship',
     routeSlug: 'family-sponsorship',
     navName: 'Family Sponsorship',
+    navDescription: 'Reunification',
     title: 'Family Sponsorship & Reunification',
     short: 'Family Sponsorship',
     accent: '#179b66',
@@ -502,7 +506,8 @@ export const SERVICES: ServiceItem[] = [
   {
     slug: 'service-usa-visas',
     routeSlug: 'usa-visas',
-    navName: 'USA Visas',
+    navName: 'U.S. NIW & Investor',
+    navDescription: 'EB-2 NIW, E-2, L-1',
     title: 'US NIW & Investor Visas',
     short: 'USA Visas',
     accent: '#6b81cf',
@@ -632,6 +637,7 @@ export const SERVICES: ServiceItem[] = [
     slug: 'service-europe-visas',
     routeSlug: 'europe-visas',
     navName: 'Europe',
+    navDescription: 'Golden & Visitor Visas',
     title: 'Golden Visa & Visitor Visas in Europe',
     short: 'Europe',
     accent: '#fd0148',

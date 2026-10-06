@@ -1,12 +1,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { getPosts } from '@/lib/cms'
+import { getPageContent, getPosts } from '@/lib/cms'
 
 export const dynamic = 'force-dynamic'
 
 export default async function BlogPage() {
-  const posts = await getPosts(50)
+  const [posts, contentData] = await Promise.all([getPosts(50), getPageContent('blog')])
+  const content = contentData as {
+    eyebrow?: string
+    titleLine1?: string
+    titleLine2?: string
+    lede?: string
+    empty?: string
+    readMore?: string
+  } | null
   const FONT_SERIF = { fontFamily: "'Playfair Display', Georgia, serif" }
 
   return (
@@ -14,22 +22,22 @@ export default async function BlogPage() {
       <div className="w-full max-w-[1235px] px-4 md:px-0 py-15 md:py-20 flex flex-col gap-12">
         <div className="flex flex-col gap-3 text-center max-w-[720px] mx-auto">
           <span className="text-[11px] md:text-[16px] font-medium text-[#000000] tracking-widest uppercase">
-            [Blog]
+            {content?.eyebrow || ''}
           </span>
           <h1 className="text-[34px] sm:text-[44px] md:text-[64px] font-semibold text-[#171A1E] leading-tight tracking-tight">
-            Immigration{' '}
+            {content?.titleLine1 || ' '}{' '}
             <span style={FONT_SERIF} className="italic font-semibold">
-              Insights
+              {content?.titleLine2 || ''}
             </span>
           </h1>
           <p className="text-[16px] md:text-[18px] text-[#6B6B69] leading-relaxed">
-            Guides, updates, and practical advice for your migration journey.
+            {content?.lede || ''}
           </p>
         </div>
 
         {posts.length === 0 ? (
           <p className="text-center text-[#6B6B69] text-[16px] py-20">
-            No published posts yet. Add posts in the{' '}
+            {content?.empty || ''}{' '}
             <Link href="/admin/collections/posts" className="underline text-[#171A1E]">
               Payload admin
             </Link>
@@ -78,7 +86,7 @@ export default async function BlogPage() {
                   href={`/blog/${post.slug}`}
                   className="text-[15px] font-medium text-[#171A1E] hover:underline"
                 >
-                  Read More →
+                  {content?.readMore || ''}
                 </Link>
               </article>
             ))}

@@ -4,8 +4,26 @@ import type { Metadata } from 'next'
 import type { CSSProperties } from 'react'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
-import { getServiceBySlug } from '@/lib/cms'
-import type { ServiceItem } from '@/data/site-content'
+import { getServiceBySlug, type CmsService } from '@/lib/cms'
+
+interface ServiceDetailContent {
+  title: string
+  short: string
+  accent: string
+  tint: string
+  image: string
+  alt: string
+  plate: [string, string]
+  lede: string
+  chips: string[]
+  groups: { code: string; name: string; nodes: [string, string, string][] }[]
+  types: [string, string, string, [string, string][]][]
+  helpSteps?: [string, string][]
+}
+
+function getServiceDetail(service: CmsService | null) {
+  return service?.detailContent as unknown as ServiceDetailContent | undefined
+}
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -16,7 +34,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const service = await getServiceBySlug(slug)
-  const svc = service?.detailContent as unknown as (ServiceItem & { helpSteps?: [string, string][] }) | undefined
+  const svc = getServiceDetail(service)
   if (!svc) return { title: 'Service Not Found | HOF Migration' }
 
   return {
@@ -28,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params
   const service = await getServiceBySlug(slug)
-  const svc = service?.detailContent as unknown as (ServiceItem & { helpSteps?: [string, string][] }) | undefined
+  const svc = getServiceDetail(service)
 
   if (!svc) {
     notFound()
@@ -99,7 +117,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
 
               <figure className="svc-media">
-                <img src={svc.image} alt={svc.alt} />
+                <img src={service?.imageUrl || ''} alt={svc.alt} />
                 <figcaption className="svc-media__plate">
                   <b>{svc.plate[0]}</b>
                   <span>{svc.plate[1]}</span>

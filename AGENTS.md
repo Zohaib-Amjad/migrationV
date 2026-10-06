@@ -47,7 +47,7 @@ public/
 ```
 
 - `(frontend)` / `(payload)` are route groups (not URL segments).
-- CMS data fetched via `src/lib/cms.ts`; fallback/hardcoded marketing copy sourced from `src/data/site-content.ts`.
+- Public entity data is fetched via `src/lib/cms.ts`; `src/data/site-content.ts` supplies initial values to `pnpm seed:cms` and is not imported by frontend components.
 - All static reference materials from `hof-migration-website-complete` are preserved in `hof-migration-website/`.
 
 ---
@@ -80,6 +80,7 @@ Legacy routes (`/destinations/*`, `/visa-types/*`, `/case-studies/*`) are redire
 4. Contact form → **Form Submissions**; newsletter → **Newsletter Subscriptions**.
 5. After schema changes: `pnpm generate:types` (and `pnpm generate:importmap` if admin UI components change).
 6. To load the current static FAQ, review, service, story, team, and office content into Payload, run `pnpm seed:cms`. The seed only creates missing entries or fills missing service/story fields; it preserves existing edits.
+7. Public runtime data for services, FAQs, testimonials, success stories, team members, and offices must be fetched from Payload. The shared `src/data/site-content.ts` values are seed defaults only; do not import them into public frontend components.
 
 Do **not**: enable Supabase Auth/RLS, hand-run SQL migrations, or hardcode copy that belongs in Payload (except intentional static destination/fallback data).
 
@@ -129,6 +130,7 @@ pnpm generate:importmap
 - Home FAQ set is separate from other-page FAQ fallbacks.
 - Site Settings exist in Payload; frontend metadata may still be hardcoded in `layout.tsx` until wired.
 - Automated Arabic localization engine: `I18nProvider.tsx` runs a 5-tier translation pipeline (exact dictionary, normalized lookup, delimiter decomposition, greedy substring matching, and `AR_WORD_DICTIONARY` regex token fallback) with memory caching. Any newly introduced English content is automatically translated into Arabic when the Arabic toggle is active.
+- Arabic localization is required whenever English-facing copy or data changes. Add or update a complete, context-aware Arabic equivalent at the source (including CMS seed/fallback data and bilingual UI strings), and add exact phrases and domain vocabulary to the localization dictionary/glossary so the automatic pipeline reuses verified wording. Review the Arabic output for meaning, grammar, and consistent terminology; do not rely on token-by-token fallback alone for new public-facing content.
 - Public-facing copy and data that editors need to change must be stored in Payload and fetched dynamically by the frontend. When existing static content is first moved to Payload, seed its current values so they remain editable; do not add new frontend-only copy for fields that belong in CMS.
 - Hero consultants team photo: `.people-band` and `.people-band__wrap img` use responsive scaling (`max-width: min(100%, 540px)`, `aspect-ratio: 2200 / 625`, `object-fit: contain`) on screens `<= 900px` so every team member is fully visible on mobile viewports without left/right cropping.
 - Language toggle: Navbar button renders `"العربية"` in Arabic script when in English mode, and `"English"` when in Arabic mode.

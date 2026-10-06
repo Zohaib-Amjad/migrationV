@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
-import { getCaseStudies } from '@/lib/cms'
+import { getCaseStudies, getPageContent } from '@/lib/cms'
 
 export const metadata: Metadata = {
   title: 'Success Stories | HOF Migration',
@@ -12,7 +12,14 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function SuccessStoriesPage() {
-  const stories = await getCaseStudies()
+  const [stories, contentData] = await Promise.all([getCaseStudies(), getPageContent('success-stories')])
+  const content = contentData as {
+    pageLabel?: string
+    hero?: { titleLine1?: string; titleLine2?: string; lede?: string; destinations?: string; countLabel?: string }
+    storyEyebrow?: string
+    storyCta?: string
+    watchStory?: string
+  } | null
   return (
     <div className="story-page">
       <div className="page-band">
@@ -22,22 +29,19 @@ export default async function SuccessStoriesPage() {
             <span className="crumbs__sep" aria-hidden="true">
               /
             </span>
-            <span aria-current="page">Success Stories</span>
+            <span aria-current="page">{content?.pageLabel || ''}</span>
           </nav>
 
           <div className="page-head">
             <h1 className="page-head__title">
-              The People Behind
+              {content?.hero?.titleLine1 || ''}
               <br />
-              the Applications
+              {content?.hero?.titleLine2 || ''}
             </h1>
-            <p className="page-head__lede">
-              Four journeys told as they happened — including the parts that went wrong at first.
-              Names and details are used with their permission.
-            </p>
+            <p className="page-head__lede">{content?.hero?.lede || ''}</p>
             <div className="page-head__meta">
-              <span className="page-head__chip">4 stories</span>
-              <span className="page-head__chip">Canada · United States · United Kingdom · Australia</span>
+              <span className="page-head__chip">{stories.length} {content?.hero?.countLabel || ''}</span>
+              <span className="page-head__chip">{content?.hero?.destinations || ''}</span>
             </div>
           </div>
         </div>
@@ -51,16 +55,16 @@ export default async function SuccessStoriesPage() {
                 <article key={story.slug} className="story-card reveal is-in">
                   <div className="stories__video">
                     <div className="stories__video-noise"></div>
-                    <button type="button" className="stories__play" aria-label="Play video">
+                    <button type="button" className="stories__play" aria-label={content?.storyEyebrow || ''}>
                       <svg viewBox="0 0 24 24" fill="#14161a">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </button>
-                    <span className="stories__video-caption">{story.storyDetails?.caption || `Watch ${story.clientName}’s story`}</span>
+                    <span className="stories__video-caption">{story.storyDetails?.caption || (content?.watchStory || '').replace('{name}', story.clientName)}</span>
                   </div>
 
                   <div className="story-card__body">
-                    <span className="story-card__eyebrow">Success story</span>
+                    <span className="story-card__eyebrow">{content?.storyEyebrow || ''}</span>
                     <h2 className="story-card__name">{story.title}</h2>
                     <span className="story-card__route">{story.storyDetails?.route || story.clientName}</span>
                     <p className="story-card__text">{story.summary}</p>
@@ -68,7 +72,7 @@ export default async function SuccessStoriesPage() {
                       className="story-card__link"
                       href={`/success-stories/${story.slug}`}
                     >
-                      Read the full story
+                      {content?.storyCta || ''}
                     </Link>
                   </div>
                 </article>

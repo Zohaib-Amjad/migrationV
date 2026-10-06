@@ -3,6 +3,7 @@ import type {
   Faq,
   Insight,
   Media,
+  Page,
   Post,
   Service,
   Testimonial,
@@ -45,6 +46,8 @@ export type CmsService = {
   slug: string
   num: string
   title: string
+  navTitle?: string
+  navDescription?: string
   desc: string
   bullets: string[]
   imageUrl: string
@@ -192,14 +195,6 @@ export async function getTestimonials(): Promise<CmsTestimonial[]> {
   }
 }
 
-const DEFAULT_FEATURED_IMAGES: Record<string, string> = {
-  'skilled-migration': '/assets/services-v2/skilled-migration.jpg',
-  'study-abroad': '/assets/services-v2/study-abroad.jpg',
-  'family-sponsorship': '/assets/services-v2/family-sponsorship.jpg',
-  'usa-visas': '/assets/services-v2/usa-visas.jpg',
-  'europe-visas': '/assets/services-v2/europe-visas.jpg',
-}
-
 export async function getServices(
   category?: 'featured' | 'pathway',
 ): Promise<CmsService[]> {
@@ -222,12 +217,11 @@ export async function getServices(
         slug,
         num: doc.numberLabel || `0${index + 1}`,
         title: doc.title,
+        navTitle: doc.navTitle || undefined,
+        navDescription: doc.navDescription || undefined,
         desc: doc.description,
         bullets: (doc.bullets || []).map((b: any) => b.text),
-        imageUrl:
-          mediaUrl(doc.image as Media | number | null) ||
-          DEFAULT_FEATURED_IMAGES[slug] ||
-          '/assets/services-v2/skilled-migration.jpg',
+        imageUrl: mediaUrl(doc.image as Media | number | null) || '',
         iconUrl: mediaUrl(doc.icon as Media | number | null),
         accent: doc.accent || '#0095FF',
         tint: doc.tint || '#DFEDF7',
@@ -267,6 +261,26 @@ export async function getCaseStudies(): Promise<CmsCaseStudy[]> {
   }
 }
 
+export type CmsPageContent = Record<string, unknown>
+
+export async function getPageContent(slug: string): Promise<CmsPageContent | null> {
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'pages',
+      depth: 1,
+      limit: 1,
+      where: { slug: { equals: slug } },
+    })
+    const page = result.docs[0] as Page | undefined
+    return page?.contentData && typeof page.contentData === 'object'
+      ? (page.contentData as CmsPageContent)
+      : null
+  } catch {
+    return null
+  }
+}
+
 export async function getServiceBySlug(slug: string): Promise<CmsService | null> {
   try {
     const payload = await getPayloadClient()
@@ -284,7 +298,7 @@ export async function getServiceBySlug(slug: string): Promise<CmsService | null>
       title: doc.title,
       desc: doc.description || '',
       bullets: (doc.bullets || []).map((b: any) => b.text),
-      imageUrl: mediaImage || DEFAULT_FEATURED_IMAGES[slug] || '',
+      imageUrl: mediaImage || '',
       iconUrl: mediaUrl(doc.icon as Media | number | null),
       accent: doc.accent || '#0095FF',
       tint: doc.tint || '#DFEDF7',

@@ -4,11 +4,18 @@ import { useState, useEffect, useRef, type CSSProperties } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useI18n } from '@/components/I18nProvider'
-import { SERVICES } from '@/data/site-content'
+import type { CmsCaseStudy, CmsFaq, CmsService, CmsTeamMember } from '@/lib/cms'
 import { SearchModal } from '@/components/SearchModal'
 import { BrandLogo } from '@/components/BrandLogo'
 
-export function Navbar() {
+interface NavbarProps {
+  services: CmsService[]
+  caseStudies: CmsCaseStudy[]
+  teamMembers: CmsTeamMember[]
+  faqs: CmsFaq[]
+}
+
+export function Navbar({ services, caseStudies, teamMembers, faqs }: NavbarProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [servicesAccordionOpen, setServicesAccordionOpen] = useState(false)
@@ -22,7 +29,7 @@ export function Navbar() {
   const serviceSlugMatch = pathname?.match(/^\/services\/([a-z0-9-]+)\/?$/)
   const currentServiceSlug = serviceSlugMatch ? serviceSlugMatch[1] : null
   const currentService = currentServiceSlug
-    ? SERVICES.find((s) => s.routeSlug === currentServiceSlug || s.slug === currentServiceSlug)
+    ? services.find((service) => service.slug === currentServiceSlug)
     : null
 
   // On service detail pages, the center vertical trunk takes the Section 1 background color (svc.tint).
@@ -127,66 +134,21 @@ export function Navbar() {
             </Link>
 
             <div className="nav__menu" data-nav-panel="">
-              <Link
-                className={`nav__menu-item ${pathname?.includes('skilled-migration') ? 'is-active' : ''}`}
-                href="/services/skilled-migration"
-                style={{ ['--dot']: '#0095ff' }}
-                onClick={() => setDropdownOpen(false)}
-              >
-                <span className="nav__menu-dot" aria-hidden="true"></span>
-                <span className="nav__menu-copy">
-                  <b>Skilled Migration</b>
-                  <small>Canada &amp; Australia</small>
-                </span>
-              </Link>
-              <Link
-                className={`nav__menu-item ${pathname?.includes('study-abroad') ? 'is-active' : ''}`}
-                href="/services/study-abroad"
-                style={{ ['--dot']: '#ff5900' }}
-                onClick={() => setDropdownOpen(false)}
-              >
-                <span className="nav__menu-dot" aria-hidden="true"></span>
-                <span className="nav__menu-copy">
-                  <b>Study Abroad</b>
-                  <small>Student Visas</small>
-                </span>
-              </Link>
-              <Link
-                className={`nav__menu-item ${pathname?.includes('family-sponsorship') ? 'is-active' : ''}`}
-                href="/services/family-sponsorship"
-                style={{ ['--dot']: '#179b66' }}
-                onClick={() => setDropdownOpen(false)}
-              >
-                <span className="nav__menu-dot" aria-hidden="true"></span>
-                <span className="nav__menu-copy">
-                  <b>Family Sponsorship</b>
-                  <small>Reunification</small>
-                </span>
-              </Link>
-              <Link
-                className={`nav__menu-item ${pathname?.includes('usa-visas') ? 'is-active' : ''}`}
-                href="/services/usa-visas"
-                style={{ ['--dot']: '#6b81cf' }}
-                onClick={() => setDropdownOpen(false)}
-              >
-                <span className="nav__menu-dot" aria-hidden="true"></span>
-                <span className="nav__menu-copy">
-                  <b>U.S. NIW &amp; Investor</b>
-                  <small>EB-2 NIW, E-2, L-1</small>
-                </span>
-              </Link>
-              <Link
-                className={`nav__menu-item ${pathname?.includes('europe-visas') ? 'is-active' : ''}`}
-                href="/services/europe-visas"
-                style={{ ['--dot']: '#fd0148' }}
-                onClick={() => setDropdownOpen(false)}
-              >
-                <span className="nav__menu-dot" aria-hidden="true"></span>
-                <span className="nav__menu-copy">
-                  <b>Europe</b>
-                  <small>Golden &amp; Visitor Visas</small>
-                </span>
-              </Link>
+              {services.map((service) => (
+                <Link
+                  key={service.id}
+                  className={`nav__menu-item ${pathname?.includes(service.slug) ? 'is-active' : ''}`}
+                  href={`/services/${service.slug}`}
+                  style={{ '--dot': service.accent || '#8daba4' } as CSSProperties}
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  <span className="nav__menu-dot" aria-hidden="true"></span>
+                  <span className="nav__menu-copy">
+                    <b>{service.navTitle || service.title}</b>
+                    <small>{service.navDescription || service.desc}</small>
+                  </span>
+                </Link>
+              ))}
               <Link
                 className={`nav__menu-all ${pathname === '/services' ? 'is-active' : ''}`}
                 href="/services"
@@ -296,7 +258,7 @@ export function Navbar() {
                   </svg>
                 </span>
                 <span className="nav__drawer-accordion-label">Services</span>
-                <span className="nav__drawer-badge">5 services</span>
+                <span className="nav__drawer-badge">{services.length} services</span>
               </div>
               <span className={`nav__drawer-chevron-wrap ${servicesAccordionOpen ? 'is-open' : ''}`}>
                 <svg className="nav__drawer-chevron" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -308,80 +270,23 @@ export function Navbar() {
             {servicesAccordionOpen && (
               <div className="nav__drawer-subitems-panel">
                 <div className="nav__drawer-subitems-list">
-                  <Link
-                    className={`nav__drawer-subitem ${pathname?.includes('skilled-migration') ? 'is-active' : ''}`}
-                    href="/services/skilled-migration"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="nav__drawer-subitem-icon" style={{ backgroundColor: '#eaf2fd' }}>
-                      <span className="nav__drawer-subitem-dot" style={{ backgroundColor: '#0095ff' }} />
-                    </div>
-                    <div className="nav__drawer-subitem-text">
-                      <b className="nav__drawer-subitem-name">Skilled Migration</b>
-                      <small className="nav__drawer-subitem-desc">Canada &amp; Australia</small>
-                    </div>
-                    <span className="nav__drawer-subitem-arrow" aria-hidden="true">→</span>
-                  </Link>
-
-                  <Link
-                    className={`nav__drawer-subitem ${pathname?.includes('study-abroad') ? 'is-active' : ''}`}
-                    href="/services/study-abroad"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="nav__drawer-subitem-icon" style={{ backgroundColor: '#fdf2eb' }}>
-                      <span className="nav__drawer-subitem-dot" style={{ backgroundColor: '#ff5900' }} />
-                    </div>
-                    <div className="nav__drawer-subitem-text">
-                      <b className="nav__drawer-subitem-name">Study Abroad</b>
-                      <small className="nav__drawer-subitem-desc">Student Visas</small>
-                    </div>
-                    <span className="nav__drawer-subitem-arrow" aria-hidden="true">→</span>
-                  </Link>
-
-                  <Link
-                    className={`nav__drawer-subitem ${pathname?.includes('family-sponsorship') ? 'is-active' : ''}`}
-                    href="/services/family-sponsorship"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="nav__drawer-subitem-icon" style={{ backgroundColor: '#f0f9f4' }}>
-                      <span className="nav__drawer-subitem-dot" style={{ backgroundColor: '#179b66' }} />
-                    </div>
-                    <div className="nav__drawer-subitem-text">
-                      <b className="nav__drawer-subitem-name">Family Sponsorship</b>
-                      <small className="nav__drawer-subitem-desc">Reunification</small>
-                    </div>
-                    <span className="nav__drawer-subitem-arrow" aria-hidden="true">→</span>
-                  </Link>
-
-                  <Link
-                    className={`nav__drawer-subitem ${pathname?.includes('usa-visas') ? 'is-active' : ''}`}
-                    href="/services/usa-visas"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="nav__drawer-subitem-icon" style={{ backgroundColor: '#ecf1ff' }}>
-                      <span className="nav__drawer-subitem-dot" style={{ backgroundColor: '#6b81cf' }} />
-                    </div>
-                    <div className="nav__drawer-subitem-text">
-                      <b className="nav__drawer-subitem-name">U.S. NIW &amp; Investor</b>
-                      <small className="nav__drawer-subitem-desc">EB-2 NIW, E-2, L-1</small>
-                    </div>
-                    <span className="nav__drawer-subitem-arrow" aria-hidden="true">→</span>
-                  </Link>
-
-                  <Link
-                    className={`nav__drawer-subitem ${pathname?.includes('europe-visas') ? 'is-active' : ''}`}
-                    href="/services/europe-visas"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="nav__drawer-subitem-icon" style={{ backgroundColor: '#ffe8ef' }}>
-                      <span className="nav__drawer-subitem-dot" style={{ backgroundColor: '#fd0148' }} />
-                    </div>
-                    <div className="nav__drawer-subitem-text">
-                      <b className="nav__drawer-subitem-name">Europe</b>
-                      <small className="nav__drawer-subitem-desc">Golden &amp; Visitor Visas</small>
-                    </div>
-                    <span className="nav__drawer-subitem-arrow" aria-hidden="true">→</span>
-                  </Link>
+                  {services.map((service) => (
+                    <Link
+                      key={service.id}
+                      className={`nav__drawer-subitem ${pathname?.includes(service.slug) ? 'is-active' : ''}`}
+                      href={`/services/${service.slug}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <div className="nav__drawer-subitem-icon" style={{ backgroundColor: service.tint || '#edf3f1' }}>
+                        <span className="nav__drawer-subitem-dot" style={{ backgroundColor: service.accent || '#8daba4' }} />
+                      </div>
+                      <div className="nav__drawer-subitem-text">
+                        <b className="nav__drawer-subitem-name">{service.title}</b>
+                        <small className="nav__drawer-subitem-desc">{service.desc}</small>
+                      </div>
+                      <span className="nav__drawer-subitem-arrow" aria-hidden="true">→</span>
+                    </Link>
+                  ))}
                 </div>
 
                 <Link
@@ -460,7 +365,14 @@ export function Navbar() {
       )}
         </header>
       </div>
-      <SearchModal isOpen={searchModalOpen} onClose={() => setSearchModalOpen(false)} />
+      <SearchModal
+        isOpen={searchModalOpen}
+        onClose={() => setSearchModalOpen(false)}
+        services={services}
+        caseStudies={caseStudies}
+        teamMembers={teamMembers}
+        faqs={faqs}
+      />
     </div>
   )
 }

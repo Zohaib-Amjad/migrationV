@@ -65,6 +65,20 @@ export const Services: CollectionConfig = {
       },
     },
     {
+      name: 'navTitle',
+      type: 'text',
+      admin: {
+        description: 'Compact title shown in the Services navigation dropdown.',
+      },
+    },
+    {
+      name: 'navDescription',
+      type: 'text',
+      admin: {
+        description: 'Short supporting line shown below the title in the Services navigation dropdown.',
+      },
+    },
+    {
       name: 'numberLabel',
       type: 'text',
       admin: {

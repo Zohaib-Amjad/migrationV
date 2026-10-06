@@ -156,6 +156,18 @@ export interface Page {
   title: string;
   slug: string;
   layout?: (HeroBlock | TextImageBlock | TestimonialsBlock | CTABlock)[] | null;
+  /**
+   * Page headings, copy, and other editable page data. The frontend reads this object for the matching route.
+   */
+  contentData?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -179,6 +191,10 @@ export interface HeroBlock {
  */
 export interface Media {
   id: number;
+  /**
+   * Original public path for an existing site asset, such as /assets/services-v2/example.jpg.
+   */
+  sourcePath?: string | null;
   /**
    * Describe the image for accessibility and SEO.
    */
@@ -377,6 +393,14 @@ export interface Service {
     | boolean
     | null;
   /**
+   * Compact title shown in the Services navigation dropdown.
+   */
+  navTitle?: string | null;
+  /**
+   * Short supporting line shown below the title in the Services navigation dropdown.
+   */
+  navDescription?: string | null;
+  /**
    * Display number, e.g. [01] or 01
    */
   numberLabel?: string | null;
@@ -399,7 +423,7 @@ export interface Service {
   createdAt: string;
 }
 /**
- * FAQ accordion per page. Set page = Home for homepage only. Other pages show dummy content until you add FAQs for Contact / Services / etc.
+ * FAQ accordion per page. Set page = Home for homepage only, or All pages to share an FAQ across pages.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "faqs".
@@ -719,6 +743,7 @@ export interface PagesSelect<T extends boolean = true> {
         testimonials?: T | TestimonialsBlockSelect<T>;
         cta?: T | CTABlockSelect<T>;
       };
+  contentData?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -818,6 +843,8 @@ export interface ServicesSelect<T extends boolean = true> {
   accent?: T;
   tint?: T;
   detailContent?: T;
+  navTitle?: T;
+  navDescription?: T;
   numberLabel?: T;
   bullets?:
     | T
@@ -946,6 +973,7 @@ export interface NewsletterSubscriptionsSelect<T extends boolean = true> {
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
+  sourcePath?: T;
   alt?: T;
   updatedAt?: T;
   createdAt?: T;

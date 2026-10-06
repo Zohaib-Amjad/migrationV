@@ -4,20 +4,15 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useI18n } from '@/components/I18nProvider'
-import {
-  SERVICES,
-  STORIES,
-  LEADERSHIP,
-  CORE_TEAM,
-  FAQS,
-  type ServiceItem,
-  type SuccessStoryItem,
-  type TeamMemberItem,
-} from '@/data/site-content'
+import type { CmsCaseStudy, CmsFaq, CmsService, CmsTeamMember } from '@/lib/cms'
 
 interface SearchModalProps {
   isOpen: boolean
   onClose: () => void
+  services: CmsService[]
+  caseStudies: CmsCaseStudy[]
+  teamMembers: CmsTeamMember[]
+  faqs: CmsFaq[]
 }
 
 interface SearchResult {
@@ -46,88 +41,6 @@ interface DefaultSearchCategory {
 }
 
 const DEFAULT_CATEGORIES: DefaultSearchCategory[] = [
-  {
-    titleEn: 'Leadership & Team',
-    titleAr: 'القيادة وفريق العمل',
-    items: [
-      {
-        titleEn: 'Leadership',
-        titleAr: 'فريق القيادة التنفيذية',
-        descEn: 'Meet our Managing Partner & Senior Practice Directors',
-        descAr: 'تعرف على الشركاء الإداريين ومديري أقسام الهجرة',
-        url: '/about#leadership',
-        icon: '👑',
-        tagEn: 'About',
-        tagAr: 'من نحن',
-      },
-      {
-        titleEn: 'Our Core Team',
-        titleAr: 'فريق العمل الرئيسي',
-        descEn: 'Case managers, legal specialists, and authorized advisors',
-        descAr: 'مستشارو الهجرة المعتمدون وأخصائيو معالجة الملفات',
-        url: '/about#team',
-        icon: '👥',
-        tagEn: 'Team',
-        tagAr: 'الفريق',
-      },
-    ],
-  },
-  {
-    titleEn: 'Services & Visa Detail Pages',
-    titleAr: 'خدمات وصفحات تفاصيل التأشيرات',
-    items: [
-      {
-        titleEn: 'Skilled Migration',
-        titleAr: 'هجرة الكفاءات وأصحاب المهن',
-        descEn: 'Canada Express Entry, Australia PR Subclass 189/190, UK & NZ visas',
-        descAr: 'الهجرة السريعة لكندا والإقامة الدائمة لأستراليا ونيوزيلندا وبريطانيا',
-        url: '/services/skilled-migration',
-        icon: '🇨🇦',
-        tagEn: 'Service',
-        tagAr: 'خدمة',
-      },
-      {
-        titleEn: 'Study Abroad',
-        titleAr: 'الدراسة في الخارج والتأشيرات الطلابية',
-        descEn: 'Top university admissions, post-study work permits & student visas',
-        descAr: 'القبول بالجامعات العالمية وتصاريح العمل بعد التخرج',
-        url: '/services/study-abroad',
-        icon: '🎓',
-        tagEn: 'Service',
-        tagAr: 'خدمة',
-      },
-      {
-        titleEn: 'Family & Spouse Sponsorship',
-        titleAr: 'لم شمل الأسرة ورعاية الزوجين',
-        descEn: 'Spousal sponsorship, dependent child & parent reunion visas',
-        descAr: 'تأشيرات إلحاق الزوجين والأبناء ولم شمل الوالدين',
-        url: '/services/family-sponsorship',
-        icon: '👨‍👩‍👧',
-        tagEn: 'Service',
-        tagAr: 'خدمة',
-      },
-      {
-        titleEn: 'U.S. Visas & EB-2 NIW',
-        titleAr: 'تأشيرات أمريكا وإعفاء المصلحة الوطنية',
-        descEn: 'National Interest Waiver (EB-2 NIW), EB-5 investor & L-1 transfer',
-        descAr: 'تأشيرات إعفاء المصلحة الوطنية ونقل المديرين والاستثمار في أمريكا',
-        url: '/services/usa-visas',
-        icon: '🇺🇸',
-        tagEn: 'Service',
-        tagAr: 'خدمة',
-      },
-      {
-        titleEn: 'Europe Visas & Global Residency',
-        titleAr: 'تأشيرات أوروبا والإقامة الذهبية',
-        descEn: 'EU Golden Visas, Schengen business visas & European citizenship',
-        descAr: 'الإقامة الذهبية الأوروبية وتأشيرات شنغن الاستثمارية',
-        url: '/services/europe-visas',
-        icon: '🇪🇺',
-        tagEn: 'Service',
-        tagAr: 'خدمة',
-      },
-    ],
-  },
   {
     titleEn: 'All Pages',
     titleAr: 'كافة صفحات الموقع',
@@ -216,13 +129,52 @@ const DEFAULT_CATEGORIES: DefaultSearchCategory[] = [
   },
 ]
 
-export function SearchModal({ isOpen, onClose }: SearchModalProps) {
+export function SearchModal({
+  isOpen,
+  onClose,
+  services,
+  caseStudies,
+  teamMembers,
+  faqs,
+}: SearchModalProps) {
   const router = useRouter()
   const { isArabic } = useI18n()
   const [query, setQuery] = useState('')
   const [selectedIndex, setSelectedIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const pageCategory = DEFAULT_CATEGORIES[0]
+  const initialSearchCategories: DefaultSearchCategory[] = [
+    {
+      titleEn: 'Leadership & Team',
+      titleAr: 'القيادة وفريق العمل',
+      items: teamMembers.map((member) => ({
+        titleEn: member.name,
+        titleAr: member.name,
+        descEn: `${member.role} — ${member.short}`,
+        descAr: `${member.role} — ${member.short}`,
+        url: `/team/${member.slug}`,
+        icon: '👤',
+        tagEn: member.group === 'leadership' ? 'Leadership' : 'Team',
+        tagAr: member.group === 'leadership' ? 'القيادة' : 'الفريق',
+      })),
+    },
+    {
+      titleEn: 'Services',
+      titleAr: 'الخدمات',
+      items: services.map((service) => ({
+        titleEn: service.title,
+        titleAr: service.title,
+        descEn: service.desc,
+        descAr: service.desc,
+        url: `/services/${service.slug}`,
+        icon: '✈️',
+        tagEn: 'Service',
+        tagAr: 'خدمة',
+      })),
+    },
+    ...(pageCategory ? [pageCategory] : []),
+  ]
 
   const handleNavigate = useCallback(
     (url: string) => {
@@ -339,50 +291,48 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     }
 
     // 2. Services
-    SERVICES.forEach((s: ServiceItem) => {
+    services.forEach((s) => {
       if (
-        s.navName.toLowerCase().includes(q) ||
         s.title.toLowerCase().includes(q) ||
-        s.short.toLowerCase().includes(q) ||
-        s.lede.toLowerCase().includes(q) ||
-        s.chips.some((chip) => chip.toLowerCase().includes(q))
+        s.desc.toLowerCase().includes(q) ||
+        s.bullets.some((bullet) => bullet.toLowerCase().includes(q))
       ) {
         results.push({
           id: `svc-${s.slug}`,
           title: s.title,
-          subtitle: s.lede,
+          subtitle: s.desc,
           category: 'Service',
-          url: `/services/${s.routeSlug}`,
-          tag: s.navName,
+          url: `/services/${s.slug}`,
+          tag: s.title,
           icon: '✈️',
         })
       }
     })
 
     // 3. Success Stories
-    STORIES.forEach((st: SuccessStoryItem) => {
+    caseStudies.forEach((st) => {
+      const route = st.storyDetails?.route || ''
       if (
-        st.name.toLowerCase().includes(q) ||
-        st.headline.toLowerCase().includes(q) ||
-        st.route.toLowerCase().includes(q) ||
-        st.caption.toLowerCase().includes(q) ||
-        st.excerpt.toLowerCase().includes(q)
+        st.clientName.toLowerCase().includes(q) ||
+        st.title.toLowerCase().includes(q) ||
+        route.toLowerCase().includes(q) ||
+        (st.storyDetails?.caption || '').toLowerCase().includes(q) ||
+        st.summary.toLowerCase().includes(q)
       ) {
         results.push({
           id: `story-${st.slug}`,
-          title: `${st.name} — ${st.route}`,
-          subtitle: st.headline,
+          title: route ? `${st.clientName} — ${route}` : st.clientName,
+          subtitle: st.title,
           category: 'Story',
-          url: `/success-stories/${st.routeSlug}`,
+          url: `/success-stories/${st.slug}`,
           tag: 'Case Study',
           icon: '🌟',
         })
       }
     })
 
-    // 4. Team Members (LEADERSHIP + CORE_TEAM)
-    const teamMembers: TeamMemberItem[] = [...LEADERSHIP, ...CORE_TEAM]
-    teamMembers.forEach((tm: TeamMemberItem) => {
+    // 4. Team Members
+    teamMembers.forEach((tm) => {
       if (
         tm.name.toLowerCase().includes(q) ||
         tm.role.toLowerCase().includes(q) ||
@@ -393,7 +343,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           title: tm.name,
           subtitle: `${tm.role} — ${tm.short}`,
           category: 'Team',
-          url: `/team/${tm.routeSlug}`,
+          url: `/team/${tm.slug}`,
           tag: tm.role,
           icon: '👤',
         })
@@ -401,12 +351,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     })
 
     // 5. FAQs
-    FAQS.forEach((faq, idx: number) => {
-      if (faq.q.toLowerCase().includes(q) || faq.a.toLowerCase().includes(q)) {
+    faqs.forEach((faq) => {
+      if (faq.question.toLowerCase().includes(q) || faq.answer.toLowerCase().includes(q)) {
         results.push({
-          id: `faq-${idx}`,
-          title: faq.q,
-          subtitle: faq.a,
+          id: `faq-${faq.id}`,
+          title: faq.question,
+          subtitle: faq.answer,
           category: 'FAQ',
           url: '/#faq',
           tag: 'FAQ',
@@ -525,7 +475,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           {query.trim() === '' ? (
             /* Categorized Initial State when Search is Opened */
             <div className="space-y-6">
-              {DEFAULT_CATEGORIES.map((cat, catIdx) => (
+              {initialSearchCategories.map((cat, catIdx) => (
                 <div key={catIdx} className="mb-5 last:mb-0">
                   <div className="search-modal-section-title">
                     {isArabic ? cat.titleAr : cat.titleEn}

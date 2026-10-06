@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   images: {
     localPatterns: [
       {
+        pathname: '/api/media-assets/**',
+      },
+      {
         pathname: '/api/media/file/**',
       },
       {
@@ -73,6 +76,20 @@ const nextConfig: NextConfig = {
         permanent: false,
       },
     ]
+  },
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/assets/:path*',
+          destination: '/api/media-assets/assets/:path*',
+        },
+        {
+          source: '/images/:path*',
+          destination: '/api/media-assets/images/:path*',
+        },
+      ],
+    }
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

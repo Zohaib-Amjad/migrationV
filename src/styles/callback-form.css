@@ -74,16 +74,84 @@
   color: rgba(255, 255, 255, 0.45);
 }
 
-/* The native dropdown list is drawn by the OS, not on the glass — it needs
-   its own light-on-dark-proof colours or it renders white text on white. */
+/* Keep the native option menu on the same dark glass palette as its select. */
 .callback-form__field option {
-  color: #14161a;
-  background: #fff;
+  color: #fff;
+  background: #263632;
+}
+
+.callback-form__field option:checked {
+  color: #fff;
+  background: #435c55;
 }
 
 .callback-form__submit {
   align-self: flex-start;
   margin-top: 8px;
+}
+
+.callback-form__success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  color: #fff;
+  font-family: var(--font-sans);
+}
+
+.callback-form__success-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  margin-bottom: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 50%;
+  background: rgba(141, 171, 164, 0.22);
+  color: #d5e5df;
+}
+
+.callback-form__success-icon svg {
+  display: block;
+  width: 23px;
+  height: 23px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.callback-form__success-title {
+  margin: 0;
+  color: #fff;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.callback-form__success-message {
+  max-width: 420px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.callback-form__success-action {
+  margin-top: 8px;
+}
+
+.callback-form__error {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 202, 202, 0.42);
+  border-radius: 12px;
+  background: rgba(110, 26, 26, 0.28);
+  color: #ffe4e4;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 @media (max-width: 640px) {
@@ -92,6 +160,11 @@
   }
 
   .callback-form__submit {
+    align-self: stretch;
+    justify-content: center;
+  }
+
+  .callback-form__success-action {
     align-self: stretch;
     justify-content: center;
   }

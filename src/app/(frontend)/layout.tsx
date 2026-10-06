@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Footer } from '@/components/Footer'
 import { Navbar } from '@/components/Navbar'
 import I18nProvider from '@/components/I18nProvider'
+import { getCaseStudies, getFaqs, getServices, getTeamMembers } from '@/lib/cms'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,7 +16,18 @@ export const metadata: Metadata = {
   },
 }
 
-export default function FrontendLayout({ children }: { children: React.ReactNode }) {
+export const dynamic = 'force-dynamic'
+
+export default async function FrontendLayout({ children }: { children: React.ReactNode }) {
+  const [services, caseStudies, teamMembers, faqs] = await Promise.all([
+    getServices(),
+    getCaseStudies(),
+    getTeamMembers(),
+    getFaqs('all'),
+  ])
+
+  const navServices = services.slice(0, 5)
+
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <head>
@@ -52,7 +64,12 @@ export default function FrontendLayout({ children }: { children: React.ReactNode
       </head>
       <body suppressHydrationWarning>
         <I18nProvider>
-          <Navbar />
+          <Navbar
+            services={navServices}
+            caseStudies={caseStudies}
+            teamMembers={teamMembers}
+            faqs={faqs}
+          />
           <main className="w-full">{children}</main>
           <Footer />
         </I18nProvider>

@@ -66,11 +66,10 @@ export function ConsultationForm() {
           program: '',
         })
       } else {
-        // Fallback gracefully for UI if Payload API requires auth or network issue
-        setStatus('success')
+        setStatus('error')
       }
     } catch {
-      setStatus('success')
+      setStatus('error')
     }
   }
 
@@ -371,30 +370,40 @@ export function ConsultationForm() {
 
           <div className="expert-cta__form-card">
             {status === 'success' ? (
-              <div className="py-8 text-center text-white">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-[#179b66]">
-                  <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <div className="callback-form__success" role="status" aria-live="polite">
+                <div className="callback-form__success-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <path d="m5 12.5 4.5 4.5L19 7" />
                   </svg>
                 </div>
-                <h3 className="mb-2 text-xl font-semibold text-white">
+                <h3 className="callback-form__success-title">
                   {isArabic ? 'شكراً لك!' : 'Thank you!'}
                 </h3>
-                <p className="text-sm opacity-90">
+                <p className="callback-form__success-message">
                   {isArabic
                     ? 'تم استلام استفسارك بنجاح. سيتواصل معك مستشارنا المختص خلال 24 ساعة.'
                     : 'Your enquiry has been received. Our specialist will contact you within 24 hours.'}
                 </p>
                 <button
                   type="button"
-                  onClick={() => setStatus('idle')}
-                  className="mt-6 inline-block rounded-lg bg-white/20 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/30 hover:shadow-lg active:translate-y-0.5 active:scale-95"
+                  onClick={() => {
+                    setFormData({ name: '', phone: '', email: '', program: '' })
+                    setStatus('idle')
+                  }}
+                  className="btn btn--white callback-form__success-action"
                 >
                   {isArabic ? 'إرسال استفسار آخر' : 'Send another enquiry'}
                 </button>
               </div>
             ) : (
               <form className="callback-form__form" onSubmit={handleSubmit}>
+                {status === 'error' && (
+                  <p className="callback-form__error" role="alert">
+                    {isArabic
+                      ? 'تعذر إرسال استفسارك. يرجى المحاولة مرة أخرى.'
+                      : 'We could not send your enquiry. Please try again.'}
+                  </p>
+                )}
                 <div className="callback-form__row">
                   <div className="callback-form__field">
                     <label htmlFor="cf-name">{isArabic ? 'الاسم' : 'Name'}</label>

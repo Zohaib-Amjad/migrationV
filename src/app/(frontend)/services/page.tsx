@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { ConsultationForm } from '@/components/ConsultationForm'
 import { FeedbackSection } from '@/components/FeedbackSection'
 
-import { getServices } from '@/lib/cms'
+import { getPageContent, getServices } from '@/lib/cms'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,7 +14,11 @@ export const metadata: Metadata = {
 }
 
 export default async function ServicesPage() {
-  const cmsServices = await getServices()
+  const [cmsServices, contentData] = await Promise.all([getServices(), getPageContent('services')])
+  const content = contentData as {
+    hero?: { eyebrow?: string; titleLine1?: string; titleLine2?: string; lede?: string; destinations?: string }
+    cardCta?: string
+  } | null
   const displayServices = cmsServices.map((s) => ({
         slug: s.slug,
         routeSlug: s.slug,
@@ -33,23 +37,20 @@ export default async function ServicesPage() {
           <nav className="crumbs" aria-label="Breadcrumb">
             <Link href="/">Home</Link>
             <span className="crumbs__sep" aria-hidden="true">/</span>
-            <span aria-current="page">Services</span>
+            <span aria-current="page">{content?.hero?.eyebrow || ''}</span>
           </nav>
 
           <div className="page-head">
-            <span className="page-head__eyebrow">Services</span>
+            <span className="page-head__eyebrow">{content?.hero?.eyebrow || ''}</span>
             <h1 className="page-head__title">
-              Immigration and
+              {content?.hero?.titleLine1 || ''}
               <br />
-              education advisory services
+              {content?.hero?.titleLine2 || ''}
             </h1>
-            <p className="page-head__lede">
-              Five services, each built around a different question: are you eligible, where are you
-              truly competitive, and what the path looks like once a decision is made.
-            </p>
+            <p className="page-head__lede">{content?.hero?.lede || ''}</p>
             <div className="page-head__meta">
               <span className="page-head__chip">{displayServices.length} services</span>
-              <span className="page-head__chip">Canada &bull; Australia &bull; UK &bull; US &bull; Europe</span>
+              <span className="page-head__chip">{content?.hero?.destinations || ''}</span>
             </div>
           </div>
         </div>
@@ -74,7 +75,7 @@ export default async function ServicesPage() {
                   </span>
                   <h2 className="svc-index__title">{svc.title}</h2>
                   <p className="svc-index__text">{svc.cardText}</p>
-                  <span className="svc-index__link">See how we can help</span>
+                  <span className="svc-index__link">{content?.cardCta || ''}</span>
                 </Link>
               ))}
             </div>

@@ -39,5 +39,12 @@ export const Pages: CollectionConfig = {
         initCollapsed: true,
       },
     },
+    {
+      name: 'contentData',
+      type: 'json',
+      admin: {
+        description: 'Page headings, copy, and other editable page data. The frontend reads this object for the matching route.',
+      },
+    },
   ],
 }
