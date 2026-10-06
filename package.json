@@ -5,15 +5,15 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "build": "node init && cross-env NODE_OPTIONS=--no-deprecation next build",
+    "dev": "node init && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "seed:cms": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-cms.ts",
     "security:check": "node scripts/security-audit.mjs",
-    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+    "start": "node init && cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.85.2",
